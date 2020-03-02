@@ -1,3 +1,4 @@
+// icehowl cant attack heroes, only minions
 package model.cards.minions;
 
 import model.cards.Rarity;
