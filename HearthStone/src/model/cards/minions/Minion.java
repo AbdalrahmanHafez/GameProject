@@ -14,6 +14,9 @@ public class Minion extends Card {
 	private boolean sleeping;
 	private boolean attacked;
 	
+	public Minion() {
+		
+	}
 	
 	public Minion(String name, int manaCost, Rarity rarity, int attack,int maxHP,boolean
 			taunt,boolean divine,boolean charge) 
@@ -37,11 +40,16 @@ public class Minion extends Card {
 
 
 	public void setAttack(int attack) {
-		this.attack = attack;
+		if(attack >=0)
+			this.attack = attack;
+		else
+			 this.attack =0;	
+		
 	}
 
 
 	public int getMaxHP() {
+		
 		return maxHP;
 	}
 

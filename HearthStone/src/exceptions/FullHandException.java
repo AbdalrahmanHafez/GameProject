@@ -6,11 +6,11 @@ public class FullHandException extends HearthstoneException{
 	
 	private Card burned;  			//The card that will be burned (discarded) as the player’s hand is already full.
 	
-	public FullHandException() {
+	public FullHandException(Card b) {
 		
 	}
 
-	public FullHandException(String s) {
+	public FullHandException(String s,Card b) {
 		super(s);
 	}
 

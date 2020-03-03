@@ -1,7 +1,5 @@
 package model.cards;
 
-import model.cards.minions.Minion;
-
 public abstract class Card {
 
 	
@@ -9,9 +7,10 @@ public abstract class Card {
 	private int manaCost;
 	private Rarity rarity;
 	
+	public Card() {}
 	public Card(String name, int manaCost, Rarity rarity) {
 		this.name = name;
-		this.setManaCost(manaCost); // restrictons on the size of manacost
+		this.manaCost = manaCost;
 		this.rarity = rarity;
 	}
 	
@@ -28,19 +27,13 @@ public abstract class Card {
 		return manaCost;
 	}
 	public void setManaCost(int manaCost) {
-		if (manaCost <= 10 && manaCost >= 0)
-			this.manaCost = manaCost;
+		if(manaCost >=0 && manaCost<=10)
+		     this.manaCost = manaCost;
+		else if(manaCost>10)
+			 this.manaCost =10;
 		else
-		if(manaCost < 0)
-			this.manaCost = 0;
-		else
-		if(manaCost > 10)
-			this.manaCost = 10;
-			
+			 this.manaCost =0;
 	}
-	
-	
-	
 	public Rarity getRarity() {
 		return rarity;
 	}

@@ -32,7 +32,9 @@ public abstract class Hero {
 	
 	private boolean heroPowerUsed;
 	
-	
+	public Hero() {
+		
+	}
 	public Hero(String name) {
 		this.name = name;
 		currentHP =	30;
