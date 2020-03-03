@@ -1,6 +1,9 @@
 package model.heroes;
 
+import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.math.*;
 
 import model.cards.Card;
 import model.cards.Rarity;
@@ -35,35 +38,51 @@ public abstract class Hero {
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		
-		ArrayList<Minion> m = new ArrayList<Minion> ();
+		ArrayList<Minion> minions = new ArrayList<Minion> ();
 		
 		while ((currentLine = br.readLine()) != null) {
-			Rarity R ;
+			String[] l =  currentLine.split(",");
 			
-			
-			String[] z =  currentLine.split(",");
-			switch(z[2]) {
-			case "b" : R = Rarity.BASIC;break;
-			case "c" : R = Rarity.COMMON;break;
-			case "r" : R = Rarity.RARE;break;
-			case "e" : R = Rarity.EPIC;break;
-			case "l" : R = Rarity.LEGENDARY;break;
-			
+			Rarity R = null ;
+			switch(l[2]) { // Rarity Value
+				case "b" : R = Rarity.BASIC;break;
+				case "c" : R = Rarity.COMMON;break;
+				case "r" : R = Rarity.RARE;break;
+				case "e" : R = Rarity.EPIC;break;
+				case "l" : R = Rarity.LEGENDARY;break;
 			}
 			
-			m.add(new Minion( z[0],Integer.parseInt(z[1]),R,Integer.parseInt(z[3]),Integer.parseInt(z[4]),Boolean.parseBoolean((z[5]).toLowerCase()),Boolean.parseBoolean((z[6]).toLowerCase())),Boolean.parseBoolean((z[7]).toLowerCase()));
-		}
-		
-		String[] info = totalS.split(",");
-		
-		
-		return 
-		
+
+//			public Minion(String name, int manaCost, Rarity rarity, int attack,int maxHP,boolean
+//					taunt,boolean divine,boolean charge) 
+			
+//			NAME, MANA COST,RARITY, ATTACK, MAX HP,
+//			TAUNT, DIVINE, CHARGE.
+			
+			minions.add(new Minion(l[0],						//name
+					Integer.parseInt(l[1]),						//mana
+					R,											//Rarity
+					Integer.parseInt(l[3]),						//Attack
+					Integer.parseInt(l[4]),						//MaxHP
+					Boolean.parseBoolean(l[5].toLowerCase()),	//taunt
+					Boolean.parseBoolean(l[6].toLowerCase()),	//Divine
+					Boolean.parseBoolean(l[7].toLowerCase())	//Charge
+					));
 	}
 	
 	
+		return minions;
+	}
 	
-	
+	static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,int count){
+		Collections.shuffle(minions);
+		
+		Random r = new Random();
+		int rand = r.nextInt(1);
+		//???
+		
+		return null;
+	}
 	
 	
 	
