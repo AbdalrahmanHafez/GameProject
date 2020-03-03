@@ -1,7 +1,7 @@
 package exceptions;
 
 public class FullFieldException extends HearthstoneException{
-
+	
 	public FullFieldException() {
 		
 	}

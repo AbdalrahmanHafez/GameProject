@@ -1,12 +1,10 @@
 package model.heroes;
 
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.math.*;
-
 import model.cards.Card;
 import model.cards.Rarity;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import model.cards.minions.Minion;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,14 +12,18 @@ import java.io.IOException;
 
 public abstract class Hero {
 	String name;
+	
 	int currentHP;
-	boolean heroPowerUsed;
 	int totalManaCrystals;
 	int currentManaCrystals;
+	int fatigueDamage;
+	
 	ArrayList<Card> deck;
 	ArrayList<Minion> field;
 	ArrayList<Card> hand;
-	int fatigueDamage;
+	
+	boolean heroPowerUsed;
+	
 	
 	public Hero(String name) {
 		this.name = name;
@@ -54,8 +56,7 @@ public abstract class Hero {
 			
 
 //			public Minion(String name, int manaCost, Rarity rarity, int attack,int maxHP,boolean
-//					taunt,boolean divine,boolean charge) 
-			
+//					taunt,boolean divine,boolean charge) 		
 //			NAME, MANA COST,RARITY, ATTACK, MAX HP,
 //			TAUNT, DIVINE, CHARGE.
 			
@@ -75,15 +76,43 @@ public abstract class Hero {
 	}
 	
 	static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,int count){
-		Collections.shuffle(minions);
+		Collections.shuffle(minions); // Randomizes Minions Array
 		
-		Random r = new Random();
-		int rand = r.nextInt(1);
-		//???
-		
-		return null;
+		ArrayList<Minion> smallerArrayOfMinions = new ArrayList<Minion> ();
+		for(int i = 0; i< count; i++) { 
+			smallerArrayOfMinions.add(minions.get(i)) ;
+		}	
+			
+		return smallerArrayOfMinions;
 	}
 	
+
+	void buildDeck() throws IOException{
+		switch(name) { // HeroName
+			case "Hunter" :
+				
+				
+				
+				
+				
+				
+				
+				;break;
+			case "Mage" :
+				
+				;break;
+			case "Paladin" : 	
+				
+				;break;
+			case "Priest" :
+				
+				;break;
+			case "Warlock" : 
+				
+				
+				;break;
+		}
+	}
 	
 	
 	public int getCurrentHP() {
