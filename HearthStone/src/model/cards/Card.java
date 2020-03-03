@@ -10,7 +10,7 @@ public abstract class Card {
 	public Card() {}
 	public Card(String name, int manaCost, Rarity rarity) {
 		this.name = name;
-		this.manaCost = manaCost;
+		this.setManaCost(manaCost); // restrictons on the size of manacost
 		this.rarity = rarity;
 	}
 	
@@ -27,12 +27,14 @@ public abstract class Card {
 		return manaCost;
 	}
 	public void setManaCost(int manaCost) {
-		if(manaCost >=0 && manaCost<=10)
-		     this.manaCost = manaCost;
-		else if(manaCost>10)
-			 this.manaCost =10;
+		if (manaCost <= 10 && manaCost >= 0)
+			this.manaCost = manaCost;
 		else
-			 this.manaCost =0;
+		if(manaCost < 0)
+			this.manaCost = 0;
+		else
+		if(manaCost > 10)
+			this.manaCost = 10;
 	}
 	public Rarity getRarity() {
 		return rarity;
