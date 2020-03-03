@@ -2,10 +2,18 @@ package model.heroes;
 
 import model.cards.Card;
 import model.cards.Rarity;
+import model.cards.spells.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
+import model.cards.spells.KillCommand;
+import model.cards.spells.MultiShot;
+import model.cards.spells.Polymorph;
+import model.cards.spells.Pyroblast;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,6 +47,8 @@ public abstract class Hero {
 		String currentLine = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
+		
+		Icehowl ce;
 		
 		ArrayList<Minion> minions = new ArrayList<Minion> ();
 		
@@ -75,7 +85,7 @@ public abstract class Hero {
 		return minions;
 	}
 	
-	static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,int count){
+	public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,int count){
 		Collections.shuffle(minions); // Randomizes Minions Array
 		
 		ArrayList<Minion> smallerArrayOfMinions = new ArrayList<Minion> ();
@@ -86,32 +96,105 @@ public abstract class Hero {
 		return smallerArrayOfMinions;
 	}
 	
+	
 
 	void buildDeck() throws IOException{
-		switch(name) { // HeroName
+
+		//Reading the cvs data file
+		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
+		
+		
+		switch(this.name) { // HeroName
 			case "Hunter" :
 				
+				deck.addAll(getNeutralMinions(minions, 15)); // gets 15 nurtal minions
+								
+				deck.add(new KillCommand("Kill Command", 3, Rarity.BASIC));
+				deck.add(new KillCommand("Kill Command", 3, Rarity.BASIC));
 				
-				
-				
-				
-				
-				
+				deck.add(new MultiShot("Multi-Shot", 4, Rarity.BASIC));
+				deck.add(new MultiShot("Multi-Shot", 4, Rarity.BASIC));
+												
+				deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false , false ,true));
+								
 				;break;
+				
+				
 			case "Mage" :
 				
-				;break;
-			case "Paladin" : 	
+				deck.addAll(getNeutralMinions(minions, 13)); 
 				
+				deck.add(new Polymorph("Polymorph", 4, Rarity.BASIC));
+				deck.add(new Polymorph("Polymorph", 4, Rarity.BASIC));
+				
+				deck.add(new Flamestrike("Flamestrike", 7, Rarity.BASIC));
+				deck.add(new Flamestrike("Flamestrike", 7, Rarity.BASIC));
+				
+				deck.add(new Pyroblast("Pyroblast", 10, Rarity.EPIC));
+				deck.add(new Pyroblast("Pyroblast", 10, Rarity.EPIC));
+				
+				
+				deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false , false ,false));
+								
 				;break;
+				
+				
+			case "Paladin" :
+				
+				deck.addAll(getNeutralMinions(minions, 15)); 
+				
+				deck.add(new SealOfChampions("Seal of Champions", 3, Rarity.COMMON));
+				deck.add(new SealOfChampions("Seal of Champions", 3, Rarity.COMMON));
+				
+				deck.add(new LevelUp("Level Up!", 6, Rarity.EPIC));
+				deck.add(new LevelUp("Level Up!", 6, Rarity.EPIC));
+				
+				deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
+								
+				;break;
+				
+				
 			case "Priest" :
 				
+				deck.addAll(getNeutralMinions(minions, 13)); 
+				
+				deck.add(new DivineSpirit("Divine Spirit", 2, Rarity.BASIC));
+				deck.add(new DivineSpirit("Divine Spirit", 2, Rarity.BASIC));
+				
+				deck.add(new HolyNova("Holy Nova", 5, Rarity.BASIC));
+				deck.add(new HolyNova("Holy Nova", 5, Rarity.BASIC));
+				
+				deck.add(new ShadowWordDeath("Shadow Word :Death", 3, Rarity.BASIC));
+				deck.add(new ShadowWordDeath("Shadow Word :Death", 3, Rarity.BASIC));
+								
+				deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
+				
 				;break;
+				
+				
 			case "Warlock" : 
 				
+				deck.addAll(getNeutralMinions(minions, 13)); 
+
+				deck.add(new CurseOfWeakness("Curse of Weakness", 2, Rarity.RARE));
+				deck.add(new CurseOfWeakness("Curse of Weakness", 2, Rarity.RARE));
 				
-				;break;
-		}
+				
+				deck.add(new SiphonSoul("Siphon Soul", 6, Rarity.RARE));
+				deck.add(new SiphonSoul("Siphon Soul", 6, Rarity.RARE));
+				
+				
+				deck.add(new TwistingNether("Twisting Nether", 8, Rarity.EPIC));
+				deck.add(new TwistingNether("Twisting Nether", 8, Rarity.EPIC));
+				
+				deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
+
+				
+				;break;	
+			}
+		
+		
+		Collections.shuffle(deck);
 	}
 	
 	
