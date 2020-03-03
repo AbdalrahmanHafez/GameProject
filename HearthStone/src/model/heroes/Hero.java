@@ -19,18 +19,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public abstract class Hero {
-	String name;
+	private String name;
 	
-	int currentHP;
-	int totalManaCrystals;
-	int currentManaCrystals;
-	int fatigueDamage;
+	private int currentHP;
+	private int totalManaCrystals;
+	private int currentManaCrystals;
+	private int fatigueDamage;
 	
-	ArrayList<Card> deck;
-	ArrayList<Minion> field;
-	ArrayList<Card> hand;
+	private ArrayList<Card> deck;
+	private ArrayList<Minion> field;
+	private ArrayList<Card> hand;
 	
-	boolean heroPowerUsed;
+	private boolean heroPowerUsed;
 	
 	
 	public Hero(String name) {
@@ -43,12 +43,11 @@ public abstract class Hero {
 			
 			
 	
-	public static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException{
+	public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException{
 		String currentLine = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		
-		Icehowl ce;
 		
 		ArrayList<Minion> minions = new ArrayList<Minion> ();
 		
@@ -99,7 +98,7 @@ public abstract class Hero {
 	
 
 	void buildDeck() throws IOException{
-
+		
 		//Reading the cvs data file
 		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
 		
