@@ -1,12 +1,11 @@
 package model.heroes;
 
-public class Mage extends Hero{
-	public Mage() {
-		
-	}
+import java.io.IOException;
 
-	public Mage(String name) {
+public class Mage extends Hero{
+	public Mage() throws IOException {
 		super("Jaina Proudmoore");
+
 	}
 
 }

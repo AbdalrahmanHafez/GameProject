@@ -1,14 +1,13 @@
 package model.heroes;
 
+import java.io.IOException;
+
 public class Priest extends Hero{
 	
 
-	public Priest() {
-		
-	}
-
-	public Priest(String name) {
+	public Priest() throws IOException {
 		super("Anduin Wrynn");
+
 	}
 
 }

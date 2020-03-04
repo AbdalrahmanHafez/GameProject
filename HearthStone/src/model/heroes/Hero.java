@@ -35,10 +35,14 @@ public abstract class Hero {
 	public Hero() {
 		
 	}
-	public Hero(String name) {
+	
+	public Hero(String name) throws IOException {
 		this.name = name;
 		currentHP =	30;
 		heroPowerUsed = false;
+
+		deck = new ArrayList<Card>(1);
+		buildDeck();	
 	}
 
 	
@@ -47,7 +51,7 @@ public abstract class Hero {
 	
 	public final static ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException{
 		String currentLine = "";
-		FileReader fileReader= new FileReader(filePath);
+		FileReader fileReader = new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		
 		
@@ -55,6 +59,15 @@ public abstract class Hero {
 		
 		while ((currentLine = br.readLine()) != null) {
 			String[] l =  currentLine.split(",");
+			
+			// Icehowl instantioaltion
+			if (l[0].equals("Icehowl")) {
+				minions.add(new Icehowl());
+				continue;
+			}
+			
+				
+			
 			
 			Rarity R = null ;
 			switch(l[2]) { // Rarity Value
@@ -80,131 +93,172 @@ public abstract class Hero {
 					Boolean.parseBoolean(l[6].toLowerCase()),	//Divine
 					Boolean.parseBoolean(l[7].toLowerCase())	//Charge
 					));
-	}
+			
+			}
+			
 	
 	
 		return minions;
 	}
 	
-	public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,int count){
-		Collections.shuffle(minions); // Randomizes Minions Array
+	
+
+
+	
+	
+	
+	public final static ArrayList<Minion> getNeutralMinions(ArrayList<Minion> minions,	int count){
 		
-		ArrayList<Minion> smallerArrayOfMinions = new ArrayList<Minion> ();
-		for(int i = 0; i< count; i++) { 
-			smallerArrayOfMinions.add(minions.get(i)) ;
-		}	
 			
-		return smallerArrayOfMinions;
-	}
+		
+			Collections.shuffle(minions); // Randomizes Minions Array
+			
+			ArrayList<Minion> smallerArrayOfMinions = new ArrayList<Minion> ();
+			while(smallerArrayOfMinions.size() < count) {
+					int i = (int)(14.0 * Math.random());
+			
+					int occur = Collections.frequency(smallerArrayOfMinions, minions.get(i));	
+					
+					
+					
+					if (occur >= 2 || (occur >= 1 &&  minions.get(i).getRarity() == Rarity.LEGENDARY)) {
+						continue;
+
+					}
+							
+					smallerArrayOfMinions.add(minions.get(i)) ;
+					
+					
+			}	
+			
+			return smallerArrayOfMinions;	
+		}
+		
+
+	
+	
 	
 	
 
-	void buildDeck() throws IOException{
+	public void buildDeck() throws IOException{
 		
 		//Reading the cvs data file
 		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
 		
 		
 		switch(this.name) { // HeroName
-			case "Hunter" :
+			case "Rexxar" :
 				
-				deck.addAll(getNeutralMinions(minions, 15)); // gets 15 nurtal minions
-								
-				deck.add(new KillCommand("Kill Command", 3, Rarity.BASIC));
-				deck.add(new KillCommand("Kill Command", 3, Rarity.BASIC));
+				deck.addAll((getNeutralMinions(minions, 15))); // gets 15 nurtal minions
+							
+				deck.add(new KillCommand());
+				deck.add(new KillCommand());
 				
-				deck.add(new MultiShot("Multi-Shot", 4, Rarity.BASIC));
-				deck.add(new MultiShot("Multi-Shot", 4, Rarity.BASIC));
-												
+				deck.add(new MultiShot());
+				deck.add(new MultiShot());
+				
 				deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false , false ,true));
 								
-				;break;
+				break;
 				
 				
-			case "Mage" :
+			case "Jaina Proudmoore" :
 				
 				deck.addAll(getNeutralMinions(minions, 13)); 
 				
-				deck.add(new Polymorph("Polymorph", 4, Rarity.BASIC));
-				deck.add(new Polymorph("Polymorph", 4, Rarity.BASIC));
+				deck.add(new Polymorph());
+				deck.add(new Polymorph());
 				
-				deck.add(new Flamestrike("Flamestrike", 7, Rarity.BASIC));
-				deck.add(new Flamestrike("Flamestrike", 7, Rarity.BASIC));
+				deck.add(new Flamestrike());
+				deck.add(new Flamestrike());
 				
-				deck.add(new Pyroblast("Pyroblast", 10, Rarity.EPIC));
-				deck.add(new Pyroblast("Pyroblast", 10, Rarity.EPIC));
+				deck.add(new Pyroblast());
+				deck.add(new Pyroblast());
 				
 				
 				deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false , false ,false));
 								
-				;break;
+				break;
 				
 				
-			case "Paladin" :
+			case "Uther Lightbringer" :
 				
 				deck.addAll(getNeutralMinions(minions, 15)); 
 				
-				deck.add(new SealOfChampions("Seal of Champions", 3, Rarity.COMMON));
-				deck.add(new SealOfChampions("Seal of Champions", 3, Rarity.COMMON));
+				deck.add(new SealOfChampions());
+				deck.add(new SealOfChampions());
 				
-				deck.add(new LevelUp("Level Up!", 6, Rarity.EPIC));
-				deck.add(new LevelUp("Level Up!", 6, Rarity.EPIC));
+				deck.add(new LevelUp());
+				deck.add(new LevelUp());
 				
 				deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
 								
-				;break;
+				break;
 				
 				
-			case "Priest" :
+			case "Anduin Wrynn" : 
 				
 				deck.addAll(getNeutralMinions(minions, 13)); 
 				
-				deck.add(new DivineSpirit("Divine Spirit", 2, Rarity.BASIC));
-				deck.add(new DivineSpirit("Divine Spirit", 2, Rarity.BASIC));
+				deck.add(new DivineSpirit());
+				deck.add(new DivineSpirit());
 				
-				deck.add(new HolyNova("Holy Nova", 5, Rarity.BASIC));
-				deck.add(new HolyNova("Holy Nova", 5, Rarity.BASIC));
+				deck.add(new HolyNova());
+				deck.add(new HolyNova());
 				
-				deck.add(new ShadowWordDeath("Shadow Word :Death", 3, Rarity.BASIC));
-				deck.add(new ShadowWordDeath("Shadow Word :Death", 3, Rarity.BASIC));
+				deck.add(new ShadowWordDeath());
+				deck.add(new ShadowWordDeath());
 								
 				deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
 				
-				;break;
+				break;
 				
 				
-			case "Warlock" : 
+			case "Gul'dan" : 
+				
+
+			
+				
 				
 				deck.addAll(getNeutralMinions(minions, 13)); 
-
-				deck.add(new CurseOfWeakness("Curse of Weakness", 2, Rarity.RARE));
-				deck.add(new CurseOfWeakness("Curse of Weakness", 2, Rarity.RARE));
+	
+				deck.add(new CurseOfWeakness());
+				deck.add(new CurseOfWeakness());
+	
 				
+				deck.add(new SiphonSoul());
+				deck.add(new SiphonSoul());
+							
 				
-				deck.add(new SiphonSoul("Siphon Soul", 6, Rarity.RARE));
-				deck.add(new SiphonSoul("Siphon Soul", 6, Rarity.RARE));
-				
-				
-				deck.add(new TwistingNether("Twisting Nether", 8, Rarity.EPIC));
-				deck.add(new TwistingNether("Twisting Nether", 8, Rarity.EPIC));
+				deck.add(new TwistingNether());
+				deck.add(new TwistingNether());
 				
 				deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
 
-				
-				;break;	
+				break;
 			}
+		
 		
 		
 		Collections.shuffle(deck);
 	}
 	
+
 	
 	public int getCurrentHP() {
 		return currentHP;
 	}
 
 	public void setCurrentHP(int currentHP) {
-		this.currentHP = currentHP;
+		//restict the currentHP to [0, 30]
+		if (currentHP <= 30 && currentHP >= 0)
+			this.currentHP = currentHP;
+		else
+		if(currentHP < 0)
+			this.currentHP = 0;
+		else
+		if(currentHP > 30)
+			this.currentHP = 30;
 	}
 
 	public boolean isHeroPowerUsed() {
@@ -220,7 +274,16 @@ public abstract class Hero {
 	}
 
 	public void setTotalManaCrystals(int totalManaCrystals) {
-		this.totalManaCrystals = totalManaCrystals;
+		//restict the totalManaCrystals to [0, 10]
+		if (totalManaCrystals <= 10 && totalManaCrystals >= 0)
+				this.totalManaCrystals = totalManaCrystals;
+			else
+		if(totalManaCrystals < 0)
+				this.totalManaCrystals = 0;
+			else
+		if(totalManaCrystals > 10)
+				this.totalManaCrystals = 10;	
+		
 	}
 
 	public int getCurrentManaCrystals() {
@@ -228,7 +291,16 @@ public abstract class Hero {
 	}
 
 	public void setCurrentManaCrystals(int currentManaCrystals) {
-		this.currentManaCrystals = currentManaCrystals;
+		//restict the currentManaCrystals to [0, 10]
+				if (currentManaCrystals <= 10 && currentManaCrystals >= 0)
+						this.currentManaCrystals = currentManaCrystals;
+					else
+				if(currentManaCrystals < 0)
+						this.currentManaCrystals = 0;
+					else
+				if(currentManaCrystals > 10)
+						this.currentManaCrystals = 10;	
+		
 	}
 
 	public String getName() {

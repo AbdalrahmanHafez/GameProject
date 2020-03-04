@@ -27,6 +27,7 @@ public abstract class Card {
 		return manaCost;
 	}
 	public void setManaCost(int manaCost) {
+		//restict the manaCost to [0, 10]
 		if (manaCost <= 10 && manaCost >= 0)
 			this.manaCost = manaCost;
 		else

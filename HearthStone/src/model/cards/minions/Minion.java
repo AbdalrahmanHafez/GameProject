@@ -65,7 +65,12 @@ public class Minion extends Card {
 
 
 	public void setCurrentHP(int currentHP) {
+		
+		//restict the currentHP to [0, 30]
+		if(currentHP < 0)
+			this.currentHP = 0;
 		this.currentHP = currentHP;
+		
 	}
 
 
