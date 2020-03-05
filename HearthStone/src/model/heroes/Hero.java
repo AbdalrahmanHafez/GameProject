@@ -26,9 +26,9 @@ public abstract class Hero {
 	private int currentManaCrystals;
 	private int fatigueDamage;
 	
-	private ArrayList<Card> deck;
 	private ArrayList<Minion> field;
 	private ArrayList<Card> hand;
+	protected ArrayList<Card> deck; //protected, to be read by subclasses
 	
 	private boolean heroPowerUsed;
 	
@@ -60,7 +60,7 @@ public abstract class Hero {
 		while ((currentLine = br.readLine()) != null) {
 			String[] l =  currentLine.split(",");
 			
-			// Icehowl instantioaltion
+			// Icehowl instantiation
 			if (l[0].equals("Icehowl")) {
 				minions.add(new Icehowl());
 				continue;
@@ -140,110 +140,11 @@ public abstract class Hero {
 	
 	
 
-	public void buildDeck() throws IOException{
-		
-		//Reading the cvs data file
-		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
-		
-		
-		switch(this.name) { // HeroName
-			case "Rexxar" :
-				
-				deck.addAll((getNeutralMinions(minions, 15))); // gets 15 nurtal minions
-							
-				deck.add(new KillCommand());
-				deck.add(new KillCommand());
-				
-				deck.add(new MultiShot());
-				deck.add(new MultiShot());
-				
-				deck.add(new Minion("King Krush", 9, Rarity.LEGENDARY, 8, 8, false , false ,true));
-								
-				break;
-				
-				
-			case "Jaina Proudmoore" :
-				
-				deck.addAll(getNeutralMinions(minions, 13)); 
-				
-				deck.add(new Polymorph());
-				deck.add(new Polymorph());
-				
-				deck.add(new Flamestrike());
-				deck.add(new Flamestrike());
-				
-				deck.add(new Pyroblast());
-				deck.add(new Pyroblast());
-				
-				
-				deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false , false ,false));
-								
-				break;
-				
-				
-			case "Uther Lightbringer" :
-				
-				deck.addAll(getNeutralMinions(minions, 15)); 
-				
-				deck.add(new SealOfChampions());
-				deck.add(new SealOfChampions());
-				
-				deck.add(new LevelUp());
-				deck.add(new LevelUp());
-				
-				deck.add(new Minion("Tirion Fordring", 4, Rarity.LEGENDARY, 6, 6, true, true, false));
-								
-				break;
-				
-				
-			case "Anduin Wrynn" : 
-				
-				deck.addAll(getNeutralMinions(minions, 13)); 
-				
-				deck.add(new DivineSpirit());
-				deck.add(new DivineSpirit());
-				
-				deck.add(new HolyNova());
-				deck.add(new HolyNova());
-				
-				deck.add(new ShadowWordDeath());
-				deck.add(new ShadowWordDeath());
-								
-				deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
-				
-				break;
-				
-				
-			case "Gul'dan" : 
-				
+	public abstract void buildDeck() throws IOException;
+	//Each hero has his own implementation of the deck
 
-			
-				
-				
-				deck.addAll(getNeutralMinions(minions, 13)); 
 	
-				deck.add(new CurseOfWeakness());
-				deck.add(new CurseOfWeakness());
 	
-				
-				deck.add(new SiphonSoul());
-				deck.add(new SiphonSoul());
-							
-				
-				deck.add(new TwistingNether());
-				deck.add(new TwistingNether());
-				
-				deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
-
-				break;
-			}
-		
-		
-		
-		Collections.shuffle(deck);
-	}
-	
-
 	
 	public int getCurrentHP() {
 		return currentHP;
