@@ -28,7 +28,7 @@ public abstract class Hero {
 	
 	private ArrayList<Minion> field;
 	private ArrayList<Card> hand;
-	protected ArrayList<Card> deck; //protected, to be read by subclasses
+	private ArrayList<Card> deck; 
 	
 	private boolean heroPowerUsed;
 	

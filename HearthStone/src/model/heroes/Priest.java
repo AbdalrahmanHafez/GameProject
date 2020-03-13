@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.*;
@@ -21,21 +22,24 @@ public class Priest extends Hero{
 		
 		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
 
+		//Accessing the HeroDeck
+		ArrayList<Card> HeroDeck = super.getDeck();
+				
 		
-		deck.addAll(getNeutralMinions(minions, 13)); 
+		HeroDeck.addAll(getNeutralMinions(minions, 13)); 
 		
-		deck.add(new DivineSpirit());
-		deck.add(new DivineSpirit());
+		HeroDeck.add(new DivineSpirit());
+		HeroDeck.add(new DivineSpirit());
 		
-		deck.add(new HolyNova());
-		deck.add(new HolyNova());
+		HeroDeck.add(new HolyNova());
+		HeroDeck.add(new HolyNova());
 		
-		deck.add(new ShadowWordDeath());
-		deck.add(new ShadowWordDeath());
+		HeroDeck.add(new ShadowWordDeath());
+		HeroDeck.add(new ShadowWordDeath());
 						
-		deck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
+		HeroDeck.add(new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false));
 		
-		Collections.shuffle(deck);
+		Collections.shuffle(HeroDeck);
 
 	}
 

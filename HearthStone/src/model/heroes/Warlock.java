@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.*;
@@ -18,22 +19,26 @@ public class Warlock extends Hero{
 	public void buildDeck() throws IOException {
 		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
 
-		deck.addAll(getNeutralMinions(minions, 13)); 
+		//Accessing the HeroDeck
+		ArrayList<Card> HeroDeck = super.getDeck();
+				
 		
-		deck.add(new CurseOfWeakness());
-		deck.add(new CurseOfWeakness());
+		HeroDeck.addAll(getNeutralMinions(minions, 13)); 
+		
+		HeroDeck.add(new CurseOfWeakness());
+		HeroDeck.add(new CurseOfWeakness());
 
 		
-		deck.add(new SiphonSoul());
-		deck.add(new SiphonSoul());
+		HeroDeck.add(new SiphonSoul());
+		HeroDeck.add(new SiphonSoul());
 					
 		
-		deck.add(new TwistingNether());
-		deck.add(new TwistingNether());
+		HeroDeck.add(new TwistingNether());
+		HeroDeck.add(new TwistingNether());
 		
-		deck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
+		HeroDeck.add(new Minion("Wilfred Fizzlebang", 6, Rarity.LEGENDARY, 4, 4, false, false, false));
 
-		Collections.shuffle(deck);
+		Collections.shuffle(HeroDeck);
 
 	}
 	

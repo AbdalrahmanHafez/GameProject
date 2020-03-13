@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.*;
@@ -19,22 +20,25 @@ public class Mage extends Hero{
 
 		ArrayList<Minion> minions = getAllNeutralMinions("neutral_minions.csv");
 		
+		//Accessing the HeroDeck
+		ArrayList<Card> HeroDeck = super.getDeck();
+				
 
-		deck.addAll(getNeutralMinions(minions, 13)); 
+		HeroDeck.addAll(getNeutralMinions(minions, 13)); 
 		
-		deck.add(new Polymorph());
-		deck.add(new Polymorph());
+		HeroDeck.add(new Polymorph());
+		HeroDeck.add(new Polymorph());
 		
-		deck.add(new Flamestrike());
-		deck.add(new Flamestrike());
+		HeroDeck.add(new Flamestrike());
+		HeroDeck.add(new Flamestrike());
 		
-		deck.add(new Pyroblast());
-		deck.add(new Pyroblast());
+		HeroDeck.add(new Pyroblast());
+		HeroDeck.add(new Pyroblast());
 		
 		
-		deck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false , false ,false));
+		HeroDeck.add(new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false , false ,false));
 			
-		Collections.shuffle(deck);
+		Collections.shuffle(HeroDeck);
 
 	}
 
