@@ -5,8 +5,8 @@ public abstract class HearthstoneException extends Exception{
 	public HearthstoneException() {
 		
 	}
-	public HearthstoneException(String s) {
-		super(s);
+	public HearthstoneException(String message) {
+		super(message);
 	}
 	
 }

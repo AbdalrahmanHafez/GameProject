@@ -7,8 +7,8 @@ public class InvalidTargetException extends HearthstoneException{
 	
 	}
 
-	public InvalidTargetException(String s) {
-		super(s);
+	public InvalidTargetException(String message) {
+		super(message);
 		
 	}
 	

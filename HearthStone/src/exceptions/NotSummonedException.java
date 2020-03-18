@@ -6,8 +6,9 @@ public class NotSummonedException extends HearthstoneException{
 	public NotSummonedException() {
 	}
 
-	public NotSummonedException(String s) {
-		super(s);
-			}
+	public NotSummonedException(String message) {
+		super(message);
+		
+	}
 
 }

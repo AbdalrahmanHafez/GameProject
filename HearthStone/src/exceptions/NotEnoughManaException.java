@@ -7,8 +7,8 @@ public class NotEnoughManaException extends HearthstoneException{
 		
 	}
 
-	public NotEnoughManaException(String s) {
-		super(s);
+	public NotEnoughManaException(String message) {
+		super(message);
 	}
 	
 

@@ -7,8 +7,8 @@ public class NotYourTurnException extends HearthstoneException{
 		
 	}
 
-	public NotYourTurnException(String s) {
-		super(s);
+	public NotYourTurnException(String message) {
+		super(message);
 		
 	}
 	

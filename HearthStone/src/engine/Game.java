@@ -10,9 +10,8 @@ public class Game {
 	private Hero currentHero;
 	private Hero opponent;
 
-	public Game(Hero p1, Hero p2) throws IOException {
-		p1.buildDeck();
-		p2.buildDeck();
+	public Game(Hero p1, Hero p2)
+	{
 		firstHero  = p1;
 		secondHero = p2;
 		
@@ -24,8 +23,11 @@ public class Game {
 		else {
 			currentHero = secondHero;
 			opponent = firstHero;
-			
 		}
+		
+		firstHero.setTotalManaCrystals(1);
+		firstHero.setCurrentManaCrystals(1);
+
 	}
 	
 	

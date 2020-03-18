@@ -7,8 +7,8 @@ import java.util.Collections;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
-import model.cards.spells.*;
-
+import model.cards.spells.KillCommand;
+import model.cards.spells.MultiShot;
 
 public class Hunter extends  Hero{
 

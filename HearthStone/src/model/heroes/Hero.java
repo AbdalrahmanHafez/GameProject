@@ -22,6 +22,7 @@ public abstract class Hero {
 	private String name;
 	
 	private int currentHP;
+	private boolean heroPowerUsed;
 	private int totalManaCrystals;
 	private int currentManaCrystals;
 	private int fatigueDamage;
@@ -30,19 +31,17 @@ public abstract class Hero {
 	private ArrayList<Card> hand;
 	private ArrayList<Card> deck; 
 	
-	private boolean heroPowerUsed;
-	
-	public Hero() {
-		
-	}
-	
+			
 	public Hero(String name) throws IOException {
 		this.name = name;
-		currentHP =	30;
-		heroPowerUsed = false;
+		currentHP = 30;
+        heroPowerUsed = false;
 
-		deck = new ArrayList<Card>(1);
-		buildDeck();	
+		deck = new ArrayList<Card>();
+		field = new ArrayList<Minion>();
+		hand = new ArrayList<Card>();
+		
+        buildDeck();
 	}
 
 	
@@ -152,14 +151,13 @@ public abstract class Hero {
 
 	public void setCurrentHP(int currentHP) {
 		//restict the currentHP to [0, 30]
-		if (currentHP <= 30 && currentHP >= 0)
-			this.currentHP = currentHP;
-		else
-		if(currentHP < 0)
-			this.currentHP = 0;
-		else
-		if(currentHP > 30)
+		this.currentHP = currentHP;
+		if (this.currentHP > 30)
 			this.currentHP = 30;
+		else if (this.currentHP <= 0) {
+			this.currentHP = 0;
+			
+		}
 	}
 
 	public boolean isHeroPowerUsed() {
@@ -193,15 +191,13 @@ public abstract class Hero {
 
 	public void setCurrentManaCrystals(int currentManaCrystals) {
 		//restict the currentManaCrystals to [0, 10]
-				if (currentManaCrystals <= 10 && currentManaCrystals >= 0)
-						this.currentManaCrystals = currentManaCrystals;
-					else
-				if(currentManaCrystals < 0)
-						this.currentManaCrystals = 0;
-					else
-				if(currentManaCrystals > 10)
-						this.currentManaCrystals = 10;	
-		
+        this.currentManaCrystals = currentManaCrystals;
+		if (this.currentManaCrystals > 10)
+			this.currentManaCrystals = 10;
+		else if (this.currentManaCrystals <= 0) {
+			this.currentManaCrystals = 0;
+			
+		}
 	}
 
 	public String getName() {

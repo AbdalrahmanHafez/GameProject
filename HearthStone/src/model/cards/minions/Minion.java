@@ -3,8 +3,7 @@ package model.cards.minions;
 import model.cards.Card;
 import model.cards.Rarity;
 
-public class Minion extends Card {
-	
+public class Minion extends Card implements Cloneable {
 	private int attack;
 	private int maxHP;
 	private int currentHP;
@@ -14,23 +13,18 @@ public class Minion extends Card {
 	private boolean sleeping;
 	private boolean attacked;
 	
-	public Minion() {
-		
-	}
-	
 	public Minion(String name, int manaCost, Rarity rarity, int attack,int maxHP,boolean
 			taunt,boolean divine,boolean charge) 
 	{
 		super(name, manaCost, rarity);
-		this.attack = attack;
+		setAttack(attack);
 		this.maxHP = maxHP;
 		this.currentHP = maxHP;
 		this.taunt = taunt;
 		this.divine = divine;
 		this.sleeping = true;
 		if (charge) {this.sleeping = false;}
-		this.attacked = false;
-		
+				
 	}
 
 
@@ -40,16 +34,14 @@ public class Minion extends Card {
 
 
 	public void setAttack(int attack) {
-		if(attack >=0)
-			this.attack = attack;
-		else
+		this.attack = attack;
+		if (this.attack <= 0)
 			 this.attack =0;	
 		
 	}
 
 
 	public int getMaxHP() {
-		
 		return maxHP;
 	}
 

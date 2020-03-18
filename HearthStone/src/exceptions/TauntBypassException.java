@@ -4,9 +4,9 @@ package exceptions;
 public class TauntBypassException extends HearthstoneException{
 
 	public TauntBypassException() {
-		// TODO Auto-generated constructor stub
+		
 	}
-	public TauntBypassException(String s) {
-		super(s);
+	public TauntBypassException(String message) {
+		super(message);
 	}
 }

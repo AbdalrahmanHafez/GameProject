@@ -28,14 +28,13 @@ public abstract class Card {
 	}
 	public void setManaCost(int manaCost) {
 		//restict the manaCost to [0, 10]
-		if (manaCost <= 10 && manaCost >= 0)
-			this.manaCost = manaCost;
-		else
-		if(manaCost < 0)
-			this.manaCost = 0;
-		else
-		if(manaCost > 10)
+		this.manaCost = manaCost;
+		if (this.manaCost > 10)
 			this.manaCost = 10;
+		else
+        if (this.manaCost < 0)
+			this.manaCost = 0;
+			
 	}
 	public Rarity getRarity() {
 		return rarity;
