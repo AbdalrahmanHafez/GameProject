@@ -1,12 +1,14 @@
 package exceptions;
 
+@SuppressWarnings("serial")
 public abstract class HearthstoneException extends Exception{
+public HearthstoneException()
+{
+	super();
+}
+public HearthstoneException(String message)
 
-	public HearthstoneException() {
-		
-	}
-	public HearthstoneException(String message) {
-		super(message);
-	}
-	
+{
+	super(message);
+}
 }

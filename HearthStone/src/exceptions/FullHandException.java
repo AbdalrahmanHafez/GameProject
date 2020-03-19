@@ -2,17 +2,19 @@ package exceptions;
 
 import model.cards.Card;
 
-public class FullHandException extends HearthstoneException{
-	
-	private Card burned;  			//The card that will be burned (discarded) as the player hand is already full.
-	
+@SuppressWarnings("serial")
+public class FullHandException extends HearthstoneException {
+	@SuppressWarnings("unused")
+	private Card burned;
 	public FullHandException(Card b) {
-		this.burned = b;
+		super();
+		burned=b;
+		
 	}
 
 	public FullHandException(String message,Card b) {
 		super(message);
-		this.burned = b;
+		burned=b;
+		
 	}
-
 }

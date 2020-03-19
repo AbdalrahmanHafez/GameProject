@@ -1,6 +1,7 @@
 package exceptions;
 
-public class FullFieldException extends HearthstoneException{
+@SuppressWarnings("serial")
+public class FullFieldException extends HearthstoneException {
 
 	public FullFieldException() {
 		super();
