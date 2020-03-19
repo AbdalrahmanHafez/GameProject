@@ -68,23 +68,24 @@ public class Game implements ActionValidator {
 		}
 		
 		if(!currentHero.getField().contains(attacker)) {
-			throw new  CannotAttackException();
+			throw new  NotSummonedException();
 		}
 		
 		
 		// minons should not contain any taunt 
-		for(Minion minion:opponent.getField()) {
+		
+		// (FOR EACH) Minion in oponenetField
+		for(Minion minion : opponent.getField()) {
 			if(minion.isTaunt()) {
-				throw new  TauntBypassException();
+				throw new TauntBypassException();
 			}
 		}
+				
 		
-		
-		
-		if(!currentHero.getField().contains(attacker) || !currentHero.getField().contains(target) ) {
-			throw new  NotSummonedException();
+		if(attacker.getAttack() == 0) {
+			throw new  CannotAttackException();
 		}
-			
+		
 		
 	}
 
