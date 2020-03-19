@@ -5,12 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import engine.ActionValidator;
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
+import model.cards.minions.MinionListener;
+import model.cards.spells.*;
 
-public abstract class Hero {
+public abstract class Hero implements MinionListener{
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
@@ -21,7 +25,11 @@ public abstract class Hero {
 	private ArrayList<Card> hand;
 	@SuppressWarnings("unused")
 	private int fatigueDamage;
-
+	
+	private HeroListener listener;
+	private ActionValidator validator;
+	
+	
 	public Hero(String name) throws IOException {
 		this.name = name;
 		currentHP = 30;
@@ -33,6 +41,8 @@ public abstract class Hero {
 
 	public abstract void buildDeck() throws IOException;
 
+	
+	
 	public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		ArrayList<Minion> minions = new ArrayList<Minion>();
@@ -103,6 +113,83 @@ public abstract class Hero {
 		}
 		return res;
 	}
+	
+	
+	
+	public void onMinionDeath(Minion m) {
+		field.remove(m);
+	}
+	
+	
+	
+	
+	public void useHeroPower() throws NotEnoughManaException,HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException{
+//		page 5 
+	}
+		
+	 public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException{
+		 
+	 }
+	
+	
+	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException, TauntBypassException,	 InvalidTargetException, NotSummonedException{
+		 
+	 }
+	 
+	 
+	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException, TauntBypassException, NotSummonedException, InvalidTargetException{
+		 
+	 }
+	
+	 
+	 public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
+		 
+	 }
+	
+	 public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws NotYourTurnException, NotEnoughManaException{
+		 
+	 }
+	 
+	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
+		 
+	 }
+	 
+	 public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException{
+		 
+	 }
+	
+	 
+	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
+		 
+	 }
+	 
+	 public void endTurn() throws FullHandException, CloneNotSupportedException{
+		 
+	 }
+	
+	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
+		
+		 return null;
+	 }
+	 
+	 
+	 
+	 
+	 
+	
+	
+	public HeroListener getListener() {
+		return listener;
+	}
+
+	public void setListener(HeroListener listener) {
+		this.listener = listener;
+	}
+
+	public void setValidator(ActionValidator validator) {
+		this.validator = validator;
+	}
+	
 
 	public int getCurrentHP() {
 		return currentHP;

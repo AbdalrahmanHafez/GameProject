@@ -1,16 +1,41 @@
 package model.cards.minions;
 
+import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
+import model.heroes.Hero;
 
 public class Minion extends Card implements Cloneable {
 	private int attack;
 	private int maxHP;
 	private int currentHP;
 	private boolean taunt;
-	private boolean divine;
+	private boolean divine; 
 	private boolean sleeping;
 	private boolean attacked;
+
+	private MinionListener listener;
+	
+	
+	
+	public void attack(Minion target) {
+		
+		
+	}
+	
+	public void attack(Hero target) throws InvalidTargetException{
+		
+		
+	}
+
+	@Override
+	public Minion clone() throws CloneNotSupportedException{
+		
+		
+		
+		return null;
+	}
+	
 
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
@@ -27,6 +52,12 @@ public class Minion extends Card implements Cloneable {
 	public boolean isTaunt() {
 		return taunt;
 	}
+	
+		
+	public void setListener(MinionListener listener) {
+		this.listener = listener;
+	}
+	
 
 	public int getMaxHP() {
 		return maxHP;
