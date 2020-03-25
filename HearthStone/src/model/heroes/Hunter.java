@@ -29,7 +29,12 @@ public class Hunter extends Hero {
 		
 		getDeck().add(krush);
 		Collections.shuffle(getDeck());
+	
+	
 	}
+	
+	
+	
 	
 	
 }

@@ -14,6 +14,7 @@ import model.cards.minions.Minion;
 import model.cards.minions.MinionListener;
 import model.cards.spells.*;
 
+// The hero listens to minion Events
 public abstract class Hero implements MinionListener{
 	private String name;
 	private int currentHP;
@@ -28,7 +29,7 @@ public abstract class Hero implements MinionListener{
 	
 	private HeroListener listener;
 	private ActionValidator validator;
-	
+//	The variable responsible for validating all actions the hero takes.
 	
 	public Hero(String name) throws IOException {
 		this.name = name;
@@ -118,53 +119,59 @@ public abstract class Hero implements MinionListener{
 	
 	public void onMinionDeath(Minion m) {
 		field.remove(m);
+
+
 	}
 	
 	
 	
-	
+//	TODO useHeroPower
 	public void useHeroPower() throws NotEnoughManaException,HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException{
 //		page 5 
 	}
-		
+
+	//	This method handles playing a minion card.this means removing a minion from the hero hand and adding it to his ﬁeld.
 	 public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException{
-		 
+//		 validate
 	 }
 	
 	
 	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException, TauntBypassException,	 InvalidTargetException, NotSummonedException{
+//		 validate
 		 
 	 }
 	 
 	 
 	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException, TauntBypassException, NotSummonedException, InvalidTargetException{
-		 
+//		 validate
+
 	 }
 	
 	 
 	 public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
-		 
+//		 validate
+
 	 }
 	
 	 public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws NotYourTurnException, NotEnoughManaException{
-		 
+//		 validate
+
 	 }
 	 
 	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
-		 
+//		 validate
+
 	 }
 	 
 	 public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException{
-		 
+//		 validate
+
 	 }
 	
 	 
 	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
-		 
-	 }
-	 
-	 public void endTurn() throws FullHandException, CloneNotSupportedException{
-		 
+//		 validate
+
 	 }
 	
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
@@ -172,6 +179,10 @@ public abstract class Hero implements MinionListener{
 		 return null;
 	 }
 	 
+	 
+	 public void endTurn() throws FullHandException, CloneNotSupportedException{
+		 
+	 }
 	 
 	 
 	 

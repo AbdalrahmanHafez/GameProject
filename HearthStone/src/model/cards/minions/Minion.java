@@ -17,7 +17,7 @@ public class Minion extends Card implements Cloneable {
 	private MinionListener listener;
 	
 	
-	
+	//	TODO Minion Attack
 	public void attack(Minion target) {
 		
 		
@@ -28,6 +28,9 @@ public class Minion extends Card implements Cloneable {
 		
 	}
 
+	
+	//TODO Minion Clone
+	//	PAGE 4 
 	@Override
 	public Minion clone() throws CloneNotSupportedException{
 		

@@ -19,9 +19,7 @@ public class Game implements ActionValidator {
 	private Hero opponent;
 	
 	private GameListener listener;
-	
-	
-	
+		
 
 	public Game(Hero p1, Hero p2)
 	{
@@ -38,20 +36,6 @@ public class Game implements ActionValidator {
 	
 	
 
-	public void setListener(GameListener listener) {
-		this.listener = listener;
-	}
-	
-	public Hero getCurrentHero() {
-		return currentHero;
-	}
-
-	public Hero getOpponent() {
-		return opponent;
-	}
-
-
-
 	@Override
 	public void validateTurn(Hero user) throws NotYourTurnException {
 		if (!user.equals(currentHero)) {
@@ -63,6 +47,7 @@ public class Game implements ActionValidator {
 
 	@Override
 	public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
+		// TODO GAME validateAttack
 		if(!opponent.getField().contains(target)) {
 			throw new  InvalidTargetException();
 		}
@@ -94,23 +79,21 @@ public class Game implements ActionValidator {
 	@Override
 	public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		
-		
+		// TODO GAME  validateAttack
+
 		
 		if(!currentHero.getField().contains(attacker) ) {
 			throw new  NotSummonedException();
 		}
 		
-		
-		
-		
-		
-	}
+			}
 
 
 
 	@Override
 	public void validateManaCost(Card card) throws NotEnoughManaException {
-		// TODO Auto-generated method stub
+		// TODO GAME  validateManaCost
+		
 		
 	}
 
@@ -118,7 +101,7 @@ public class Game implements ActionValidator {
 
 	@Override
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
-		// TODO Auto-generated method stub
+		// TODO GAME  validatePlayingMinion
 		
 	}
 
@@ -126,11 +109,30 @@ public class Game implements ActionValidator {
 
 	@Override
 	public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
-		// TODO Auto-generated method stub
+		// TODO GAME  validateUsingHeroPower
 		
 	}
 
 	
+	
+	
+	
+	
+	
+	public void setListener(GameListener listener) {
+		this.listener = listener;
+	}
+	
+	public Hero getCurrentHero() {
+		return currentHero;
+	}
+
+	public Hero getOpponent() {
+		return opponent;
+	}
+
+
+
 	
 	
 

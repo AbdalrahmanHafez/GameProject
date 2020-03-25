@@ -14,7 +14,6 @@ public interface ActionValidator {
 	
 	public void validateAttack(Minion attacker,Hero target) throws 	CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException;
 	
-	
 	public void validateManaCost(Card card) throws NotEnoughManaException;
 	
 	public void validatePlayingMinion(Minion minion) throws FullFieldException;
