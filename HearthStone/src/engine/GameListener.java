@@ -1,6 +1,8 @@
 package engine;
 
-public interface GameListener {
+import model.heroes.HeroListener;
+
+public interface GameListener extends HeroListener {
 
 	
 	

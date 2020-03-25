@@ -15,7 +15,7 @@ import model.cards.minions.MinionListener;
 import model.cards.spells.*;
 
 // The hero listens to minion Events
-public abstract class Hero implements MinionListener{
+public abstract class Hero implements MinionListener, HeroListener{
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
@@ -123,11 +123,33 @@ public abstract class Hero implements MinionListener{
 
 	}
 	
+	public void damageOpponent(int amount) {
+
+		
+		listener.damageOpponent(amount);
+		
+	}
+	
+	public void onHeroDeath() {
+	
+	
+	}
+	
+	public void endTurn() throws FullHandException, CloneNotSupportedException {
+	
+	
+	}
+	
+	
 	
 	
 //	TODO useHeroPower
 	public void useHeroPower() throws NotEnoughManaException,HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException{
-//		page 5 
+		validator.validateTurn(this);
+		validator.validateUsingHeroPower(this);
+		
+			
+		
 	}
 
 	//	This method handles playing a minion card.this means removing a minion from the hero hand and adding it to his ﬁeld.
@@ -174,17 +196,21 @@ public abstract class Hero implements MinionListener{
 
 	 }
 	
+	 // TODO HeroDraw clone??
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
-		
-		 return null;
-	 }
-	 
-	 
-	 public void endTurn() throws FullHandException, CloneNotSupportedException{
+		 Card drawnCard = this.getDeck().remove(0);
 		 
+		 if (this.getHand().size() == 10) {
+			 throw new FullHandException(drawnCard);
+		 }
+		 
+		 
+		 
+		 
+		 return drawnCard;
 	 }
 	 
-	 
+	
 	 
 	 
 	

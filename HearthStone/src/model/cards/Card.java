@@ -1,5 +1,13 @@
 package model.cards;
 
+import java.io.IOException;
+
+import model.cards.minions.Minion;
+import model.cards.spells.Pyroblast;
+import model.cards.spells.Spell;
+import model.heroes.Mage;
+import model.heroes.Priest;
+
 public abstract class Card implements Cloneable{
 	private String name;
 	private int manaCost;
@@ -12,18 +20,16 @@ public abstract class Card implements Cloneable{
 	}
 	
 	
-	@Override
 	//  TODO clone()
 	//	You should override the clone() method to make it visible to all other classes and return a clone Card of the card that the method is invoked on (instead of the generic type Object).
-	//		Abstract ??
-	public Card clone() throws CloneNotSupportedException{
-		
-		
-		
-		return null;
-		
-	}
-
+	public abstract Card clone() throws CloneNotSupportedException;
+	
+	
+	
+	
+	
+	
+	
 	
 
 	public int getManaCost() {

@@ -2,6 +2,7 @@ package engine;
 
 import exceptions.CannotAttackException;
 import exceptions.FullFieldException;
+import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.InvalidTargetException;
 import exceptions.NotEnoughManaException;
@@ -11,8 +12,10 @@ import exceptions.TauntBypassException;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
+import model.heroes.HeroListener;
+import model.heroes.Paladin;
 
-public class Game implements ActionValidator {
+public class Game implements ActionValidator, HeroListener {
 	private Hero firstHero;
 	private Hero secondHero;
 	private Hero currentHero;
@@ -67,7 +70,7 @@ public class Game implements ActionValidator {
 		}
 				
 		
-		if(attacker.getAttack() == 0) {
+		if(attacker.isAttacked() == true || attacker.getAttack() == 0) {
 			throw new  CannotAttackException();
 		}
 		
@@ -79,20 +82,37 @@ public class Game implements ActionValidator {
 	@Override
 	public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		
-		// TODO GAME  validateAttack
-
+	
+		if (target == currentHero) {
+			throw new  InvalidTargetException();
+		}
+		
+		
+		for(Minion minion : opponent.getField()) {
+			if(minion.isTaunt()) {
+				throw new TauntBypassException();
+			}
+		}
+		
+		if(attacker.isAttacked() == true || attacker.getAttack() == 0) {
+			throw new  CannotAttackException();
+		}
 		
 		if(!currentHero.getField().contains(attacker) ) {
 			throw new  NotSummonedException();
 		}
 		
-			}
+	}
 
 
 
 	@Override
 	public void validateManaCost(Card card) throws NotEnoughManaException {
-		// TODO GAME  validateManaCost
+		
+		if(currentHero.getCurrentManaCrystals() < card.getManaCost()) {
+			throw new NotEnoughManaException();
+		}
+		
 		
 		
 	}
@@ -101,18 +121,84 @@ public class Game implements ActionValidator {
 
 	@Override
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
-		// TODO GAME  validatePlayingMinion
+		if(currentHero.getField().size() == 7) {
+			throw new FullFieldException();
+		}
+		
+		
+		
+		
+	}
+
+
+	@Override
+	public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
+	
+		if(hero.isHeroPowerUsed()) {
+			throw new HeroPowerAlreadyUsedException();
+		}
+		
+		if(hero.getCurrentManaCrystals() < 2 || (hero instanceof Paladin && hero.getCurrentManaCrystals() < 1 )) {
+			throw new NotEnoughManaException();
+		}
+		
+		
+		
+		
+	}
+
+	
+	//	TODO HeroLister
+	@Override
+	public void onHeroDeath() {
+//		onGameOver();
+// TODO onHeroDeath 
 		
 	}
 
 
 
 	@Override
-	public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
-		// TODO GAME  validateUsingHeroPower
+	public void damageOpponent(int amount) {
+		opponent.setCurrentHP(opponent.getCurrentHP() - amount);
 		
 	}
 
+
+
+	@Override
+	public void endTurn() throws FullHandException, CloneNotSupportedException {
+		Hero temp = currentHero;
+		currentHero = opponent;
+		opponent = temp;
+		
+		
+		currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals() +1 );
+		currentHero.setCurrentManaCrystals(currentHero.getTotalManaCrystals());
+		
+		
+		currentHero.setHeroPowerUsed(false);
+		
+		
+		for(Minion minion: currentHero.getField()) {
+			minion.setSleeping(false);
+			minion.setAttacked(false);
+		}
+		
+		
+		
+		currentHero.drawCard();
+		
+		
+	}
+
+
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -132,6 +218,8 @@ public class Game implements ActionValidator {
 	}
 
 
+
+	
 
 	
 	

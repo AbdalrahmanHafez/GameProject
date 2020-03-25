@@ -18,6 +18,7 @@ public class Minion extends Card implements Cloneable {
 	
 	
 	//	TODO Minion Attack
+	//	TODO icelHowl validate attack against hero
 	public void attack(Minion target) {
 		
 		
@@ -28,17 +29,7 @@ public class Minion extends Card implements Cloneable {
 		
 	}
 
-	
-	//TODO Minion Clone
-	//	PAGE 4 
-	@Override
-	public Minion clone() throws CloneNotSupportedException{
-		
-		
-		
-		return null;
-	}
-	
+			
 
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
@@ -52,6 +43,48 @@ public class Minion extends Card implements Cloneable {
 			this.sleeping = true;
 	}
 
+	
+	
+	@Override
+	public Minion clone() throws CloneNotSupportedException {
+		Minion cloned;
+		
+		try {
+			cloned = new Minion(this.getName(), this.getManaCost(), this.getRarity(), this.getAttack(), this.getCurrentHP(), this.isTaunt(), this.isDivine(), false);
+		
+		} catch (Exception e) {
+			throw new CloneNotSupportedException();
+		}
+		
+			
+		return cloned;
+	}
+	
+	
+	
+	
+	public static void main(String[] Args) throws CloneNotSupportedException {
+		Minion m = new Minion("ce", 2, Rarity.BASIC, 2, 5, false, false, false);
+		Minion m2 = m.clone();
+		
+		System.out.println(m.getCurrentHP());
+		System.out.println(m2.getCurrentHP());
+		
+		m.setCurrentHP(1);
+		System.out.println(m.getCurrentHP());
+		System.out.println(m2.getCurrentHP());
+		
+		
+		m2.setCurrentHP(3);
+		System.out.println(m.getCurrentHP());
+		System.out.println(m2.getCurrentHP());
+	}
+	
+	
+	
+	
+	
+	
 	public boolean isTaunt() {
 		return taunt;
 	}
@@ -121,5 +154,7 @@ public class Minion extends Card implements Cloneable {
 	public boolean isDivine() {
 		return divine;
 	}
+
+	
 
 }
