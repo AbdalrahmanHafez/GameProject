@@ -17,5 +17,17 @@ public class LevelUp extends Spell implements FieldSpell {
 		// TODO performAction
 		
 	}
+	
+	
+	@Override
+	public LevelUp clone() throws CloneNotSupportedException {
+			try {
+				LevelUp cloned = new LevelUp();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
 
 }

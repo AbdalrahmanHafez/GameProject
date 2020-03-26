@@ -18,4 +18,17 @@ public class Flamestrike extends Spell implements AOESpell {
 		// TODO performAction
 		
 	}
+	
+	@Override
+	public Flamestrike clone() throws CloneNotSupportedException {
+			try {
+				Flamestrike cloned = new Flamestrike();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+
+
 }

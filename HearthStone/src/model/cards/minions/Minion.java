@@ -46,18 +46,14 @@ public class Minion extends Card implements Cloneable {
 	
 	
 	@Override
-	public Minion clone() throws CloneNotSupportedException {
-		Minion cloned;
-		
+	public Minion clone() throws CloneNotSupportedException {	
 		try {
-			cloned = new Minion(this.getName(), this.getManaCost(), this.getRarity(), this.getAttack(), this.getCurrentHP(), this.isTaunt(), this.isDivine(), false);
-		
+			Minion cloned = new Minion(this.getName(), this.getManaCost(), this.getRarity(), this.getAttack(), this.getCurrentHP(), this.isTaunt(), this.isDivine(), false);
+			return cloned;
+			
 		} catch (Exception e) {
 			throw new CloneNotSupportedException();
-		}
-		
-			
-		return cloned;
+		}	
 	}
 	
 	

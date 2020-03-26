@@ -3,6 +3,7 @@ package model.cards;
 import java.io.IOException;
 
 import model.cards.minions.Minion;
+import model.cards.spells.CurseOfWeakness;
 import model.cards.spells.Pyroblast;
 import model.cards.spells.Spell;
 import model.heroes.Mage;
@@ -25,9 +26,7 @@ public abstract class Card implements Cloneable{
 	public abstract Card clone() throws CloneNotSupportedException;
 	
 	
-	
-	
-	
+		
 	
 	
 	

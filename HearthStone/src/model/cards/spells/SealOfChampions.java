@@ -18,4 +18,15 @@ public class SealOfChampions extends Spell implements MinionTargetSpell {
 	}
 
 	
+	@Override
+	public SealOfChampions clone() throws CloneNotSupportedException {
+			try {
+				SealOfChampions cloned = new SealOfChampions();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+	
 }

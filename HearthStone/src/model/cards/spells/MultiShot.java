@@ -17,5 +17,16 @@ public class MultiShot extends Spell implements AOESpell{
 		// TODO performAction
 		
 	}
+	
+	@Override
+	public MultiShot clone() throws CloneNotSupportedException {
+			try {
+				MultiShot cloned = new MultiShot();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
 
 }

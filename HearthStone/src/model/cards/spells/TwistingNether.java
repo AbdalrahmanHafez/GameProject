@@ -17,5 +17,16 @@ public class TwistingNether extends Spell implements AOESpell {
 		// TODO performAction
 		
 	}
+	
+	@Override
+	public TwistingNether clone() throws CloneNotSupportedException {
+			try {
+				TwistingNether cloned = new TwistingNether();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
 
 }

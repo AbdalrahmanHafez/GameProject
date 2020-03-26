@@ -15,4 +15,16 @@ public class SiphonSoul extends Spell implements LeechingSpell {
 		// TODO performAction
 		return 0;
 	}
+	
+	
+	@Override
+	public SiphonSoul clone() throws CloneNotSupportedException {
+			try {
+				SiphonSoul cloned = new SiphonSoul();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
 }

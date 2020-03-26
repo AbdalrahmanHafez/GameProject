@@ -16,4 +16,15 @@ public class ShadowWordDeath extends Spell implements MinionTargetSpell {
 		// TODO performAction
 		
 	}
+	
+	@Override
+	public ShadowWordDeath clone() throws CloneNotSupportedException {
+			try {
+				ShadowWordDeath cloned = new ShadowWordDeath();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
 }

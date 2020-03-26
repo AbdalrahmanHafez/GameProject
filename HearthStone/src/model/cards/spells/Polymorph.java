@@ -16,4 +16,16 @@ public class Polymorph extends Spell implements MinionTargetSpell {
 		
 	}
 
+	
+	@Override
+	public Polymorph clone() throws CloneNotSupportedException {
+			try {
+				Polymorph cloned = new Polymorph();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+	
 }

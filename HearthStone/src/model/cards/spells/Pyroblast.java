@@ -23,4 +23,16 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 		
 	}
 	
+	
+	@Override
+	public Pyroblast clone() throws CloneNotSupportedException {
+			try {
+				Pyroblast cloned = new Pyroblast();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+	
 }

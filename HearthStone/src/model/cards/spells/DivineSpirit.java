@@ -1,6 +1,7 @@
 package model.cards.spells;
 
 import exceptions.InvalidTargetException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 
@@ -15,6 +16,17 @@ public class DivineSpirit extends Spell implements MinionTargetSpell {
 	public void performAction(Minion m) throws InvalidTargetException {
 		// TODO performAction
 		
+	}
+
+	@Override
+	public DivineSpirit clone() throws CloneNotSupportedException {
+			try {
+				DivineSpirit cloned = new DivineSpirit();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
 	}
 
 	

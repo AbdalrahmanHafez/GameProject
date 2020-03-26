@@ -23,4 +23,16 @@ public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetS
 		// TODO performAction
 		
 	}
+	
+	@Override
+	public KillCommand clone() throws CloneNotSupportedException {
+			try {
+				KillCommand cloned = new KillCommand();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+	
 }

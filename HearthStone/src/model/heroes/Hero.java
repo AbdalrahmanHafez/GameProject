@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import engine.ActionValidator;
+import engine.Game;
 import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
@@ -124,11 +125,15 @@ public abstract class Hero implements MinionListener, HeroListener{
 	}
 	
 	public void damageOpponent(int amount) {
-
+		
+		//		notify the game to damage
 		
 		listener.damageOpponent(amount);
 		
 	}
+	
+
+	
 	
 	public void onHeroDeath() {
 	
@@ -214,6 +219,8 @@ public abstract class Hero implements MinionListener, HeroListener{
 	 
 	 
 	
+	 
+	 
 	
 	public HeroListener getListener() {
 		return listener;

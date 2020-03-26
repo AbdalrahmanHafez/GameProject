@@ -35,6 +35,9 @@ public class Game implements ActionValidator, HeroListener {
 		currentHero.setCurrentManaCrystals(1);
 		currentHero.setTotalManaCrystals(1);
 		
+//		in order to listen to whatever hero screams
+		currentHero.setListener(this);
+		opponent.setListener(this);
 	}
 	
 	
@@ -118,7 +121,6 @@ public class Game implements ActionValidator, HeroListener {
 	}
 
 
-
 	@Override
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
 		if(currentHero.getField().size() == 7) {
@@ -151,9 +153,9 @@ public class Game implements ActionValidator, HeroListener {
 	//	TODO HeroLister
 	@Override
 	public void onHeroDeath() {
-//		onGameOver();
-// TODO onHeroDeath 
-		
+	//		onGameOver();
+	// TODO onHeroDeath 
+			
 	}
 
 

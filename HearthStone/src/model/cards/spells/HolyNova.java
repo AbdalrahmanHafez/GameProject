@@ -18,4 +18,16 @@ public class HolyNova extends Spell implements AOESpell {
 		
 	}
 
+	@Override
+	public HolyNova clone() throws CloneNotSupportedException {
+			try {
+				HolyNova cloned = new HolyNova();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
+	}	
+	
+	
 }
