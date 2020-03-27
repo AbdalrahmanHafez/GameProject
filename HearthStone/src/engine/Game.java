@@ -38,6 +38,9 @@ public class Game implements ActionValidator, HeroListener {
 //		in order to listen to whatever hero screams
 		currentHero.setListener(this);
 		opponent.setListener(this);
+//		to validate
+		currentHero.setValidator(this);
+		opponent.setValidator(this);
 	}
 	
 	
@@ -53,7 +56,6 @@ public class Game implements ActionValidator, HeroListener {
 
 	@Override
 	public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-		// TODO GAME validateAttack
 		if(!opponent.getField().contains(target)) {
 			throw new  InvalidTargetException();
 		}
@@ -61,9 +63,6 @@ public class Game implements ActionValidator, HeroListener {
 		if(!currentHero.getField().contains(attacker)) {
 			throw new  NotSummonedException();
 		}
-		
-		
-		// minons should not contain any taunt 
 		
 		// (FOR EACH) Minion in oponenetField
 		for(Minion minion : opponent.getField()) {
@@ -123,7 +122,7 @@ public class Game implements ActionValidator, HeroListener {
 
 	@Override
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
-		if(currentHero.getField().size() == 7) {
+		if(currentHero.getField().size() >= 7) {
 			throw new FullFieldException();
 		}
 		
@@ -153,6 +152,8 @@ public class Game implements ActionValidator, HeroListener {
 	//	TODO HeroLister
 	@Override
 	public void onHeroDeath() {
+		listener.onGameOver();
+
 	//		onGameOver();
 	// TODO onHeroDeath 
 			
@@ -188,7 +189,7 @@ public class Game implements ActionValidator, HeroListener {
 		}
 		
 		
-		
+//		Clone not supported may arise here
 		currentHero.drawCard();
 		
 		

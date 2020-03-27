@@ -1,8 +1,9 @@
 package engine;
 
+import model.cards.minions.MinionListener;
 import model.heroes.HeroListener;
 
-public interface GameListener extends HeroListener {
+public interface GameListener extends HeroListener, MinionListener {
 
 	
 	

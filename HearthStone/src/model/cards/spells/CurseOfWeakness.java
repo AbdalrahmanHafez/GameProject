@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.cards.Card;
 import model.cards.Rarity;
+import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 
 public class CurseOfWeakness extends Spell implements AOESpell {
@@ -17,12 +18,18 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
 		// TODO performAction
 		
+		
 	}
 
 	@Override
-	public Card clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return null;
+	public CurseOfWeakness clone() throws CloneNotSupportedException {
+			try {
+				CurseOfWeakness cloned = new CurseOfWeakness();
+				return cloned;
+				
+			} catch (Exception e) {
+				throw new CloneNotSupportedException();
+			}	
 	}
 
 	

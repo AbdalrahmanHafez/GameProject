@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.xml.bind.Validator;
+
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
@@ -31,15 +33,17 @@ public class Mage extends Hero {
 			getDeck().add(new Pyroblast());
 		}
 		Minion kalycgos = (new Minion("Kalycgos", 10, Rarity.LEGENDARY, 4, 12, false, false, false));
-		;
+		
 		getDeck().add(kalycgos);
 		Collections.shuffle(getDeck());
 
-	}
+	}	
 	
 	@Override
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
+		
+//		Spell to damage a Hero or minion by 1
 		
 		
 		

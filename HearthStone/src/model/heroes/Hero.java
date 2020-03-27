@@ -3,6 +3,7 @@ package model.heroes;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
 import engine.ActionValidator;
@@ -16,7 +17,7 @@ import model.cards.minions.MinionListener;
 import model.cards.spells.*;
 
 // The hero listens to minion Events
-public abstract class Hero implements MinionListener, HeroListener{
+public abstract class Hero implements HeroListener, MinionListener{
 	private String name;
 	private int currentHP;
 	private boolean heroPowerUsed;
@@ -125,25 +126,19 @@ public abstract class Hero implements MinionListener, HeroListener{
 	}
 	
 	public void damageOpponent(int amount) {
-		
 		//		notify the game to damage
-		
+
 		listener.damageOpponent(amount);
-		
 	}
 	
 
 	
 	
 	public void onHeroDeath() {
-	
-	
+		listener.onHeroDeath();
+
 	}
-	
-	public void endTurn() throws FullHandException, CloneNotSupportedException {
-	
-	
-	}
+
 	
 	
 	
@@ -159,57 +154,116 @@ public abstract class Hero implements MinionListener, HeroListener{
 
 	//	This method handles playing a minion card.this means removing a minion from the hero hand and adding it to his ﬁeld.
 	 public void playMinion(Minion m) throws NotYourTurnException, NotEnoughManaException, FullFieldException{
-//		 validate
+		validator.validateTurn(this);
+		validator.validateManaCost(m);
+		validator.validatePlayingMinion(m);
+		
+		 getHand().remove(m);
+		 getField().add(m);
+		 
+		 
 	 }
 	
 	
 	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException, TauntBypassException,	 InvalidTargetException, NotSummonedException{
-//		 validate
+		validator.validateTurn(this);
+		validator.validateAttack(attacker, target);
+		 attacker.attack(target);
+		 
 		 
 	 }
 	 
 	 
 	 public void attackWithMinion(Minion attacker, Hero target) throws CannotAttackException, NotYourTurnException, TauntBypassException, NotSummonedException, InvalidTargetException{
-//		 validate
-
+			validator.validateTurn(this);
+			validator.validateAttack(attacker, target);
+			attacker.attack(target);
 	 }
 	
 	 
 	 public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
-//		 validate
-
+		validator.validateTurn(this);
+		validator.validateManaCost((Card)s);
+		s.performAction(getField());
+		getHand().remove(s);
+		 
 	 }
+
+	 
 	
 	 public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws NotYourTurnException, NotEnoughManaException{
-//		 validate
+			validator.validateTurn(this);
+			validator.validateManaCost((Card)s);
+			s.performAction(oppField, getField());
+			getHand().remove(s);
 
 	 }
 	 
 	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
-//		 validate
+			validator.validateTurn(this);
+			validator.validateManaCost((Card)s);
+			
+			//TODO castMinion spell, is this ok or what?
+			if(getField().contains(m)) 
+				throw new InvalidTargetException();
+	
+			s.performAction(m);
+			getHand().remove(s);
 
 	 }
 	 
 	 public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException{
-//		 validate
+			validator.validateTurn(this);
+			validator.validateManaCost((Card)s);
+			s.performAction(h);
+			getHand().remove(s);
 
 	 }
 	
 	 
 	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
-//		 validate
+			validator.validateTurn(this);
+			validator.validateManaCost((Card)s);
+			s.performAction(m);
+			getHand().remove(s);
 
 	 }
+	 
+		
+
+	public void endTurn() throws FullHandException, CloneNotSupportedException {
+		listener.endTurn();
+		
+	}
 	
 	 // TODO HeroDraw clone??
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
-		 Card drawnCard = this.getDeck().remove(0);
-		 
-		 if (this.getHand().size() == 10) {
-			 throw new FullHandException(drawnCard);
+		 // drawing from an Empty deck
+		 if(this.getDeck().size() == 0) {
+			this.fatigueDamage = this.fatigueDamage + 1;
+		 	setCurrentHP(currentHP - fatigueDamage); 
+		 	return null;
 		 }
+
+		 Card drawnCard = this.getDeck().remove(0);
+	
 		 
+		 getHand().add(drawnCard);
 		 
+//		 If field already has chromaggus than add another clone of it.
+		 for(Card card : this.getField()) 
+			if(  card.getName().equals("Chromaggus")  )
+				if(this.getField().size() <= 9) // ensure a space left
+					getHand().add(  card.clone()  );
+		 
+			 
+		 
+
+		 if (this.getHand().size() >= 10) 
+			 throw new FullHandException(drawnCard);
+		 
+		
+			 
 		 
 		 
 		 return drawnCard;

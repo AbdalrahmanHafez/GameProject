@@ -1,6 +1,7 @@
 package model.heroes;
 
 import exceptions.*;
+import model.cards.minions.MinionListener;
 
 
 //The Game should be able to listen to hero events.

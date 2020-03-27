@@ -15,7 +15,7 @@ public class LevelUp extends Spell implements FieldSpell {
 	@Override
 	public void performAction(ArrayList<Minion> field) {
 		// TODO performAction
-		
+
 	}
 	
 	

@@ -21,8 +21,6 @@ public abstract class Card implements Cloneable{
 	}
 	
 	
-	//  TODO clone()
-	//	You should override the clone() method to make it visible to all other classes and return a clone Card of the card that the method is invoked on (instead of the generic type Object).
 	public abstract Card clone() throws CloneNotSupportedException;
 	
 	
