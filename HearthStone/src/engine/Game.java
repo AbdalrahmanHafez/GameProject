@@ -173,6 +173,7 @@ public class Game implements ActionValidator, HeroListener {
 		opponent.setCurrentHP(opponent.getCurrentHP() - amount);
 		
 	}
+	
 
 
 
@@ -203,12 +204,6 @@ public class Game implements ActionValidator, HeroListener {
 	}
 
 
-	
-	
-	
-	
-	
-	
 	
 	
 	

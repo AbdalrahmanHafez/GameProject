@@ -38,13 +38,27 @@ public class Priest extends Hero {
 
 	}
 	
-	@Override
-	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+	
+	
+	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		
 //		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
-		
-		
+		for(Minion m : super.getField())
+			if(m.getName().equals("Prophet Velen")) {
+				target.setCurrentHP(target.getCurrentHP() + 8);
+				return;//exit
+			}
+		//		restores 2 HP
+		target.setCurrentHP(target.getCurrentHP() + 2);
+	
+	}
+	
+	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+
+		target.setCurrentHP(target.getCurrentHP() + 2);
+	
 	}
 	
 

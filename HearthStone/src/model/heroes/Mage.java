@@ -86,18 +86,20 @@ public class Mage extends Hero {
 		super.castSpell(s, m);
 	}
 	
+
 	
 	
-	
-	@Override
-	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
-//		TODO useheropower
-//		Spell to damage a Hero or minion by 1
-		
-		
-		
+//		Damages the hero
+		target.setCurrentHP(target.getCurrentHP() - 1);
+	
 	}
 	
-
+	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+//		Damages a minion
+		target.setCurrentHP(target.getCurrentHP() - 1);
+	
+	}
 }

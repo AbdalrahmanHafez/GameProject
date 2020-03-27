@@ -126,28 +126,30 @@ public abstract class Hero implements HeroListener, MinionListener{
 	
 	public void damageOpponent(int amount) {
 		//		notify the game to damage
-
 		listener.damageOpponent(amount);
 	}
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public void onHeroDeath() {
 		listener.onHeroDeath();
-
 	}
-
-	
-	
 	
 	
 	public void useHeroPower() throws NotEnoughManaException,HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException{
 		validator.validateTurn(this);
 		validator.validateUsingHeroPower(this);
 		
-			
-		
+//		using the hero's power cost 2 mana
+		setCurrentManaCrystals(this.getCurrentManaCrystals() - 2);
 	}
 
 	//	This method handles playing a minion card.this means removing a minion from the hero hand and adding it to his ﬁeld.
@@ -346,4 +348,5 @@ public abstract class Hero implements HeroListener, MinionListener{
 	public String getName() {
 		return name;
 	}
+
 }
