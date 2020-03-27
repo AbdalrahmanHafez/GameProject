@@ -45,7 +45,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 	public abstract void buildDeck() throws IOException;
 
 	
-	
 	public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(filePath));
 		ArrayList<Minion> minions = new ArrayList<Minion>();
@@ -143,7 +142,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 	
 	
 	
-//	TODO useHeroPower
 	public void useHeroPower() throws NotEnoughManaException,HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException{
 		validator.validateTurn(this);
 		validator.validateUsingHeroPower(this);
@@ -168,7 +166,7 @@ public abstract class Hero implements HeroListener, MinionListener{
 	 public void attackWithMinion(Minion attacker, Minion target) throws CannotAttackException, NotYourTurnException, TauntBypassException,	 InvalidTargetException, NotSummonedException{
 		validator.validateTurn(this);
 		validator.validateAttack(attacker, target);
-		 attacker.attack(target);
+		attacker.attack(target);
 		 
 		 
 	 }
@@ -186,7 +184,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 		validator.validateManaCost((Card)s);
 		s.performAction(getField());
 		getHand().remove(s);
-		 
 	 }
 
 	 
@@ -203,7 +200,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 			validator.validateTurn(this);
 			validator.validateManaCost((Card)s);
 			
-			//TODO castMinion spell, is this ok or what?
 			if(getField().contains(m)) 
 				throw new InvalidTargetException();
 	
@@ -236,7 +232,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 		
 	}
 	
-	 // TODO HeroDraw clone??
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
 		 // drawing from an Empty deck
 		 if(this.getDeck().size() == 0) {
@@ -250,13 +245,14 @@ public abstract class Hero implements HeroListener, MinionListener{
 		 
 		 getHand().add(drawnCard);
 		 
+//		 Legendary Special
 //		 If field already has chromaggus than add another clone of it.
 		 for(Card card : this.getField()) 
 			if(  card.getName().equals("Chromaggus")  )
 				if(this.getField().size() <= 9) // ensure a space left
 					getHand().add(  card.clone()  );
 		 
-			 
+		
 		 
 
 		 if (this.getHand().size() >= 10) 
@@ -299,7 +295,9 @@ public abstract class Hero implements HeroListener, MinionListener{
 			this.currentHP = 30;
 		else if (this.currentHP <= 0) {
 			this.currentHP = 0;
-			
+//			Meaning the Hero Died
+				listener.onHeroDeath();
+		
 		}
 	}
 

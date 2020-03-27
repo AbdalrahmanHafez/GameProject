@@ -42,6 +42,7 @@ public class Priest extends Hero {
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		
+//		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
 		
 		
 	}

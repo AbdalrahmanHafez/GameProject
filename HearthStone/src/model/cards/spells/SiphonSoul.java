@@ -12,8 +12,10 @@ public class SiphonSoul extends Spell implements LeechingSpell {
 
 	@Override
 	public int performAction(Minion m) {
-		// TODO performAction
-		return 0;
+//		 Destroys a minion even if it has a divine shield and restores 3 health points to the hero .
+		m.setCurrentHP(0); 		// make him die
+		
+		return 3;
 	}
 	
 	

@@ -13,7 +13,8 @@ public class SealOfChampions extends Spell implements MinionTargetSpell {
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		// TODO performAction
+		m.setAttack(m.getAttack() + 3);
+		m.setDivine( true );
 		
 	}
 

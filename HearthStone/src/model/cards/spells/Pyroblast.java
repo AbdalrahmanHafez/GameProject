@@ -13,15 +13,17 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		// TODO performAction
+		m.setCurrentHP(m.getCurrentHP() - 10);
+		
 		
 	}
 
 	@Override
 	public void performAction(Hero h) {
-		// TODO performAction
+		h.setCurrentHP(h.getCurrentHP() - 10);
 		
 	}
+
 	
 	
 	@Override

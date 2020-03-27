@@ -14,7 +14,14 @@ public class TwistingNether extends Spell implements AOESpell {
 
 	@Override
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
-		// TODO performAction
+//		 Destroys all minions of both heroes even if any of them has a divine shield.
+		
+		for(Minion minion : curField)
+			minion.setCurrentHP(0); //make him die?
+		for(Minion minion : oppField)
+			minion.setCurrentHP(0);
+		
+
 		
 	}
 	

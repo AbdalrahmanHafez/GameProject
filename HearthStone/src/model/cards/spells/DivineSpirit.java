@@ -14,8 +14,10 @@ public class DivineSpirit extends Spell implements MinionTargetSpell {
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		// TODO performAction
 		
+		m.setCurrentHP(2 * m.getCurrentHP());
+		m.setMaxHP(2 * m.getMaxHP());
+	
 	}
 
 	@Override

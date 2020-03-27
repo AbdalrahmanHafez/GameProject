@@ -13,7 +13,11 @@ public class ShadowWordDeath extends Spell implements MinionTargetSpell {
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		// TODO performAction
+//	Destroys a minion that his attack is 5 or more even if it has a divine
+		if(m.getAttack() >= 5) {
+			m.setCurrentHP(0); 		// make him die
+			
+		}
 		
 	}
 	

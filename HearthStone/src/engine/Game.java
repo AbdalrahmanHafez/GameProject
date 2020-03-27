@@ -10,6 +10,7 @@ import exceptions.NotSummonedException;
 import exceptions.NotYourTurnException;
 import exceptions.TauntBypassException;
 import model.cards.Card;
+import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
 import model.heroes.HeroListener;
@@ -84,9 +85,15 @@ public class Game implements ActionValidator, HeroListener {
 	@Override
 	public void validateAttack(Minion attacker, Hero target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		
-	
 		if (target == currentHero) {
 			throw new  InvalidTargetException();
+		}
+		
+//		icwhowl can't attack hero, unless he got polymorphed..
+		if(attacker instanceof Icehowl) {
+			if (attacker.getName() == "Sheep") {}
+				else {
+					throw new InvalidTargetException();}
 		}
 		
 		

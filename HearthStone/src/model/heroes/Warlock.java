@@ -44,6 +44,13 @@ public class Warlock extends Hero {
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		
+//		 If the warlock hero draws a minion card with his hero power while Wilfred
+//		Fizzlebang is on his ﬁeld, the mana cost of the drawn minion is reduced to 0.
+//		Note: In case the warlock hero has both Chromaggus and Wilfred Fizzlebang on his
+//		ﬁeld, the eﬀect of Wilfred Fizzlebang should trigger ﬁrst before Chromaggus copies
+//		the drawn minion.
+		
+		
 		
 		
 	}

@@ -9,13 +9,23 @@ import javax.xml.bind.Validator;
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.InvalidTargetException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
+import model.cards.spells.AOESpell;
+import model.cards.spells.FieldSpell;
 import model.cards.spells.Flamestrike;
+import model.cards.spells.HeroTargetSpell;
+import model.cards.spells.LeechingSpell;
+import model.cards.spells.LevelUp;
+import model.cards.spells.MinionTargetSpell;
 import model.cards.spells.Polymorph;
 import model.cards.spells.Pyroblast;
+import model.cards.spells.SealOfChampions;
+import model.cards.spells.Spell;
 
 public class Mage extends Hero {
 
@@ -39,10 +49,50 @@ public class Mage extends Hero {
 
 	}	
 	
+	
+	private void checkForKalycgos(Spell s) {
+		for(Minion m : super.getField())
+			if(m.getName().equals("Kalycgos")) {
+				Card spell = (Card) s;
+				spell.setManaCost(spell.getManaCost() - 5);
+			}	
+	}
+
+	@Override
+	public void castSpell(FieldSpell s) throws NotYourTurnException, NotEnoughManaException {
+		checkForKalycgos((Spell) s);
+		super.castSpell(s);
+
+	}
+	
+	@Override
+	public void castSpell(AOESpell s, ArrayList<Minion> oppField) throws NotYourTurnException, NotEnoughManaException {
+		checkForKalycgos((Spell) s);
+		super.castSpell(s, oppField);
+	}
+	@Override
+	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException, NotEnoughManaException {
+		checkForKalycgos((Spell) s);
+		super.castSpell(s, h);
+	}
+	@Override
+	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException {
+		checkForKalycgos((Spell) s);
+		super.castSpell(s, m);
+	}
+	@Override
+	public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException {
+		checkForKalycgos((Spell) s);
+		super.castSpell(s, m);
+	}
+	
+	
+	
+	
 	@Override
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
-		
+//		TODO useheropower
 //		Spell to damage a Hero or minion by 1
 		
 		
