@@ -18,7 +18,7 @@ import model.cards.spells.TwistingNether;
 
 public class Warlock extends Hero {
 
-	public Warlock() throws IOException {
+	public Warlock() throws IOException, CloneNotSupportedException {
 		super("Gul'dan");
 	}
 
@@ -36,6 +36,12 @@ public class Warlock extends Hero {
 		getDeck().add(wilfred);
 		Collections.shuffle(getDeck());
 
+//		Hero listens to The minion screams
+		for(Card c : this.getDeck()) 
+			if(c instanceof Minion)
+				((Minion)c).setListener(this);
+		
+//	
 	}
 	
 
@@ -60,7 +66,7 @@ public class Warlock extends Hero {
 		
 		for(Minion m : this.getField()) {
 			if(m.getName().equals("Wilfred Fizzlebang") && drawnCard instanceof Minion)
-				drawnCard.setManaCost(0); // kill it
+				drawnCard.setManaCost(0); 
 			
 		}
 		

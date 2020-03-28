@@ -33,7 +33,7 @@ public abstract class Hero implements HeroListener, MinionListener{
 	private ActionValidator validator;
 //	The variable responsible for validating all actions the hero takes.
 	
-	public Hero(String name) throws IOException {
+	public Hero(String name) throws IOException, CloneNotSupportedException {
 		this.name = name;
 		currentHP = 30;
 		deck = new ArrayList<Card>();
@@ -42,7 +42,7 @@ public abstract class Hero implements HeroListener, MinionListener{
 		buildDeck();
 	}
 
-	public abstract void buildDeck() throws IOException;
+	public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 
 	
 	public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
@@ -117,7 +117,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 	}
 	
 	
-	
 	public void onMinionDeath(Minion m) {
 		field.remove(m);
 
@@ -128,12 +127,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 		//		notify the game to damage
 		listener.damageOpponent(amount);
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -169,8 +162,9 @@ public abstract class Hero implements HeroListener, MinionListener{
 		validator.validateTurn(this);
 		validator.validateAttack(attacker, target);
 		attacker.attack(target);
-		 
-		 
+		
+//		The attacker minion should lose divine
+		attacker.setDivine(false);
 	 }
 	 
 	 
@@ -222,8 +216,10 @@ public abstract class Hero implements HeroListener, MinionListener{
 	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException{
 			validator.validateTurn(this);
 			validator.validateManaCost((Card)s);
-			s.performAction(m);
+			int returnedHelth = s.performAction(m);
 			getHand().remove(s);
+			
+			this.setCurrentHP(this.getCurrentHP() + returnedHelth);
 
 	 }
 	 
@@ -233,6 +229,7 @@ public abstract class Hero implements HeroListener, MinionListener{
 		listener.endTurn();
 		
 	}
+	
 	
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
 		 // drawing from an Empty deck

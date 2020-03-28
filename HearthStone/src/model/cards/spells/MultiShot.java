@@ -26,8 +26,15 @@ public class MultiShot extends Spell implements AOESpell{
 //			Deals 3 damage to two random enemy minions
 	        Random rand = new Random(); 
 	        
-	        Minion m1 = oppField.get(  rand.nextInt(oppField.size() )  );
-			Minion m2 = oppField.get(  rand.nextInt(oppField.size() )  );
+	        int randint = rand.nextInt(oppField.size() );
+	        int randint2 = 0;
+	        do {
+	        	randint2 = rand.nextInt(oppField.size());
+			} while (randint2 == randint);
+	        
+	        
+	        Minion m1 = oppField.get(  randint 	 );
+			Minion m2 = oppField.get(  randint2  );
 			
 			m1.setCurrentHP(m1.getCurrentHP() - 3);
 			m2.setCurrentHP(m2.getCurrentHP() - 3);

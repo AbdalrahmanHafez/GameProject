@@ -46,6 +46,7 @@ public class Minion extends Card implements Cloneable {
 				listener.onMinionDeath(this);
 		}
 		
+
 	}
 	
 	public void attack(Hero target) throws InvalidTargetException{
@@ -54,9 +55,8 @@ public class Minion extends Card implements Cloneable {
 		else {
 			target.setCurrentHP(target.getCurrentHP() - this.getAttack());
 			
-//			TODO where? onHeroDeath listener call 
 		}
-		
+	
 		
 		
 	}

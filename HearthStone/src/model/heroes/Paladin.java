@@ -9,13 +9,14 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.LevelUp;
 import model.cards.spells.SealOfChampions;
 
 public class Paladin extends Hero {
-	public Paladin() throws IOException
+	public Paladin() throws IOException, CloneNotSupportedException
 	{
 		super("Uther Lightbringer");
 	}
@@ -33,6 +34,13 @@ public class Paladin extends Hero {
 	
 		getDeck().add(tirion);
 		Collections.shuffle(getDeck());
+		
+//		Hero listens to The minion screams
+		for(Card c : this.getDeck()) 
+			if(c instanceof Minion)
+				((Minion)c).setListener(this);
+		
+//	
 	}
 	
 	@Override
@@ -41,9 +49,10 @@ public class Paladin extends Hero {
 		
 		Minion m = new Minion("Silver Hand Recruit", 	1, Rarity.BASIC, 1, 1, false, false, false);
 		
-//		TODO full field exception ???
-		this.getField().add(m);
-		
+		if(this.getField().size() <= 9)
+			this.getField().add(m);
+		else
+			throw new FullFieldException();
 		
 		
 	}

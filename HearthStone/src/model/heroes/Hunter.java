@@ -10,6 +10,7 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.KillCommand;
@@ -17,7 +18,7 @@ import model.cards.spells.MultiShot;
 
 public class Hunter extends Hero {
 
-	public Hunter() throws IOException {
+	public Hunter() throws IOException, CloneNotSupportedException {
 		super("Rexxar");
 	}
 
@@ -35,6 +36,12 @@ public class Hunter extends Hero {
 		
 		getDeck().add(krush);
 		Collections.shuffle(getDeck());
+		
+//		Hero listens to The minion screams
+		for(Card c : this.getDeck()) 
+			if(c instanceof Minion)
+				((Minion)c).setListener(this);
+		
 //	
 	
 	}
@@ -44,6 +51,7 @@ public class Hunter extends Hero {
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 
+		
 		super.damageOpponent(2);
 		
 	}

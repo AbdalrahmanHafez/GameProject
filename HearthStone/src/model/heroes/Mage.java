@@ -29,7 +29,7 @@ import model.cards.spells.Spell;
 
 public class Mage extends Hero {
 
-	public Mage() throws IOException {
+	public Mage() throws IOException, CloneNotSupportedException {
 		super("Jaina Proudmoore");
 	}
 
@@ -46,7 +46,13 @@ public class Mage extends Hero {
 		
 		getDeck().add(kalycgos);
 		Collections.shuffle(getDeck());
-
+		
+//		Hero listens to The minion screams
+		for(Card c : this.getDeck()) 
+			if(c instanceof Minion)
+				((Minion)c).setListener(this);
+		
+//	
 	}	
 	
 	

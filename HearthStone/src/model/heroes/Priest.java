@@ -9,6 +9,7 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.DivineSpirit;
@@ -17,7 +18,7 @@ import model.cards.spells.ShadowWordDeath;
 
 public class Priest extends Hero {
 
-	public Priest() throws IOException {
+	public Priest() throws IOException, CloneNotSupportedException {
 		super("Anduin Wrynn");
 	}
 
@@ -36,6 +37,13 @@ public class Priest extends Hero {
 		getDeck().add(velen);
 		Collections.shuffle(getDeck());
 
+		
+//		Hero listens to The minion screams
+		for(Card c : this.getDeck()) 
+			if(c instanceof Minion)
+				((Minion)c).setListener(this);
+		
+//	
 	}
 	
 	
@@ -44,11 +52,12 @@ public class Priest extends Hero {
 		super.useHeroPower();
 		
 //		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
-		for(Minion m : super.getField())
+		for(Minion m : super.getField()) {
 			if(m.getName().equals("Prophet Velen")) {
 				target.setCurrentHP(target.getCurrentHP() + 8);
 				return;//exit
 			}
+		}
 		//		restores 2 HP
 		target.setCurrentHP(target.getCurrentHP() + 2);
 	
@@ -56,7 +65,7 @@ public class Priest extends Hero {
 	
 	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
-
+		
 		target.setCurrentHP(target.getCurrentHP() + 2);
 	
 	}
