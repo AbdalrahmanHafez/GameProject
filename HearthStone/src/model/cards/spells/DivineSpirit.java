@@ -14,22 +14,13 @@ public class DivineSpirit extends Spell implements MinionTargetSpell {
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		
-		m.setCurrentHP(2 * m.getCurrentHP());
+
 		m.setMaxHP(2 * m.getMaxHP());
+		m.setCurrentHP(2 * m.getCurrentHP());
 	
 	}
 
-	@Override
-	public DivineSpirit clone() throws CloneNotSupportedException {
-			try {
-				DivineSpirit cloned = new DivineSpirit();
-				return cloned;
-				
-			} catch (Exception e) {
-				throw new CloneNotSupportedException();
-			}	
-	}
+	
 
 	
 

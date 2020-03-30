@@ -33,7 +33,7 @@ public abstract class Hero implements HeroListener, MinionListener{
 	private ActionValidator validator;
 //	The variable responsible for validating all actions the hero takes.
 	
-	public Hero(String name) throws IOException, CloneNotSupportedException {
+	public Hero(String name) throws IOException, CloneNotSupportedException, FullHandException {
 		this.name = name;
 		currentHP = 30;
 		deck = new ArrayList<Card>();
@@ -143,6 +143,9 @@ public abstract class Hero implements HeroListener, MinionListener{
 		
 //		using the hero's power cost 2 mana
 		setCurrentManaCrystals(this.getCurrentManaCrystals() - 2);
+		
+		setHeroPowerUsed(true);
+		
 	}
 
 	//	This method handles playing a minion card.this means removing a minion from the hero hand and adding it to his ﬁeld.
@@ -163,8 +166,6 @@ public abstract class Hero implements HeroListener, MinionListener{
 		validator.validateAttack(attacker, target);
 		attacker.attack(target);
 		
-//		The attacker minion should lose divine
-		attacker.setDivine(false);
 	 }
 	 
 	 
@@ -180,6 +181,9 @@ public abstract class Hero implements HeroListener, MinionListener{
 		validator.validateManaCost((Card)s);
 		s.performAction(getField());
 		getHand().remove(s);
+		
+		setCurrentManaCrystals(this.getCurrentManaCrystals() - ((Card)s).getManaCost());
+
 	 }
 
 	 
@@ -189,18 +193,20 @@ public abstract class Hero implements HeroListener, MinionListener{
 			validator.validateManaCost((Card)s);
 			s.performAction(oppField, getField());
 			getHand().remove(s);
+			
+			setCurrentManaCrystals(this.getCurrentManaCrystals() - ((Card)s).getManaCost());
 
 	 }
 	 
 	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException, NotEnoughManaException, InvalidTargetException{
 			validator.validateTurn(this);
 			validator.validateManaCost((Card)s);
-			
-			if(getField().contains(m)) 
-				throw new InvalidTargetException();
+
 	
 			s.performAction(m);
 			getHand().remove(s);
+
+			setCurrentManaCrystals(this.getCurrentManaCrystals() - ((Card)s).getManaCost());
 
 	 }
 	 
@@ -209,6 +215,8 @@ public abstract class Hero implements HeroListener, MinionListener{
 			validator.validateManaCost((Card)s);
 			s.performAction(h);
 			getHand().remove(s);
+			
+			setCurrentManaCrystals(this.getCurrentManaCrystals() - ((Card)s).getManaCost());
 
 	 }
 	
@@ -221,46 +229,65 @@ public abstract class Hero implements HeroListener, MinionListener{
 			
 			this.setCurrentHP(this.getCurrentHP() + returnedHelth);
 
+			setCurrentManaCrystals(this.getCurrentManaCrystals() - ((Card)s).getManaCost());
+
 	 }
 	 
 		
 
 	public void endTurn() throws FullHandException, CloneNotSupportedException {
 		listener.endTurn();
-		
 	}
 	
 	
 	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
+		 
+		
+		 
 		 // drawing from an Empty deck
-		 if(this.getDeck().size() == 0) {
+		 if(this.getDeck().isEmpty()) {
+			setCurrentHP(currentHP - fatigueDamage); 
 			this.fatigueDamage = this.fatigueDamage + 1;
-		 	setCurrentHP(currentHP - fatigueDamage); 
 		 	return null;
 		 }
 
 		 Card drawnCard = this.getDeck().remove(0);
 	
+		 if(this.getDeck().isEmpty()) {
+			 this.fatigueDamage = 1;
+		 }
+		 
+		 setCurrentManaCrystals(this.getCurrentManaCrystals() - (drawnCard).getManaCost());
+
+		 
+		 
+		 if (this.getHand().size() >= 10) 
+			 throw new FullHandException(drawnCard);
+		 
 		 
 		 getHand().add(drawnCard);
 		 
 //		 Legendary Special
-//		 If field already has chromaggus than add another clone of it.
+//		 If field already has chromaggus than add another clone of whatever the hero is drawing.
+		 
+		 for(Minion m : this.getField())
+				if(m.getName().equals("Wilfred Fizzlebang") && drawnCard instanceof Minion) {
+					drawnCard.setManaCost(0);
+					break; // exit the loop
+				}
+			
+		 
 		 for(Card card : this.getField()) 
 			if(  card.getName().equals("Chromaggus")  )
-				if(this.getField().size() <= 9) // ensure a space left
-					getHand().add(  card.clone()  );
-		 
+				if(this.getHand().size() <= 9) { // ensure a space left
+					getHand().add(  (Card) drawnCard.clone()  );
+					break; // exit the loop
+				}
 		
 		 
 
-		 if (this.getHand().size() >= 10) 
-			 throw new FullHandException(drawnCard);
 		 
 		
-			 
-		 
-		 
 		 return drawnCard;
 	 }
 	 

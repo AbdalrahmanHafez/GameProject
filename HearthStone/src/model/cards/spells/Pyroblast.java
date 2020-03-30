@@ -13,7 +13,10 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 
 	@Override
 	public void performAction(Minion m) throws InvalidTargetException {
-		m.setCurrentHP(m.getCurrentHP() - 10);
+		if(m.isDivine())
+			m.setDivine(false);
+		else
+			m.setCurrentHP(m.getCurrentHP() - 10);
 		
 		
 	}
@@ -25,16 +28,5 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 	}
 
 	
-	
-	@Override
-	public Pyroblast clone() throws CloneNotSupportedException {
-			try {
-				Pyroblast cloned = new Pyroblast();
-				return cloned;
-				
-			} catch (Exception e) {
-				throw new CloneNotSupportedException();
-			}	
-	}	
 	
 }

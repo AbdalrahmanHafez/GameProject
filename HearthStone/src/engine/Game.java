@@ -1,5 +1,9 @@
 package engine;
 
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+
 import exceptions.CannotAttackException;
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
@@ -10,6 +14,7 @@ import exceptions.NotSummonedException;
 import exceptions.NotYourTurnException;
 import exceptions.TauntBypassException;
 import model.cards.Card;
+import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 import model.heroes.Hero;
@@ -25,7 +30,7 @@ public class Game implements ActionValidator, HeroListener {
 	private GameListener listener;
 		
 
-	public Game(Hero p1, Hero p2)
+	public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException
 	{
 		firstHero=p1;
 		secondHero=p2;
@@ -33,8 +38,6 @@ public class Game implements ActionValidator, HeroListener {
 		int coin = (int) (Math.random()*2);
 		currentHero= coin==0?firstHero:secondHero;
 		opponent= currentHero==firstHero?secondHero:firstHero;
-		currentHero.setCurrentManaCrystals(1);
-		currentHero.setTotalManaCrystals(1);
 		
 //		in order to listen to whatever hero screams
 		currentHero.setListener(this);
@@ -42,6 +45,24 @@ public class Game implements ActionValidator, HeroListener {
 //		to validate
 		currentHero.setValidator(this);
 		opponent.setValidator(this);
+		
+		currentHero.drawCard();
+		currentHero.drawCard();
+		currentHero.drawCard();
+		
+		opponent.drawCard();
+		opponent.drawCard();
+		opponent.drawCard();
+		opponent.drawCard();
+		
+		currentHero.setCurrentManaCrystals(1);
+		currentHero.setTotalManaCrystals(1);
+		
+		opponent.setCurrentManaCrystals(0);
+		opponent.setTotalManaCrystals(0);
+		
+		
+		
 	}
 	
 	
@@ -57,29 +78,39 @@ public class Game implements ActionValidator, HeroListener {
 
 	@Override
 	public void validateAttack(Minion attacker, Minion target) throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-		if(!opponent.getField().contains(target)) {
-			throw new  InvalidTargetException();
+		
+		if(currentHero.getField().contains(target)) {
+			throw new InvalidTargetException();
 		}
 		
 		if(!currentHero.getField().contains(attacker)) {
 			throw new  NotSummonedException();
 		}
 		
-		// (FOR EACH) Minion in oponenetField
-		for(Minion minion : opponent.getField()) {
-			if(minion.isTaunt()) {
-				throw new TauntBypassException();
+		
+		if(!opponent.getField().contains(target)) {
+			throw new  NotSummonedException();
+		}
+		
+	
+		
+		
+		
+		if(!target.isTaunt()) {
+			for(Minion minion : opponent.getField()) {
+				if(minion.isTaunt()) {
+					throw new TauntBypassException();
+				}
 			}
 		}
-				
 		
 		if(attacker.isAttacked() == true || attacker.getAttack() == 0) {
 			throw new  CannotAttackException();
 		}
 		
-		
 	}
 
+	
 
 
 	@Override
@@ -95,6 +126,9 @@ public class Game implements ActionValidator, HeroListener {
 				else {
 					throw new InvalidTargetException();}
 		}
+		
+		if(attacker.isSleeping())
+			throw new CannotAttackException();
 		
 		
 		for(Minion minion : opponent.getField()) {
@@ -180,16 +214,14 @@ public class Game implements ActionValidator, HeroListener {
 //		have their attack usage reset and wake up (if asleep). Finally, the current hero should draw a
 //		card from his deck(the functionality of drawing a card will be mentioned later in section 4.1).
 //		PAGE 3
+	
 	@Override
 	public void endTurn() throws FullHandException, CloneNotSupportedException {
 		Hero temp = currentHero;
 		currentHero = opponent;
 		opponent = temp;
 		
-		
-		currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals() +1 );
-		currentHero.setCurrentManaCrystals(currentHero.getTotalManaCrystals());
-		
+
 		
 		currentHero.setHeroPowerUsed(false);
 		
@@ -202,6 +234,11 @@ public class Game implements ActionValidator, HeroListener {
 		
 //		Clone not supported may arise here
 		currentHero.drawCard();
+
+		
+		
+		currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals() +1 );
+		currentHero.setCurrentManaCrystals(currentHero.getTotalManaCrystals());
 		
 		
 	}

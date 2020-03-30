@@ -32,24 +32,28 @@ public class Minion extends Card implements Cloneable {
 	
 	
 	public void attack(Minion target) {
-		if(target.isDivine()) {
-			target.setDivine(false);
-		}else {
+		this.setAttacked(true);
+
+		if(this.getAttack() != 0)
+			if(target.isDivine()) 
+				target.setDivine(false);
+			else 
+				target.setCurrentHP(target.getCurrentHP() - this.getAttack());
 			
-			target.setCurrentHP(target.getCurrentHP() - this.getAttack());
-			this.setCurrentHP(this.getCurrentHP() - target.getAttack());
-			
-//			notify the listener about minion death
-			if (target.getCurrentHP() == 0) 
-				listener.onMinionDeath(target);
-			if (this.getCurrentHP() == 0) 
-				listener.onMinionDeath(this);
-		}
-		
+		if(target.getAttack() != 0)
+			if(this.isDivine())
+				this.setDivine(false);
+			else
+				this.setCurrentHP(this.getCurrentHP() - target.getAttack());
 
 	}
 	
 	public void attack(Hero target) throws InvalidTargetException{
+//		The attacker minion should lose divine
+		this.setDivine(false);
+		
+		this.setAttacked(true);
+		
 		if (this instanceof Icehowl) 
 			throw new InvalidTargetException();
 		else {
@@ -66,16 +70,6 @@ public class Minion extends Card implements Cloneable {
 
 	
 	
-	@Override
-	public Minion clone() throws CloneNotSupportedException {	
-	try {
-			Minion cloned = new Minion(this.getName(), this.getManaCost(), this.getRarity(), this.getAttack(), this.getCurrentHP(), this.isTaunt(), this.isDivine(), false);
-			return cloned;
-			
-		} catch (Exception e) {
-			throw new CloneNotSupportedException();
-		}	
-	}
 	
 	
 	

@@ -18,14 +18,21 @@ import model.cards.spells.ShadowWordDeath;
 
 public class Priest extends Hero {
 
-	public Priest() throws IOException, CloneNotSupportedException {
+	public Priest() throws IOException, CloneNotSupportedException, FullHandException {
 		super("Anduin Wrynn");
 	}
 
 	@Override
-	public void buildDeck() throws IOException {
+	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),13);
-		getDeck().addAll(neutrals);
+//		don;t duplicate a Minion, use clone()
+		for(Minion m : neutrals) 
+			if(getDeck().contains(m)) 
+				getDeck().add((Card) m.clone());
+			else 
+				getDeck().add(m);
+		
+		
 		for(int i = 0 ; i < 2; i++)
 		{
 			getDeck().add(new DivineSpirit());
@@ -66,7 +73,16 @@ public class Priest extends Hero {
 	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		
+//		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
+		for(Minion m : super.getField()) {
+			if(m.getName().equals("Prophet Velen")) {
+				target.setCurrentHP(target.getCurrentHP() + 8);
+				return;//exit
+			}
+		}
+		//		restores 2 HP
 		target.setCurrentHP(target.getCurrentHP() + 2);
+	
 	
 	}
 	

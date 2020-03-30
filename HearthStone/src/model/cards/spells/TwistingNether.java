@@ -16,24 +16,13 @@ public class TwistingNether extends Spell implements AOESpell {
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
 //		 Destroys all minions of both heroes even if any of them has a divine shield.
 		
-		for(Minion minion : curField)
-			minion.setCurrentHP(0); //make him die?
-		for(Minion minion : oppField)
-			minion.setCurrentHP(0);
-		
+		curField.clear();
+		oppField.clear();
 
 		
 	}
 	
-	@Override
-	public TwistingNether clone() throws CloneNotSupportedException {
-			try {
-				TwistingNether cloned = new TwistingNether();
-				return cloned;
-				
-			} catch (Exception e) {
-				throw new CloneNotSupportedException();
-			}	
-	}	
+	
+	
 
 }

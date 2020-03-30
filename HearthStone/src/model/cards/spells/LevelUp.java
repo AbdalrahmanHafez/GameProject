@@ -14,27 +14,18 @@ public class LevelUp extends Spell implements FieldSpell {
 
 	@Override
 	public void performAction(ArrayList<Minion> field) {
-		 for(Minion minion : field)
+		 for(Minion minion : field) {
 			 if(minion.getName().equals("Silver Hand Recruit")) {
 				 minion.setAttack( minion.getAttack() 				+1);
-				 minion.setCurrentHP( minion.getCurrentHP() 	+1);
 				 minion.setMaxHP( minion.getMaxHP()				+1);
+				 minion.setCurrentHP( minion.getCurrentHP() 	+1);
+				 
 			 }
-
+			
+		 }
 		 
 		 
 	}
 	
 	
-	@Override
-	public LevelUp clone() throws CloneNotSupportedException {
-			try {
-				LevelUp cloned = new LevelUp();
-				return cloned;
-				
-			} catch (Exception e) {
-				throw new CloneNotSupportedException();
-			}	
-	}	
-
 }

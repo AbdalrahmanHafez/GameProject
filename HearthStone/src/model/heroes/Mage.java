@@ -29,14 +29,21 @@ import model.cards.spells.Spell;
 
 public class Mage extends Hero {
 
-	public Mage() throws IOException, CloneNotSupportedException {
+	public Mage() throws IOException, CloneNotSupportedException, FullHandException {
 		super("Jaina Proudmoore");
 	}
 
 	@Override
-	public void buildDeck() throws IOException {
+	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 13);
-		getDeck().addAll(neutrals);
+//		don;t duplicate a Minion, use clone()
+		for(Minion m : neutrals) 
+			if(getDeck().contains(m)) 
+				getDeck().add((Card) m.clone());
+			else 
+				getDeck().add(m);
+		
+		
 		for (int i = 0; i < 2; i++) {
 			getDeck().add(new Polymorph());
 			getDeck().add(new Flamestrike());
@@ -60,7 +67,7 @@ public class Mage extends Hero {
 		for(Minion m : super.getField())
 			if(m.getName().equals("Kalycgos")) {
 				Card spell = (Card) s;
-				spell.setManaCost(spell.getManaCost() - 5);
+				spell.setManaCost(spell.getManaCost() - 4);
 			}	
 	}
 
@@ -105,7 +112,10 @@ public class Mage extends Hero {
 	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 //		Damages a minion
-		target.setCurrentHP(target.getCurrentHP() - 1);
+		if(target.isDivine())
+			target.setDivine(false);
+		else
+			target.setCurrentHP(target.getCurrentHP() - 1);
 	
 	}
 }

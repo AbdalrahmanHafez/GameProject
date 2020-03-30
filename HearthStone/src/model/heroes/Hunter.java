@@ -18,14 +18,21 @@ import model.cards.spells.MultiShot;
 
 public class Hunter extends Hero {
 
-	public Hunter() throws IOException, CloneNotSupportedException {
+	public Hunter() throws IOException, CloneNotSupportedException, FullHandException {
 		super("Rexxar");
 	}
 
 	@Override
-	public void buildDeck() throws IOException {
+	public void buildDeck() throws IOException, CloneNotSupportedException {
 		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),15);
-		getDeck().addAll(neutrals);
+//		don;t duplicate a Minion, use clone()
+		for(Minion m : neutrals) 
+			if(getDeck().contains(m)) 
+				getDeck().add((Card) m.clone());
+			else 
+				getDeck().add(m);
+		
+		
 		for(int i = 0 ; i < 2; i++)
 		{
 			getDeck().add(new KillCommand());

@@ -21,16 +21,7 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 		
 	}
 
-	@Override
-	public CurseOfWeakness clone() throws CloneNotSupportedException {
-			try {
-				CurseOfWeakness cloned = new CurseOfWeakness();
-				return cloned;
-				
-			} catch (Exception e) {
-				throw new CloneNotSupportedException();
-			}	
-	}
+	
 
 	
 }
