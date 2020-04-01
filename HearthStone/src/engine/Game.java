@@ -251,7 +251,8 @@ public class Game implements ActionValidator, HeroListener {
 	
 	
 	public void setListener(GameListener listener) {
-		this.listener = listener;
+		if(listener != null)
+			this.listener = listener;
 	}
 	
 	public Hero getCurrentHero() {

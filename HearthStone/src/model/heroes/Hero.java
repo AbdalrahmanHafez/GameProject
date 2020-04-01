@@ -303,7 +303,8 @@ public abstract class Hero implements HeroListener, MinionListener{
 	}
 
 	public void setListener(HeroListener listener) {
-		this.listener = listener;
+		if(listener != null)
+			this.listener = listener;
 	}
 
 	public void setValidator(ActionValidator validator) {

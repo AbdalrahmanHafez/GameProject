@@ -80,7 +80,8 @@ public class Minion extends Card implements Cloneable {
 	
 		
 	public void setListener(MinionListener listener) {
-		this.listener = listener;
+		if(listener != null)
+			this.listener = listener;
 	}
 	
 
