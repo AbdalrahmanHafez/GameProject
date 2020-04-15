@@ -9,7 +9,6 @@ import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
-import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.DivineSpirit;
@@ -18,73 +17,42 @@ import model.cards.spells.ShadowWordDeath;
 
 public class Priest extends Hero {
 
-	public Priest() throws IOException, CloneNotSupportedException, FullHandException {
+	public Priest() throws IOException, CloneNotSupportedException {
 		super("Anduin Wrynn");
 	}
 
 	@Override
 	public void buildDeck() throws IOException, CloneNotSupportedException {
-		ArrayList<Minion> neutrals= getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"),13);
-//		don;t duplicate a Minion, use clone()
-		for(Minion m : neutrals) 
-			if(getDeck().contains(m)) 
-				getDeck().add((Card) m.clone());
-			else 
-				getDeck().add(m);
-		
-		
-		for(int i = 0 ; i < 2; i++)
-		{
+		ArrayList<Minion> neutrals = getNeutralMinions(getAllNeutralMinions("neutral_minions.csv"), 13);
+		getDeck().addAll(neutrals);
+		for (int i = 0; i < 2; i++) {
 			getDeck().add(new DivineSpirit());
 			getDeck().add(new HolyNova());
 			getDeck().add(new ShadowWordDeath());
 		}
-		Minion velen=new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false);
-		
+		Minion velen = new Minion("Prophet Velen", 7, Rarity.LEGENDARY, 7, 7, false, false, false);
 		getDeck().add(velen);
+		listenToMinions();
 		Collections.shuffle(getDeck());
 
-		
-//		Hero listens to The minion screams
-		for(Card c : this.getDeck()) 
-			if(c instanceof Minion)
-				((Minion)c).setListener(this);
-		
-//	
 	}
-	
-	
-	
-	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+
+	public void useHeroPower(Minion m) throws NotEnoughManaException, HeroPowerAlreadyUsedException,
+			NotYourTurnException, FullHandException, CloneNotSupportedException, FullFieldException {
 		super.useHeroPower();
-		
-//		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
-		for(Minion m : super.getField()) {
-			if(m.getName().equals("Prophet Velen")) {
-				target.setCurrentHP(target.getCurrentHP() + 8);
-				return;//exit
-			}
-		}
-		//		restores 2 HP
-		target.setCurrentHP(target.getCurrentHP() + 2);
-	
+		if (fieldContains("Prophet Velen"))
+			m.setCurrentHP(m.getCurrentHP() + 8);
+		else
+			m.setCurrentHP(m.getCurrentHP() + 2);
 	}
-	
-	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException, FullFieldException, CloneNotSupportedException {
+
+	public void useHeroPower(Hero h) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, CloneNotSupportedException, FullFieldException {
 		super.useHeroPower();
-		
-//		If a priest hero has Prophet Velen on his ﬁeld, his hero power restores 8 health instead of 2
-		for(Minion m : super.getField()) {
-			if(m.getName().equals("Prophet Velen")) {
-				target.setCurrentHP(target.getCurrentHP() + 8);
-				return;//exit
-			}
-		}
-		//		restores 2 HP
-		target.setCurrentHP(target.getCurrentHP() + 2);
-	
-	
+		if (fieldContains("Prophet Velen"))
+			h.setCurrentHP(h.getCurrentHP() + 8);
+		else
+			h.setCurrentHP(h.getCurrentHP() + 2);
 	}
-	
 
 }

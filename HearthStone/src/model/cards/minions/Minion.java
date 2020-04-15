@@ -1,27 +1,24 @@
 package model.cards.minions;
 
-import exceptions.*;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.heroes.Hero;
-import model.heroes.HeroListener;
+import exceptions.InvalidTargetException;
 
 public class Minion extends Card implements Cloneable {
 	private int attack;
 	private int maxHP;
 	private int currentHP;
 	private boolean taunt;
-	private boolean divine; 
-	private boolean sleeping;
+	private boolean divine;
+	public boolean sleeping;
 	private boolean attacked;
-
 	private MinionListener listener;
-	
-	
 
-	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,			boolean charge) {
+	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
+			boolean charge) {
 		super(name, manaCost, rarity);
-		setAttack(attack);
+		this.attack = attack;
 		this.maxHP = maxHP;
 		this.currentHP = maxHP;
 		this.taunt = taunt;
@@ -29,61 +26,42 @@ public class Minion extends Card implements Cloneable {
 		if (!charge)
 			this.sleeping = true;
 	}
-	
-	
+
 	public void attack(Minion target) {
-		this.setAttacked(true);
 
-		if(this.getAttack() != 0)
-			if(target.isDivine()) 
-				target.setDivine(false);
-			else 
-				target.setCurrentHP(target.getCurrentHP() - this.getAttack());
-			
-		if(target.getAttack() != 0)
-			if(this.isDivine())
-				this.setDivine(false);
-			else
-				this.setCurrentHP(this.getCurrentHP() - target.getAttack());
+		if (divine && target.divine)
 
-	}
-	
-	public void attack(Hero target) throws InvalidTargetException{
-//		The attacker minion should lose divine
-		this.setDivine(false);
-		
-		this.setAttacked(true);
-		
-		if (this instanceof Icehowl) 
-			throw new InvalidTargetException();
-		else {
-			target.setCurrentHP(target.getCurrentHP() - this.getAttack());
-			
+		{
+			if (target.attack > 0)
+				divine = false;
+			if (attack > 0)
+				target.divine = false;
+		} else if (divine) {
+			target.setCurrentHP(target.currentHP - attack);
+			if (target.getAttack() > 0)
+				divine = false;
+
+		} else if (target.divine) {
+			setCurrentHP(currentHP - target.attack);
+			if (attack > 0)
+				target.divine = false;
+		} else {
+			target.setCurrentHP(target.currentHP - attack);
+			setCurrentHP(currentHP - target.attack);
+
 		}
-	
-		
-		
+		attacked = true;
 	}
 
-			
+	public void attack(Hero target) throws InvalidTargetException {
+		attacked = true;
+		target.setCurrentHP(target.getCurrentHP() - attack);
 
+	}
 
-	
-	
-	
-	
-	
-	
 	public boolean isTaunt() {
 		return taunt;
 	}
-	
-		
-	public void setListener(MinionListener listener) {
-		if(listener != null)
-			this.listener = listener;
-	}
-	
 
 	public int getMaxHP() {
 		return maxHP;
@@ -100,13 +78,15 @@ public class Minion extends Card implements Cloneable {
 	public void setCurrentHP(int currentHP) {
 		this.currentHP = currentHP;
 		if (this.currentHP > maxHP)
-			this.currentHP = maxHP;
+			currentHP = maxHP;
 		else if (this.currentHP <= 0) {
 			this.currentHP = 0;
-//		Meaning the minion Died
 			listener.onMinionDeath(this);
-			
 		}
+	}
+
+	public void setListener(MinionListener listener) {
+		this.listener = listener;
 	}
 
 	public int getAttack() {
@@ -147,6 +127,7 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
-	
-
+	public Minion clone() throws CloneNotSupportedException {
+		return (Minion) super.clone();
+	}
 }

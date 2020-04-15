@@ -3777,7 +3777,6 @@ public class M2PublicTests {
 			int occurrences = Collections.frequency(callParameters, currentHero);
 			if(occurrences != 3){
 				reset();
-
 				fail("Game Constructor should call the method drawCard in class Hero for the current hero 3 times");
 			}
 			occurrences = Collections.frequency(callParameters, testHero);
