@@ -3,18 +3,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-
-public class WelcomeScreen extends JFrame{
+public class WelcomeScreen extends JFrame implements ActionListener {
+	
+	WelcomeScreenListener listener;
 	
 	public WelcomeScreen() {
 		this.setTitle("HearthStone version 0.01");
@@ -23,20 +29,36 @@ public class WelcomeScreen extends JFrame{
 		this.setVisible( true );
 //		this.setResizable( false );
 		
+				
+//		this.setLayout(new GridLayout(6,1));
 		
+		Box theBox = Box.createVerticalBox();
+
 		
-		this.setLayout(new GridLayout(6,1));
 		
 		JLabel label0 = new JLabel("HearthStone");
 		label0.setFont (label0.getFont ().deriveFont (64.0f));
 		label0.setBorder(new CompoundBorder(label0.getBorder(), new EmptyBorder(10,50,10,10)));
-		this.add(label0);
+		theBox.add(label0);
 		
 		
 		JLabel label1 = new JLabel("Choose Player 1:");
 		label1.setFont (label0.getFont ().deriveFont (24.0f)); 
-		label1.setBorder(new CompoundBorder(label1.getBorder(), new EmptyBorder(0,50,0,0)));
-		this.add(label1);
+//		label1.setBorder(new CompoundBorder(label1.getBorder(), new EmptyBorder(0,50,0,0)));
+
+		label1.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+		label1.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		JPanel pan = new JPanel(new FlowLayout());
+		pan.add(label1);
+		pan.setPreferredSize(new Dimension(200,10));
+		//TODO welcomescreen text alignment
+		
+		theBox.add(label1);
+		
+//		theBox.add(Box.createVerticalStrut(30));
+
+		
 		
 		JPanel panel0 = new JPanel(new FlowLayout());
 		panel0.setBackground(new Color(87, 138, 201));
@@ -44,18 +66,23 @@ public class WelcomeScreen extends JFrame{
 		ArrayList<JButton> btns0 = new ArrayList<JButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
 			JButton btn = new JButton("Button " + (i+1));
+//			TODO button action commands
+			btn.setActionCommand("");
 			btns0.add(btn);
 			btn.setPreferredSize(new Dimension(250,150));
 			panel0.add(btn);
 		}
 		
-		this.add(panel0);
+		theBox.add(panel0);
 		
 		JLabel label2 = new JLabel("Choose Player 2:");
 		label2.setFont (label2.getFont ().deriveFont (24.0f));
-		label2.setBorder(new CompoundBorder(label2.getBorder(), new EmptyBorder(0,50,0,0)));
-		this.add(label2);
+//		label2.setBorder(new CompoundBorder(label2.getBorder(), new EmptyBorder(0,50,0,0)));
+		theBox.add(label2);
 		
+		
+//		theBox.add(Box.createVerticalStrut(10));
+
 				
 		
 		JPanel panel1 = new JPanel(new FlowLayout());
@@ -69,22 +96,43 @@ public class WelcomeScreen extends JFrame{
 			panel1.add(btn);
 		}
 		
-		
-
-		this.add(panel1);
+		theBox.add(panel1);
 		
 		
 		
+		JPanel panel2 = new JPanel(new FlowLayout());
 		
 		JButton StartGamebtn = new JButton("START");
-		this.add(StartGamebtn);
+		StartGamebtn.setPreferredSize(new Dimension(1500,50));
+		
+		StartGamebtn.addActionListener(this);
+		StartGamebtn.setActionCommand("startgame");
+		
+		
+		panel2.add(StartGamebtn);
+		
+		theBox.add(panel2);
+		
+		
+
+		this.add(theBox);
+		
+		
 		
 		this.repaint();
 		this.revalidate();
 		
 		
 	}
+
+
+	public void actionPerformed(ActionEvent e) {
+		listener.actionPerformed(e);
+	}
 	
+	public void setListener(WelcomeScreenListener listener) {
+		this.listener = listener;
+	}
 	
 	
 }
