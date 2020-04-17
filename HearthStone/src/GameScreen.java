@@ -2,11 +2,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,88 +51,54 @@ public class GameScreen extends JFrame {
 		JButton btnHeroInfo = new JButton("info");
 		JButton btnEndTurn = new JButton("EndTurn");
 
-		
-//		  migpanel.add(btnHero2Pic, "grow"); migpanel.add(btnHero2Hand,
-//		  "grow, span 2 1"); migpanel.add(btnHero2Mana, "grow, wrap");
-//		  
-//		  migpanel.add(btnHero2Info, "grow"); migpanel.add(btnHero2Field,
-//		  "grow, span 2 1");
-//		  
-//		  JPanel migp2= new JPanel(new MigLayout("fill")); migp2.add(btnEndTurn,
-//		  "grow, cell 0 0"); migp2.add(btnHero2Deck, "grow, cell 0 1");
-//		  
-//		  migpanel.add(migp2, "grow, wrap");
-//		 
-//		  migpanel.add(btnHeroInfo, "grow"); migpanel.add(btnHeroField,
-//		  "grow, span 2 1"); migpanel.add(btnHeroDeck, "grow, span 2 1, wrap");
-//		  
-//		  migpanel.add(btnHeroPic, "grow"); migpanel.add(btnHeroHand,
-//		  "grow, span 2 1");
-//		  
-//		  JPanel migp3= new JPanel(new MigLayout("fill")); migp3.add(btnHeroPower,
-//		  "grow, cell 0 0"); migp3.add(btnHeroMana, "grow, cell 1 0");
-//		  
-//		  migpanel.add(migp3, "grow");
-//	
-
-		JPanel topPanle = new JPanel(new FlowLayout());
-		JPanel leftPanle = new JPanel(new FlowLayout());
-		JPanel rightPanle = new JPanel(new GridLayout(3, 1));
-		JPanel bottomPanle = new JPanel(new FlowLayout());
-		JPanel centerPanle = new JPanel(new GridLayout(2, 1));
-
-		/* Buttons Adjustments */
-
-		btnHero2Hand.setPreferredSize(new Dimension(1350, 120));
-		btnHero2Pic.setPreferredSize(new Dimension(250, 120));
-		btnHero2Mana.setPreferredSize(new Dimension(250, 120));
-
-		btnHeroHand.setPreferredSize(new Dimension(1200,120));
-		btnHeroPic.setPreferredSize(new Dimension(250, 120));
-		btnHeroPower.setPreferredSize(new Dimension(150,120));
-		btnHeroMana.setPreferredSize(new Dimension(250, 120));
-		
-		btnHeroInfo.setPreferredSize(new Dimension(70,800));
-		
-		btnEndTurn.setPreferredSize(new Dimension(10, 10 ));
-		
-		/* End Button Adj */
 
 		
-		  topPanle.add(btnHero2Pic);
-		  topPanle.add(btnHero2Hand);
-		  topPanle.add(btnHero2Mana);
-		  
-		  leftPanle.add(btnHeroInfo);
-		  
-		  rightPanle.add(btnHero2Deck);
-		  
-//		  TODO maybe do a verical box layout
-		  JPanel endPanel = new JPanel();
-		  btnEndTurn.setPreferredSize(new Dimension(100,150));
-		  endPanel.add(btnEndTurn);
-		  rightPanle.add(endPanel);
-		  
-		  rightPanle.add(btnHeroDeck);
-		  
-		  bottomPanle.add(btnHeroPic ); 
-		  bottomPanle.add(btnHeroHand);
-		  bottomPanle.add(btnHeroPower);
-		  bottomPanle.add(btnHeroMana);
-		  
-		  centerPanle.add(btnHero2Field); centerPanle.add(btnHeroField);
-		  
-		  
-		  topPanle.setPreferredSize(new Dimension(100,120));
-		  
-		  this.add(topPanle, BorderLayout.NORTH); 
-		  this.add(leftPanle,BorderLayout.WEST);
-		  this.add(rightPanle, BorderLayout.EAST);
-		  this.add(bottomPanle, BorderLayout.SOUTH);
-		  this.add(centerPanle,BorderLayout.CENTER);
+		JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
+		JPanel leftPanle 		= new JPanel(new MigLayout("fill"));
+		JPanel rightPanle 		= new JPanel(new MigLayout("fill"));
+		JPanel bottomPanle 	= new JPanel(new MigLayout("fill"));
+		JPanel centerPanle 	= new JPanel(new MigLayout("fill"));
 
+		/* components Adjustments */
+	
+		topPanle.setPreferredSize(new Dimension(100,120));
+		bottomPanle.setPreferredSize(new Dimension(100,120));
 
-//		this.add(migpanel);
+		
+		
+		/* End components Adj */
+
+		
+		topPanle.add(btnHero2Pic, "grow");
+		topPanle.add(btnHero2Hand, "grow, w 1200");
+		topPanle.add(btnHero2Mana, "grow");
+		  
+		
+		leftPanle.add(btnHeroInfo, "grow");
+			  
+	
+		rightPanle.add(btnHero2Deck, "grow, wrap");
+		rightPanle.add(btnEndTurn	, "grow x, wrap");
+		rightPanle.add(btnHeroDeck, "grow, wrap");
+  
+		
+		bottomPanle.add(btnHeroPic, "grow");
+		bottomPanle.add(btnHeroHand, "grow,w 1100");
+		bottomPanle.add(btnHeroPower, "grow");
+		bottomPanle.add(btnHeroMana, "grow");
+ 
+		  
+		centerPanle.add(btnHero2Field,"grow, wrap");
+		centerPanle.add(btnHeroField,"grow");
+		  
+		  
+  
+		this.add(topPanle			, BorderLayout.NORTH); 
+		this.add(leftPanle			,BorderLayout.WEST);
+		this.add(rightPanle		, BorderLayout.EAST);
+		this.add(bottomPanle	, BorderLayout.SOUTH);
+		this.add(centerPanle		,BorderLayout.CENTER);
+
 		  
 		this.repaint();
 		this.revalidate();

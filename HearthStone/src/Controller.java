@@ -8,13 +8,13 @@ public class Controller implements ActionListener, WelcomeScreenListener{
 	
 	public Controller(){
 		welcomesc  = new WelcomeScreen();
-		gamesc = new GameScreen();
+//		gamesc = new GameScreen();
+		
 		welcomesc.setListener(this);
 	}
 	
 	
 	public static void main(String[] args) {
-		
 		new Controller();
 	}
 
@@ -26,12 +26,15 @@ public class Controller implements ActionListener, WelcomeScreenListener{
 			case "startgame":
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true); 			break;
-		
-		
-		
+	
 		}
 		
 	}
+
+	
+	
+	
+	
 	
 	
 }
