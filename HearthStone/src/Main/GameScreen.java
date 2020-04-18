@@ -1,3 +1,4 @@
+package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +27,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import assets.CardButton;
+import assets.ImagePanel;
 import model.cards.Card;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
@@ -35,8 +37,6 @@ public class GameScreen extends JFrame implements ActionListener{
 	GameScreenListener listener;
 	
 	
-
-
 	JPanel migpanel = new JPanel(new MigLayout("fill"));
 
 	JButton btnHero2Pic = new JButton("Opponent Picture");
@@ -57,7 +57,8 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	JButton btnHero2Info = new JButton("opponent info");
 	JButton btnEndTurn = new JButton("EndTurn");
-
+	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
+	
 
 	JTextPane txtInfo = new JTextPane();
 	JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
@@ -115,8 +116,8 @@ public class GameScreen extends JFrame implements ActionListener{
 		topPanle.add(lblHero2Mana, "grow");
 		  
 		
-		leftPanle.add(txtInfo, "grow");
-			  
+		leftPanle.add(txtInfo, "grow, wrap");
+		leftPanle.add(imgPreview, "grow");
 	
 		rightPanle.add(btnHero2Deck, "grow, wrap, w 100!");
 		rightPanle.add(btnEndTurn	, "growx, wrap, w 100!");
@@ -146,10 +147,7 @@ public class GameScreen extends JFrame implements ActionListener{
 
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		listener.actionPerformed(e);
-	}
+
 
 		
 	
@@ -175,22 +173,25 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
-			addCardTo(c, panHeroHand);
-		}
-		
-		panHero2Hand.removeAll();
-		for(Card c : OpponentHero.getHand()) {
-			addCardTo(c, panHero2Hand);
+			addCardTo(c, panHeroHand, false);
 		}
 		
 		panHeroField.removeAll();
 		for(Card c : CurrentHero.getField()) {
-			addCardTo(c, panHeroField);
+			addCardTo(c, panHeroField, false);
 		}
 	
+		
+		
+		panHero2Hand.removeAll();
+		for(Card c : OpponentHero.getHand()) {
+			addCardTo(c, panHero2Hand, true);
+		}
+		
+		
 		panHero2Field.removeAll();
 		for(Card c : OpponentHero.getField()) {
-			addCardTo(c, panHero2Field);
+			addCardTo(c, panHero2Field, false);
 		}
 	
 		this.repaint();
@@ -200,24 +201,28 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	
 
-	public void addCardTo(Card Card, JPanel panel) {
+	public void addCardTo(Card Card, JPanel panel, boolean hidden) {
 		if (Card == null) {return;}
 		
-		CardButton btm = new CardButton(120, 150);
-		btm.setImage("resources/images/Cards/spell.png");
-		btm.setText("cecece");
+		CardButton btn = new CardButton(120, 150, hidden);
+		btn.setImage("resources/images/Cards/spell.png");
+		btn.setText("text label");
+
+		btn.setListener(this);
 		
-		
-		JButton btn = new JButton(Card.getName());
-		btn.setPreferredSize(new Dimension(120,150));
-		
-		panel.add(btm);
+		panel.add(btn);
 		
 		this.repaint();
 		this.revalidate();
 	}
 
 	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+//		Listens to CardButtons
+		listener.actionPerformed(e);
+	}
 	
 	
 	public void setListener(GameScreenListener listener) {

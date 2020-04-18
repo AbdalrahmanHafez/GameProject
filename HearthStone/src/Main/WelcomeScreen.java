@@ -1,3 +1,4 @@
+package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -202,9 +204,11 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		JButton StartGamebtn = new JButton("Lets GO !");
 		StartGamebtn.setPreferredSize(new Dimension(1500,50));
 		StartGamebtn.setBackground(colorDarkBlue);
-		StartGamebtn.setForeground(Color.WHITE);
+//		StartGamebtn.setBackground(UIManager.getColor("control"));
+		StartGamebtn.setForeground(Color.white);
 		StartGamebtn.setFocusPainted(false);
 		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		
 		
 		migpanel.add(StartGamebtn, "grow, gaptop 20");
 

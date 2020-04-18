@@ -5,6 +5,9 @@ public abstract class Card implements Cloneable {
 	private int manaCost;
 	private Rarity rarity;
 
+
+
+
 	public Card(String name, int manaCost, Rarity rarity) {
 		this.name = name;
 		this.manaCost = manaCost;
@@ -39,4 +42,7 @@ public abstract class Card implements Cloneable {
 		return (Card) super.clone();
 	}
 
+	
+
+	
 }

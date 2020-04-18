@@ -1,5 +1,7 @@
+package Main;
 import javax.swing.*;
 
+import assets.CardButton;
 import assets.alertBox;
 import engine.Game;
 import exceptions.FullHandException;
@@ -29,6 +31,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO button Actions 
+
 		switch (e.getActionCommand()){
 			case "start":
 				welcomesc.setVisible(false);
@@ -37,12 +40,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 			case "draw":
 				Card drawnCard = null;
+
 				try {
 					drawnCard = game.getCurrentHero().drawCard();
-				} catch (FullHandException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (CloneNotSupportedException e1) {
+				} catch (FullHandException | CloneNotSupportedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -53,6 +54,17 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			case "endturn":
 				System.out.println("Ending turn");
 				;break;
+				
+			case "CardButton":
+				CardButton btn = ((CardButton)e.getSource());
+				if(!btn.isHidden()) {
+					
+//					TODO cardButton action
+					
+				}
+				
+				;break;
+				
 				
 		}
 		
