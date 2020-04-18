@@ -3,6 +3,7 @@ import javax.swing.*;
 import assets.alertBox;
 import engine.Game;
 import exceptions.FullHandException;
+import model.cards.Card;
 import model.heroes.Hero;
 
 import java.awt.*;
@@ -31,11 +32,13 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		switch (e.getActionCommand()){
 			case "start":
 				welcomesc.setVisible(false);
-				gamesc.setVisible(true)				;break;
+				gamesc.setVisible(true);
+				;break;
 				
 			case "draw":
+				Card drawnCard = null;
 				try {
-					game.getCurrentHero().drawCard();
+					drawnCard = game.getCurrentHero().drawCard();
 				} catch (FullHandException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -43,11 +46,14 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
 				gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
-					
+				;break;
+
 			case "endturn":
-				(new alertBox()).info("Thanks For Playing : )");
-			
+				System.out.println("Ending turn");
+				;break;
+				
 		}
 		
 		
@@ -64,6 +70,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			(new alertBox()).error("Error inisilizeing the game engine");
 			e.printStackTrace();
 		}
+		
 		
 		gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
 		

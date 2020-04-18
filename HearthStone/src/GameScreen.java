@@ -25,6 +25,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+import assets.CardButton;
+import model.cards.Card;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
@@ -38,18 +40,18 @@ public class GameScreen extends JFrame implements ActionListener{
 	JPanel migpanel = new JPanel(new MigLayout("fill"));
 
 	JButton btnHero2Pic = new JButton("Opponent Picture");
-	JButton btnHero2Hand = new JButton("How many in opponent hand");
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
 	JButton btnHero2Deck = new JButton("Oponent Deck");
 
 	JPanel 	panHero2Field = new JPanel(new FlowLayout());
 	JPanel 	panHeroField = new JPanel(new FlowLayout());
+	JPanel	panHeroHand = new JPanel(new FlowLayout());
+	JPanel 	panHero2Hand = new JPanel(new FlowLayout());
 	
 	JButton btnHeroDeck = new JButton("Hero Deck, Draw a new Card");
 
 	JButton btnHeroPic = new JButton("Hero Picture");
-	JButton btnHeroHand = new JButton("How many in Hero hand");
 	JButton btnHeroPower = new JButton("Hero POWER");
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
@@ -72,7 +74,6 @@ public class GameScreen extends JFrame implements ActionListener{
 		this.setLocationRelativeTo(null); // will center the window on the screen
 //		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
-//		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		/* Buttons action assignments */
@@ -85,9 +86,11 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		/* components Adjustments */
 	
-		topPanle.setPreferredSize(new Dimension(100,120));
-		bottomPanle.setPreferredSize(new Dimension(100,120));
+		topPanle.setPreferredSize(new Dimension(100,180));
+		bottomPanle.setPreferredSize(new Dimension(100,180));
 		leftPanle.setPreferredSize(new Dimension(250, 0));
+	
+		
 		txtInfo.setEditable(false);
 		txtInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		Font fontPrince = null;
@@ -101,26 +104,27 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
-
+		panHeroHand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
+		panHero2Hand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
 		
 		/* End components Adj */
 
 		
 		topPanle.add(btnHero2Pic, "grow");
-		topPanle.add(btnHero2Hand, "grow, w 1500");
+		topPanle.add(panHero2Hand, "grow, w 1500");
 		topPanle.add(lblHero2Mana, "grow");
 		  
 		
 		leftPanle.add(txtInfo, "grow");
 			  
 	
-		rightPanle.add(btnHero2Deck, "grow, wrap");
-		rightPanle.add(btnEndTurn	, "grow x, wrap");
-		rightPanle.add(btnHeroDeck, "grow, wrap");
+		rightPanle.add(btnHero2Deck, "grow, wrap, w 100!");
+		rightPanle.add(btnEndTurn	, "growx, wrap, w 100!");
+		rightPanle.add(btnHeroDeck	, "grow, wrap, w 100!");
   
 		
 		bottomPanle.add(btnHeroPic, "grow");
-		bottomPanle.add(btnHeroHand, "grow,w 1100");
+		bottomPanle.add(panHeroHand, "grow,w 1100");
 		bottomPanle.add(btnHeroPower, "grow");
 		bottomPanle.add(lblHeroMana, "grow");
  
@@ -151,7 +155,7 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {
 		
-		txtInfo.setText("=====[GAME INFO]======"
+		txtInfo.setText("====[GAME INFO]===="
 				+ "\nPlaying : " 	     	+ CurrentHero.getName()
 				+ "\nHP: " 					+ CurrentHero.getCurrentHP()
 				+ "\nMana: " 				+ CurrentHero.getCurrentManaCrystals() + "/" + CurrentHero.getTotalManaCrystals()
@@ -169,13 +173,56 @@ public class GameScreen extends JFrame implements ActionListener{
 		lblHeroMana.setText(CurrentHero.getCurrentManaCrystals() + " / " + CurrentHero.getTotalManaCrystals());
 		lblHero2Mana.setText(OpponentHero.getCurrentManaCrystals() + " / " + OpponentHero.getTotalManaCrystals());
 
+		panHeroHand.removeAll();
+		for(Card c : CurrentHero.getHand()) {
+			addCardTo(c, panHeroHand);
+		}
 		
+		panHero2Hand.removeAll();
+		for(Card c : OpponentHero.getHand()) {
+			addCardTo(c, panHero2Hand);
+		}
+		
+		panHeroField.removeAll();
+		for(Card c : CurrentHero.getField()) {
+			addCardTo(c, panHeroField);
+		}
+	
+		panHero2Field.removeAll();
+		for(Card c : OpponentHero.getField()) {
+			addCardTo(c, panHero2Field);
+		}
+	
+		this.repaint();
+		this.revalidate();
 		
 	}
+	
+	
 
+	public void addCardTo(Card Card, JPanel panel) {
+		if (Card == null) {return;}
+		
+		CardButton btm = new CardButton(120, 150);
+		btm.setImage("resources/images/Cards/spell.png");
+		btm.setText("cecece");
+		
+		
+		JButton btn = new JButton(Card.getName());
+		btn.setPreferredSize(new Dimension(120,150));
+		
+		panel.add(btm);
+		
+		this.repaint();
+		this.revalidate();
+	}
+
+	
+	
 	
 	public void setListener(GameScreenListener listener) {
 		this.listener = listener;
 	}
+
 
 }
