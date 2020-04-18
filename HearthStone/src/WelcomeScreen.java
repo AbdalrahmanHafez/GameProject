@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.event.*;    
 
 
@@ -16,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -24,7 +26,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import assets.*;
-
+import model.heroes.Hero;
+import model.heroes.*;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -32,15 +35,27 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	
 	WelcomeScreenListener listener;
 	
+	Hero p1;
+	Hero p2;
+	
 	private Color colorDarkBlue = new 		Color(59, 89, 182);
 	private Color colorGrayBlue = new 		Color(161, 225, 255);
 	private Color colorWhiteBlue = new		Color(62, 157, 201);
 	private Color colorLightBlue = new		Color(161, 225, 255);
 
-	
+	 ArrayList<String> Heronames = new ArrayList<String>( 
+	            Arrays.asList(	"<html><center> [Mage] <br> Jaina Proudmore		</html>", //1
+	            					"<html><center>	[Hunter] <br> Rexxar					</html>", 	//2
+	            					"<html><center>	[Paladin] <br> Uther Lightbringer </html>",	//3
+	            					"<html><center>	[Priest] <br> Anduin Wrynn			</html>",	//4
+	            					"<html><center>	[Warlock] <br> Gul'dan				</html>")); 	//5
+	 
+	 alertBox alert = new alertBox();
+	 
 	int posX=0,posY=0;
 			
 	public WelcomeScreen() {
+		
 		this.setTitle("HearthStone version 0.01");
 		this.setBounds(10,20, 	 1500, 700);
 		this.setLocationRelativeTo(null); // will center the window on the screen
@@ -48,8 +63,6 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		this.setResizable( true );
 		this.setVisible( true );
 
-		Image img = new ImageIcon(getClass().getResource("images/Card.png")).getImage();
-		ImagePanel p = new ImagePanel(img);
 		
 		
 		
@@ -131,17 +144,17 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		ArrayList<JButton> btnsChoose1 = new ArrayList<JButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
 			JButton btn = new JButton("Button " + (i+1));
-//			TODO button action commands
 			btn.setIcon(new ImageIcon("resources/Card.png"));
-			
-			btn.setActionCommand("");
+			btn.addActionListener(this);
+			btn.setActionCommand("p1"+i) ;
+			btn.setText(Heronames.get(i));
 			btnsChoose1.add(btn);
 			btn.setPreferredSize(new Dimension(250,150));
 			btn.setBackground(colorDarkBlue);
 	        btn.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
-	        btn.setFont(new Font("Tahoma", Font.BOLD, 12));
-	        
+	        btn.setFont(new Font("Tahoma", Font.BOLD, 20));
+	        	        
 			panel1.add(btn);
 		}
 		migpanel.add(panel1, "grow, wrap");
@@ -170,11 +183,14 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		for(int i = 0 ; i<5 ; i++) {
 			JButton btn = new JButton("Button " + (i+1));
 			btnsChoose2.add(btn);
+			btn.addActionListener(this);
+			btn.setActionCommand("p2"+i) ;
+			btn.setText(Heronames.get(i));
 			btn.setPreferredSize(new Dimension(250,150));
 			btn.setBackground(colorDarkBlue);
 	        btn.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
-	        btn.setFont(new Font("Tahoma", Font.BOLD, 12));
+	        btn.setFont(new Font("Tahoma", Font.BOLD, 20));
 	        
 			panel2.add(btn);
 		}
@@ -183,18 +199,18 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 			
 		
-		JButton StartGamebtn = new JButton("START");
+		JButton StartGamebtn = new JButton("Lets GO !");
 		StartGamebtn.setPreferredSize(new Dimension(1500,50));
 		StartGamebtn.setBackground(colorDarkBlue);
 		StartGamebtn.setForeground(Color.WHITE);
 		StartGamebtn.setFocusPainted(false);
-		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 12));
+		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 20));
 		
 		migpanel.add(StartGamebtn, "grow, gaptop 20");
 
 		
 		StartGamebtn.addActionListener(this);
-		StartGamebtn.setActionCommand("startgame");
+		StartGamebtn.setActionCommand("start");
 		
 		
 
@@ -233,18 +249,14 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		});
 		
 		
-		
-		
-		
-		
-		
-		
+				
 		
 	}
 
 
 	public void actionPerformed(ActionEvent e) {
-	
+		JButton btnpressed = (JButton)e.getSource();
+
 		if(e.getActionCommand().equals("max"))
 			if(this.getExtendedState() == JFrame.MAXIMIZED_BOTH)
 				this.setExtendedState(0); 
@@ -256,8 +268,53 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 			this.setExtendedState(JFrame.ICONIFIED); 	
 		}
 		
-		listener.actionPerformed(e);
+		try {
+		switch (e.getActionCommand()){
+			case "p11":
+							p1 = new Mage() 			;break;
+			case "p12":
+							p1 = new Hunter() 		;break;
+			case "p13":
+							p1 = new Paladin() 		;break;
+			case "p14":
+							p1 = new Priest() 			;break;
+			case "p15":
+							p1 = new Warlock() 		;break;
+			case "p21":
+							p2 = new Mage() 			;break;
+			case "p22":
+							p2 = new Hunter() 		;break;
+			case "p23":
+							p2 = new Paladin() 		;break;
+			case "p24":
+							p2 = new Priest() 			;break;
+			case "p25":
+							p2 = new Warlock() 		;break;
+		}
+		}catch(Exception err) 
+			{err.getMessage();}
+		
+		
+		if(e.getActionCommand().equals("start")){
+//			TODO assuming players 
+			try {
+			p1 = new Priest();
+			p2 = new Mage();}catch(Exception ee) {;}
+				if (	p1 == null || p2 == null 	) {
+					alert.error("Please choose a hero for each player");
+					return;
+				}
+
+				listener.initializeGame(p1, p2);
+				listener.actionPerformed(e);
+		}
+		
+		
 	}
+
+
+
+	
 	
 	public void setListener(WelcomeScreenListener listener) {
 		this.listener = listener;
