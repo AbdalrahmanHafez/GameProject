@@ -14,6 +14,7 @@ public class ImagePanel extends JPanel
 {
     Image image, scaledImage;
     int w,h;
+    private boolean fullimageflag = false;
     
     public ImagePanel(String imgpath) {
     	this(imgpath, 0, 0);
@@ -27,29 +28,23 @@ public class ImagePanel extends JPanel
 
         this.w = w;
         this.h = h;        	
-        
-        if( w==0 || h==0 ) {
-        	Dimension size = new Dimension(image.getWidth(null), image.getHeight(null));
-     	    setPreferredSize(size);
-     	    setMinimumSize(size);
-     	    setMaximumSize(size);
-     	    setSize(size);
-     	    setLayout(null);
-        	        	
-        	this.w = this.getWidth();
-            this.h = this.getHeight();    
-        	scaledImage = image;
-        	return;
-        }
-    	
+                   	
         scaledImage = image.getScaledInstance(w,h,
                                               Image.SCALE_DEFAULT);
     }
+    
+    public void setImageToFull() {
+    	fullimageflag = true;
+	}
   
     protected void paintComponent(Graphics g)
     {
-        super.paintComponent(g);
-
+    	super.paintComponent(g);
+    	if(this.getWidth() != 0 && this.getHeight() !=0 && fullimageflag) {
+			scaledImage = image.getScaledInstance(this.getWidth(),  this.getHeight(),
+	                Image.SCALE_DEFAULT);		
+			fullimageflag = false;
+		}
         g.drawImage(scaledImage, 0,0 , this);
     }
   
@@ -57,6 +52,8 @@ public class ImagePanel extends JPanel
     {
         return new Dimension(this.w, this.h);
     }
+
+	
 }
 
 

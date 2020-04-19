@@ -30,7 +30,7 @@ public class CardButton extends ImageButton{
 		super(120, 150, clickable);
 		
 		this.addActionListener(this);
-		this.setActionCommand("handfieldbutton");
+		this.setActionCommand("CardButton");
 		
 		this.hidden = h;
 		
