@@ -3,7 +3,6 @@ package assets;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -14,69 +13,84 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
-import javax.xml.bind.Marshaller.Listener;
 
-import Main.GameScreenListener;
+import model.cards.Card;
 
-
-public class CardButton extends JButton implements ActionListener {
-	private String imagePath;
-	private JLabel Label;
+public class CardButton extends ImageButton{
 	private boolean hidden = false;
+	private boolean showOverlay = true;
+	private Card card;
+
 	
-	private ActionListener listener;
-	
-	public CardButton(int width, int hight, boolean h)
+	public CardButton(boolean h, boolean showOverlay, boolean clickable)
 	{
-		this.setPreferredSize(new Dimension(width, hight));
-		this.setLayout(new BorderLayout());
 		
-		Label=new JLabel("", JLabel.CENTER);
-		Label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		Label.setForeground(Color.black);
-		
-		this.hidden	=	h;
+		super(120, 150, clickable);
 		
 		this.addActionListener(this);
+		this.setActionCommand("handfieldbutton");
 		
-		if(!hidden) {
-			this.add(Label, BorderLayout.SOUTH);	
+		this.hidden = h;
+		
+		this.addMouseListener(new MouseAdapter() {
+		
 			
-			this.addMouseListener(new MouseAdapter() {
-				 public void mouseEntered(MouseEvent me) {
-					 ((CardButton) me.getSource()).setImage("resources/images/uparrow.png");
+			public void mouseEntered(MouseEvent me) {
+					 border_activate();
+					 if(showOverlay)
+						 ((ImageButton) me.getSource()).setImage("resources/images/uparrow.png");
 				 }
-		         public void mouseExited(MouseEvent me) {
-					 ((CardButton) me.getSource()).setImage("resources/images/Cards/spell.png");
+
+				public void mouseExited(MouseEvent me) {
+		        	 border_deactivate();
+					 ((ImageButton) me.getSource()).setImage("resources/images/Cards/spell.png");
 		         }
+
 		      });
 		}
 		
-	
 		
+	
+    private void border_activate() {
+		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
+		
+	}
+	private void border_deactivate() {
+		this.setBorder(null);
+
+	}
+
+	public void setCard(Card card) {
+//		TODO setCradButton
+		this.card = card;
+		this.setImage("resources/images/Cards/spell.png");
+		if(hidden)
+			this.setText("");	
+		else
+			this.setText(card.getName());
+			
+		
+//		if(card instanceof Minion) {
+//			if(card instanceof Icehowl) {this.setImage(imgPath); return;}
+//			this.setImage(imgPath); return;
+//				
+//		}
+//		
+//		if(card instanceof Spell) {
+//			
+//		}
 		
 		
 	}
 	
 	
 	
-	public void setImage(String imgPath) {
-		this.imagePath = imgPath;
-	}
 	public void setText(String txt) {
 		this.Label.setText(txt);
 	}
-	public void setHidden(boolean h) {
-		this.hidden = h; 
-	}
-	public boolean isHidden() {
-		return this.hidden; 
-	}
+
 	
 	
 	protected void paintComponent(Graphics g)
@@ -85,7 +99,7 @@ public class CardButton extends JButton implements ActionListener {
 		try {
 			if(hidden) {g.drawImage(ImageIO.read(new File("resources/images/qmark.png")), 0, 0, null);return;}
 			
-			g.drawImage(ImageIO.read(new File(imagePath)), 0, 0, null);
+			g.drawImage(ImageIO.read(new File(super.imagePath)), 0, 0, null);
 		} catch (IOException e) {
 		}
 	}
@@ -94,17 +108,35 @@ public class CardButton extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.setActionCommand("CardButton");
-		listener.actionPerformed(e);
-	}
-	
-	
-	public void setListener(ActionListener listener) {
-		this.listener = listener;
+		if(clickable && !hidden)
+			super.listener.actionPerformed(e);
 	}
 	
 	
 
+
+
 	
+	
+	
+	public Card getCard() {
+		return card;
+	}
+		
+	public boolean isShowOverlay() {
+		return showOverlay;
+	}
+	public void setShowOverlay(boolean showOverlay) {
+		this.showOverlay = showOverlay;
+	}
+	
+	public void setHidden(boolean h) {
+		this.hidden = h; 
+	}
+	public boolean isHidden() {
+		return this.hidden; 
+	}
+
+
 	
 }

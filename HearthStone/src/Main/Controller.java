@@ -1,11 +1,17 @@
 package Main;
 import javax.swing.*;
 
-import assets.CardButton;
+import assets.ImageButton;
 import assets.alertBox;
+import assets.CardButton;
 import engine.Game;
+import exceptions.FullFieldException;
 import exceptions.FullHandException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
 import model.cards.Card;
+import model.cards.minions.Minion;
+import model.cards.spells.Spell;
 import model.heroes.Hero;
 
 import java.awt.*;
@@ -15,6 +21,8 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	private WelcomeScreen welcomesc;
 	private GameScreen gamesc;
 	private Game game;
+	private alertBox alert = new alertBox();
+
 	
 	public Controller(){
 		welcomesc  = new WelcomeScreen();
@@ -31,7 +39,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO button Actions 
-
+		
 		switch (e.getActionCommand()){
 			case "start":
 				welcomesc.setVisible(false);
@@ -43,31 +51,51 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 				try {
 					drawnCard = game.getCurrentHero().drawCard();
-				} catch (FullHandException | CloneNotSupportedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				} catch (FullHandException | CloneNotSupportedException e1) {	
+					alert.info("Your Hand is FULL");}
 				
-				gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
+
 				;break;
 
 			case "endturn":
-				System.out.println("Ending turn");
+			try { //TODO endturn could this give an error
+				game.endTurn();
+			} catch (FullHandException | CloneNotSupportedException e2) {
+				e2.printStackTrace();
+			}
+
 				;break;
 				
-			case "CardButton":
-				CardButton btn = ((CardButton)e.getSource());
-				if(!btn.isHidden()) {
-					
+			case "handfieldbutton":
 //					TODO cardButton action
+				CardButton cbtn = ((CardButton)e.getSource());
+			
+				try {
+					Minion m = (Minion)(cbtn.getCard());
+					game.getCurrentHero().playMinion(m);
+					} catch (NotYourTurnException e1) {
+						alert.error("NOT your turn");
+					} catch (NotEnoughManaException e1) {
+						alert.info("You don't have enough Mana - Crystals !");
+					} catch (FullFieldException e1) {
+						alert.info("Your field is FULL");
+					}
+				
+//				try {
+					Spell s = (Spell)(cbtn.getCard());
+//					game.getCurrentHero().castSpell(s);
+								
 					
-				}
+
+					
+				
 				
 				;break;
 				
 				
 		}
 		
+		gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
 		
 		
 		
@@ -79,7 +107,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		try {
 			game = new Game(p1, p2);
 		} catch (FullHandException | CloneNotSupportedException e) {
-			(new alertBox()).error("Error inisilizeing the game engine");
+			(new alertBox()).error("Error initilizeing the game engine");
 			e.printStackTrace();
 		}
 		

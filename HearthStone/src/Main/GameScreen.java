@@ -8,6 +8,7 @@ import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,8 +28,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
-import assets.CardButton;
+import assets.ImageButton;
 import assets.ImagePanel;
+import assets.CardButton;
 import model.cards.Card;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
@@ -52,13 +55,13 @@ public class GameScreen extends JFrame implements ActionListener{
 	JButton btnHeroDeck = new JButton("Hero Deck, Draw a new Card");
 
 	JButton btnHeroPic = new JButton("Hero Picture");
-	JButton btnHeroPower = new JButton("Hero POWER");
+	ImageButton btnHeroPower = new ImageButton(50,50 ,true);
+
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
 	JButton btnHero2Info = new JButton("opponent info");
 	JButton btnEndTurn = new JButton("EndTurn");
 	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
-	
 
 	JTextPane txtInfo = new JTextPane();
 	JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
@@ -103,6 +106,8 @@ public class GameScreen extends JFrame implements ActionListener{
 		lblHero2Mana.setFont(fontPrince);
 		lblHeroMana.setFont(fontPrince);
 
+		btnHeroPower.setText("use POWER");
+		
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHeroHand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
@@ -126,7 +131,11 @@ public class GameScreen extends JFrame implements ActionListener{
 		
 		bottomPanle.add(btnHeroPic, "grow");
 		bottomPanle.add(panHeroHand, "grow,w 1100");
+//		bottomPanle.add(btnHeroPower, "grow");
+		
+		
 		bottomPanle.add(btnHeroPower, "grow");
+		
 		bottomPanle.add(lblHeroMana, "grow");
  
 		  
@@ -173,25 +182,24 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
-			addCardTo(c, panHeroHand, false);
+			addCardTo(c, panHeroHand, false, true, true);
 		}
 		
 		panHeroField.removeAll();
 		for(Card c : CurrentHero.getField()) {
-			addCardTo(c, panHeroField, false);
+			addCardTo(c, panHeroField, false, true, true);
 		}
 	
 		
-		
 		panHero2Hand.removeAll();
 		for(Card c : OpponentHero.getHand()) {
-			addCardTo(c, panHero2Hand, true);
+			addCardTo(c, panHero2Hand, true, false, false);
 		}
 		
 		
 		panHero2Field.removeAll();
 		for(Card c : OpponentHero.getField()) {
-			addCardTo(c, panHero2Field, false);
+			addCardTo(c, panHero2Field, false, false, false);
 		}
 	
 		this.repaint();
@@ -201,12 +209,12 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	
 
-	public void addCardTo(Card Card, JPanel panel, boolean hidden) {
+	public void addCardTo(Card Card, JPanel panel, boolean hidden, boolean showOverlay, boolean clickable) {
 		if (Card == null) {return;}
 		
-		CardButton btn = new CardButton(120, 150, hidden);
-		btn.setImage("resources/images/Cards/spell.png");
-		btn.setText("text label");
+		CardButton btn = new CardButton(hidden, showOverlay,clickable);
+		btn.setCard(Card);
+		
 
 		btn.setListener(this);
 		
