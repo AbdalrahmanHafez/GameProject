@@ -42,7 +42,7 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	JPanel migpanel = new JPanel(new MigLayout("fill"));
 
-	JButton btnHero2Pic = new JButton("Opponent Picture");
+	ImageButton btnHero2Pic = new ImageButton(0,0, false);
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
 	JButton btnHero2Deck = new JButton("Oponent Deck");
@@ -54,14 +54,15 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	JButton btnHeroDeck = new JButton("Hero Deck, Draw a new Card");
 
-	JButton btnHeroPic = new JButton("Hero Picture");
-	ImageButton btnHeroPower = new ImageButton(50,50 ,true);
+	ImageButton btnHeroPic = new ImageButton(0,0, false);
+	ImageButton btnHeroPower = new ImageButton(0,0,true);
+	
 
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
 	JButton btnHero2Info = new JButton("opponent info");
 	JButton btnEndTurn = new JButton("EndTurn");
-	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
+	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png",1,1);
 
 	JTextPane txtInfo = new JTextPane();
 	JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
@@ -85,6 +86,7 @@ public class GameScreen extends JFrame implements ActionListener{
 		
 		btnHeroDeck.setActionCommand("draw"); btnHeroDeck.addActionListener(this);
 		btnEndTurn.setActionCommand("endturn"); btnEndTurn.addActionListener(this);		
+		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
 		
 		 /* END Buttons action assignments */
 
@@ -108,6 +110,8 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		btnHeroPower.setText("use POWER");
 		
+		imgPreview.setImageToFull();
+		
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHeroHand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
@@ -117,11 +121,11 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		
 		topPanle.add(btnHero2Pic, "grow");
-		topPanle.add(panHero2Hand, "grow, w 1500");
+		topPanle.add(panHero2Hand, "grow, w 1300");
 		topPanle.add(lblHero2Mana, "grow");
 		  
 		
-		leftPanle.add(txtInfo, "grow, wrap");
+		leftPanle.add(txtInfo, "growx, wrap");
 		leftPanle.add(imgPreview, "grow");
 	
 		rightPanle.add(btnHero2Deck, "grow, wrap, w 100!");
@@ -131,10 +135,9 @@ public class GameScreen extends JFrame implements ActionListener{
 		
 		bottomPanle.add(btnHeroPic, "grow");
 		bottomPanle.add(panHeroHand, "grow,w 1100");
-//		bottomPanle.add(btnHeroPower, "grow");
-		
-		
 		bottomPanle.add(btnHeroPower, "grow");
+		
+		
 		
 		bottomPanle.add(lblHeroMana, "grow");
  
@@ -145,10 +148,10 @@ public class GameScreen extends JFrame implements ActionListener{
 		  
   
 		this.add(topPanle			, BorderLayout.NORTH); 
-		this.add(leftPanle			,BorderLayout.WEST);
+		this.add(leftPanle			, BorderLayout.WEST);
 		this.add(rightPanle		, BorderLayout.EAST);
 		this.add(bottomPanle	, BorderLayout.SOUTH);
-		this.add(centerPanle		,BorderLayout.CENTER);
+		this.add(centerPanle		, BorderLayout.CENTER);
 
 		  
 		this.repaint();
@@ -228,7 +231,7 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		Listens to CardButtons
+//		Listens to ImageButtons
 		listener.actionPerformed(e);
 	}
 	

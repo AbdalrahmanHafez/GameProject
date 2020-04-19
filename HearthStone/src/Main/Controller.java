@@ -7,6 +7,7 @@ import assets.CardButton;
 import engine.Game;
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
 import exceptions.NotEnoughManaException;
 import exceptions.NotYourTurnException;
 import model.cards.Card;
@@ -66,7 +67,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 				;break;
 				
-			case "handfieldbutton":
+			case "CardButton":
 //					TODO cardButton action
 				CardButton cbtn = ((CardButton)e.getSource());
 			
@@ -81,16 +82,29 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 						alert.info("Your field is FULL");
 					}
 				
-//				try {
-					Spell s = (Spell)(cbtn.getCard());
-//					game.getCurrentHero().castSpell(s);
-								
-					
-
-					
-				
-				
 				;break;
+			
+				
+			case "HeroPower":
+			try {
+				game.getCurrentHero().useHeroPower();
+			} catch (NotEnoughManaException e1) {
+				alert.info("You don't have enough Mana - Crystals !");
+			} catch (HeroPowerAlreadyUsedException e1) {
+				alert.error("You've used your power this turn");
+			} catch (NotYourTurnException e1) {
+				alert.error("NOT your turn");
+			} catch (FullHandException e1) {
+				alert.info("Your Hand is FULL");
+			} catch (FullFieldException e1) {
+				alert.info("Your field is FULL");
+			} catch (CloneNotSupportedException e1) {
+			}
+				;break;
+
+				
+		
+
 				
 				
 		}

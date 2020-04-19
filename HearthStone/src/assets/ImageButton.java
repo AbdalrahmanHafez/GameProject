@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -33,10 +35,12 @@ public class ImageButton extends JButton implements ActionListener {
 	protected String imagePath;
 	protected JLabel Label;
 	protected boolean clickable = true;
-
+	private boolean fullimageflag = false;
+	
 	protected ActionListener listener;
 
-	
+	Image scaledImage;
+    int w,h;
 	
 	public ImageButton(int w, int h, boolean clickable)
 	{
@@ -49,25 +53,36 @@ public class ImageButton extends JButton implements ActionListener {
 		
 		this.add(Label, BorderLayout.SOUTH);	
 		
-//		By default
+		 this.w = w;
+		 this.h = h;        	
+	     
+		 if(w == 0 || h == 0) { this.fullimageflag = true;}
+		 
 		setText("");
 		setImage("resources/images/default.png");
-		
-		
+    	
+    
 		this.clickable = clickable;
 		
 		this.addActionListener(this);
-		this.setActionCommand("CardButton");
+		this.setActionCommand("ImageButton");
 		
-
 		}
 		
 		
+	
+	public void setImageToFull() {
+			fullimageflag = true;
+	}
 	
 
 	
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;
+		try {
+		scaledImage = new ImageIcon(imgPath).getImage().getScaledInstance(w,h, Image.SCALE_DEFAULT);
+		}catch(Exception e) {}
+		
 	}
 	public void setText(String txt) {
 		this.Label.setText(txt);
@@ -78,10 +93,18 @@ public class ImageButton extends JButton implements ActionListener {
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		try {
-			g.drawImage(ImageIO.read(new File(imagePath)), 0, 0, null);
-		} catch (IOException e) {
+		
+		if(this.getWidth() != 0 && this.getHeight() !=0 && fullimageflag) {
+			scaledImage = new ImageIcon(imagePath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),
+	                Image.SCALE_DEFAULT);		
+			fullimageflag = false;
 		}
+		
+		g.drawImage(scaledImage, 0, 0, null);
+        this.repaint();
+		this.revalidate();
+
+
 	}
 
 
