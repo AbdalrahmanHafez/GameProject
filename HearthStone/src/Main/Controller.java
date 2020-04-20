@@ -23,7 +23,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	private GameScreen gamesc;
 	private Game game;
 	private alertBox alert = new alertBox();
-
+//testdel
 	
 	public Controller(){
 		welcomesc  = new WelcomeScreen();
