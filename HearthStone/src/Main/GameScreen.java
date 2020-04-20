@@ -1,6 +1,7 @@
 package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -35,16 +36,23 @@ import javax.swing.SwingConstants;
 
 import assets.ImageButton;
 import assets.ImagePanel;
+import assets.MinionCardButton;
+import assets.SpellCardButton;
 import assets.CardButton;
 import model.cards.Card;
 import model.cards.minions.Minion;
+import model.cards.spells.AOESpell;
+import model.cards.spells.Spell;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
 public class GameScreen extends JFrame implements ActionListener{
 	
 	GameScreenListener listener;
-	
+
+	CardButton RequestingaTarget;
+	boolean waitingForaTarget = false;
+
 	ImageButton btnHero2Pic = new ImageButton(0,0, false);
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
@@ -198,24 +206,24 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
-			addCardTo(c, panHeroHand, false, true, true);
+			addCardTo(c, panHeroHand, false, true, true, false);
 		}
 		
 		panHeroField.removeAll();
 		for(Card c : CurrentHero.getField()) {
-			addCardTo(c, panHeroField, false, true, true);
+			addCardTo(c, panHeroField, false, true, true, true);
 		}
 	
 		
 		panHero2Hand.removeAll();
 		for(Card c : OpponentHero.getHand()) {
-			addCardTo(c, panHero2Hand, true, false, false);
+			addCardTo(c, panHero2Hand, true, false, false,false);
 		}
 		
 		
 		panHero2Field.removeAll();
 		for(Card c : OpponentHero.getField()) {
-			addCardTo(c, panHero2Field, false, false, false);
+			addCardTo(c, panHero2Field, false, false, false,false);
 		}
 	
 		this.repaint();
@@ -225,22 +233,33 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	
 
-	public void addCardTo(Card Card, JPanel panel, boolean hidden, boolean showOverlay, boolean clickable) {
+	public void addCardTo(Card Card, JPanel panel, boolean hidden, boolean showOverlay, boolean clickable, boolean inField) {
 		if (Card == null) {return;}
 		
-		CardButton btn = new CardButton(hidden, showOverlay,clickable);
-		btn.setCard(Card);
+		CardButton btn = null;
+		if(Card instanceof Minion) {
+			btn = new MinionCardButton(hidden, showOverlay,clickable);
+			((MinionCardButton) btn).setinField(inField);
+			((MinionCardButton) btn).setTheCard((Minion)Card);
+			
+			
+		}else
+		if(Card instanceof Spell) {
+			btn = new SpellCardButton(hidden, showOverlay,clickable);
+			((SpellCardButton) btn).setTheCard((Spell)Card);
+		}
 		
-		btn.addMouseListener(new MouseAdapter() {			
-			public void mouseEntered(MouseEvent me) {
-				updatetxtCardInfo(Card);
-			}
-		});
+		
+		if(!btn.isHidden()){
+			btn.addMouseListener(new MouseAdapter() {			
+				public void mouseEntered(MouseEvent me) {
+					updatetxtCardInfo(Card);
+				}
+			});
+		}
 			
-			
-
+		
 		btn.setListener(this);
-		
 		panel.add(btn);
 		
 		this.repaint();
@@ -252,12 +271,12 @@ public class GameScreen extends JFrame implements ActionListener{
 	private void updatetxtCardInfo(Card card) {
 		String r = "====[CARD INFO]====";
 		r += "\nName: " + card.getName();
-		r += "\nManaCost: " + card.getManaCost();
-		r += "\nRairty: " + card.getRarity().toString();
+		r += "\n\nManaCost: " + card.getManaCost();
+		r += "\n\nRairty: " + card.getRarity().toString();
 		if(card instanceof Minion) {
-			r += "\nis Taunt: " + ((Minion) card).isTaunt();
-			r += "\nis Divine: " + ((Minion) card).isDivine();			
-			r += "\nis Charged: " + !((Minion) card).isSleeping();
+			r += "\n\nis Taunt: " + ((Minion) card).isTaunt();
+			r += "\n\nis Divine: " + ((Minion) card).isDivine();			
+			r += "\n\nis Charged: " + !((Minion) card).isSleeping();
 		}
 		txtCardInfo.setText(r);
 	}
@@ -268,11 +287,17 @@ public class GameScreen extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		Listens to ImageButtons
-		listener.actionPerformed(e);
+		System.out.println("gamescrenne");
+			listener.actionPerformed(e);
 	}
 	
 	
+	
+
+
+
+
+
 	public void setListener(GameScreenListener listener) {
 		this.listener = listener;
 	}

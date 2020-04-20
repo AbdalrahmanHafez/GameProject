@@ -59,23 +59,18 @@ public class ImageButton extends JButton implements ActionListener {
 		 if(w == 0 || h == 0) { this.fullimageflag = true;}
 		 
 		setText("");
-		setImage("resources/images/default.png");
+		setImage("");
     	
     
 		this.clickable = clickable;
 		
 		this.addActionListener(this);
-		this.setActionCommand("ImageButton");
 		
 		}
-		
-		
 	
 	public void setImageToFull() {
 			fullimageflag = true;
 	}
-	
-
 	
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;
@@ -111,6 +106,7 @@ public class ImageButton extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("image button");
 		if(clickable)
 			listener.actionPerformed(e);
 	}

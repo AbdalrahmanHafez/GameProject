@@ -17,27 +17,27 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import model.cards.Card;
+import model.cards.spells.Spell;
 
 public class CardButton extends ImageButton{
-	private boolean hidden = false;
+	protected boolean hidden = false;
 	private boolean showOverlay = true;
+	private boolean isinField; //meaning in the current hero field only
+
+	CardButton target =null;
 	
-	private Card card;
+
 
 	
 	public CardButton(boolean h, boolean showOverlay, boolean clickable)
 	{
 		
 		super(120, 150, clickable);
-		
-		this.addActionListener(this);
-		this.setActionCommand("CardButton");
-		
+	
+
 		this.hidden = h;
 		
 		this.addMouseListener(new MouseAdapter() {
-		
-			
 			public void mouseEntered(MouseEvent me) {
 					 border_activate();
 					 if(showOverlay)
@@ -46,7 +46,7 @@ public class CardButton extends ImageButton{
 
 				public void mouseExited(MouseEvent me) {
 		        	 border_deactivate();
-					 ((ImageButton) me.getSource()).setImage("resources/images/Cards/spell.png");
+					 ((ImageButton) me.getSource()).setImage("resources/images/default.png");
 		         }
 
 		      });
@@ -63,29 +63,6 @@ public class CardButton extends ImageButton{
 
 	}
 
-	public void setCard(Card card) {
-//		TODO setCradButton
-		this.card = card;
-		this.setImage("resources/images/Cards/spell.png");
-		if(hidden)
-			this.setText("");	
-		else
-			this.setText(card.getName());
-			
-		
-//		if(card instanceof Minion) {
-//			if(card instanceof Icehowl) {this.setImage(imgPath); return;}
-//			this.setImage(imgPath); return;
-//				
-//		}
-//		
-//		if(card instanceof Spell) {
-//			
-//		}
-		
-		
-	}
-	
 	
 	
 	public void setText(String txt) {
@@ -109,7 +86,8 @@ public class CardButton extends ImageButton{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(clickable && !hidden)
+		System.out.println("card butt trig");
+		if( clickable && !hidden)
 			super.listener.actionPerformed(e);
 	}
 	
@@ -120,9 +98,6 @@ public class CardButton extends ImageButton{
 	
 	
 	
-	public Card getCard() {
-		return card;
-	}
 		
 	public boolean isShowOverlay() {
 		return showOverlay;
@@ -138,6 +113,18 @@ public class CardButton extends ImageButton{
 		return this.hidden; 
 	}
 
+	public CardButton getTarget() {
+		return target;
+	}
+	public void setTarget(CardButton target) {
+		this.target = target;
+	}
+	public boolean isinField() {
+		return isinField;
+	}
+	public void setinField(boolean inField) {
+		this.isinField = inField;
+	}
 
 	
 }

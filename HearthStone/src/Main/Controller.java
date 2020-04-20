@@ -2,6 +2,7 @@ package Main;
 import javax.swing.*;
 
 import assets.ImageButton;
+import assets.MinionCardButton;
 import assets.alertBox;
 import assets.CardButton;
 import engine.Game;
@@ -45,6 +46,11 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			case "start":
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
+				game.getCurrentHero().setTotalManaCrystals(10);
+				game.getCurrentHero().setCurrentManaCrystals(10);
+				game.getOpponent().setTotalManaCrystals(10);
+				game.getOpponent().setCurrentManaCrystals(10);
+				
 				;break;
 				
 			case "draw":
@@ -67,22 +73,27 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 				;break;
 				
-			case "CardButton":
+			case "minionplay":
 //					TODO cardButton action
-				CardButton cbtn = ((CardButton)e.getSource());
+				System.out.println("minion play");
+						
+					try {
+						MinionCardButton btnminion =(MinionCardButton) e.getSource();
+						Minion m = (btnminion).getCard();
+						game.getCurrentHero().playMinion(m);
+						} catch (NotYourTurnException e1) {
+							alert.error("NOT your turn");
+						} catch (NotEnoughManaException e1) {
+							alert.info("You don't have enough Mana - Crystals !");
+						} catch (FullFieldException e1) {
+							alert.info("Your field is FULL");
+						}catch (Exception e1) {System.out.println("error i think");;}
 			
-				try {
-					Minion m = (Minion)(cbtn.getCard());
-					game.getCurrentHero().playMinion(m);
-					} catch (NotYourTurnException e1) {
-						alert.error("NOT your turn");
-					} catch (NotEnoughManaException e1) {
-						alert.info("You don't have enough Mana - Crystals !");
-					} catch (FullFieldException e1) {
-						alert.info("Your field is FULL");
-					}
+			;break;
 				
-				;break;
+			case "minionattack":
+				System.out.println("attacking");
+			;break;
 			
 				
 			case "HeroPower":
