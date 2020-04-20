@@ -5,17 +5,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -39,9 +42,6 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	GameScreenListener listener;
 	
-	
-	JPanel migpanel = new JPanel(new MigLayout("fill"));
-
 	ImageButton btnHero2Pic = new ImageButton(0,0, false);
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
@@ -72,17 +72,19 @@ public class GameScreen extends JFrame implements ActionListener{
 	JPanel centerPanle 	= new JPanel(new MigLayout("fill"));
 	
 	
+
 	
 	public GameScreen() {
-		this.setTitle("HearthStone version 0.01");
+		this.setTitle("HearthStone version 0.1");
 		this.setBounds(10, 20, 1930, 1030);
 		this.setLocationRelativeTo(null); // will center the window on the screen
 //		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		/* Buttons action assignments */
 		
+		/* Buttons action assignments */
+
 		
 		btnHeroDeck.setActionCommand("draw"); btnHeroDeck.addActionListener(this);
 		btnEndTurn.setActionCommand("endturn"); btnEndTurn.addActionListener(this);		
@@ -145,15 +147,17 @@ public class GameScreen extends JFrame implements ActionListener{
 		centerPanle.add(panHero2Field,"grow, wrap");
 		centerPanle.add(panHeroField,"grow");
 		  
-		  
-  
+	
+		
 		this.add(topPanle			, BorderLayout.NORTH); 
 		this.add(leftPanle			, BorderLayout.WEST);
 		this.add(rightPanle		, BorderLayout.EAST);
 		this.add(bottomPanle	, BorderLayout.SOUTH);
 		this.add(centerPanle		, BorderLayout.CENTER);
 
-		  
+
+		
+		
 		this.repaint();
 		this.revalidate();
 
@@ -239,6 +243,11 @@ public class GameScreen extends JFrame implements ActionListener{
 	public void setListener(GameScreenListener listener) {
 		this.listener = listener;
 	}
+	
+	
 
+	
+	
+	
 
 }
