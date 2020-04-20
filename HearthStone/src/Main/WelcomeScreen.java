@@ -63,7 +63,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setUndecorated( true );
 		this.setResizable( true );
-		this.setVisible( true );
+		this.setVisible( false );
 
 		
 		

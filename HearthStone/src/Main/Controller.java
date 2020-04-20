@@ -19,7 +19,8 @@ import model.heroes.Hero;
 import java.awt.*;
 import java.awt.event.*;
 public class Controller implements ActionListener, WelcomeScreenListener, GameScreenListener{
-	
+
+	private StartScreen Startsc;
 	private WelcomeScreen welcomesc;
 	private GameScreen gamesc;
 	private Game game;
@@ -27,8 +28,11 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 //testdel
 	
 	public Controller(){
+		Startsc = new StartScreen();
 		welcomesc  = new WelcomeScreen();
 		gamesc = new GameScreen();
+		
+		Startsc.setListener(this);
 		welcomesc.setListener(this);
 		gamesc.setListener(this);
 		
@@ -42,10 +46,18 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	public void actionPerformed(ActionEvent e) {
 		// TODO button Actions 
 		
+		if(e.getActionCommand().equals("initialStart")) {
+			Startsc.setVisible(false);
+			welcomesc.setVisible(true);
+			return;
+		}
+		
 		switch (e.getActionCommand()){
+		
 			case "start":
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
+				
 				game.getCurrentHero().setTotalManaCrystals(10);
 				game.getCurrentHero().setCurrentManaCrystals(10);
 				game.getOpponent().setTotalManaCrystals(10);

@@ -32,10 +32,7 @@ public class MinionCardButton extends CardButton implements ActionListener{
 		
 	}
 
-	private void settoattack() {
-		System.out.println("huh");
-		this.setActionCommand("minionattack");
-	}
+
 	
 	public void setTheCard(Minion card) {
 //		TODO setCradButton
@@ -56,14 +53,9 @@ public class MinionCardButton extends CardButton implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 				System.out.println("minion card trig");
 				
-				settoattack();
-				
-
 				if(this.isinField()) {
 //					meaning the minion want to attack something
 					e = new ActionEvent(this, 50,"minionattack");
-				
-				
 				}
 				
 				listener.actionPerformed(e);
