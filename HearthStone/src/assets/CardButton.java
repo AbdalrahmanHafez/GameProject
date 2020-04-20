@@ -21,6 +21,7 @@ import model.cards.Card;
 public class CardButton extends ImageButton{
 	private boolean hidden = false;
 	private boolean showOverlay = true;
+	
 	private Card card;
 
 	

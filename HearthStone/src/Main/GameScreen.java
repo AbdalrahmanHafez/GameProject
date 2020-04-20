@@ -12,6 +12,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +37,7 @@ import assets.ImageButton;
 import assets.ImagePanel;
 import assets.CardButton;
 import model.cards.Card;
+import model.cards.minions.Minion;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
@@ -56,14 +59,15 @@ public class GameScreen extends JFrame implements ActionListener{
 
 	ImageButton btnHeroPic = new ImageButton(0,0, false);
 	ImageButton btnHeroPower = new ImageButton(0,0,true);
-	
+//	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png",1,1);
+	JTextPane txtCardInfo= new JTextPane();
+
 
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
-	JButton btnHero2Info = new JButton("opponent info");
 	JButton btnEndTurn = new JButton("EndTurn");
-	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png",1,1);
 
+	
 	JTextPane txtInfo = new JTextPane();
 	JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
 	JPanel leftPanle 		= new JPanel(new MigLayout("fill"));
@@ -101,6 +105,11 @@ public class GameScreen extends JFrame implements ActionListener{
 		
 		txtInfo.setEditable(false);
 		txtInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		
+		txtCardInfo.setEditable(false);
+		txtCardInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		
+		
 		Font fontPrince = null;
 			try {
 				fontPrince = Font.createFont(Font.TRUETYPE_FONT, new File("resources\\other\\prince.ttf")).deriveFont(40f);
@@ -112,7 +121,7 @@ public class GameScreen extends JFrame implements ActionListener{
 
 		btnHeroPower.setText("use POWER");
 		
-		imgPreview.setImageToFull();
+//		imgPreview.setImageToFull();
 		
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
@@ -128,7 +137,7 @@ public class GameScreen extends JFrame implements ActionListener{
 		  
 		
 		leftPanle.add(txtInfo, "growx, wrap");
-		leftPanle.add(imgPreview, "grow");
+		leftPanle.add(txtCardInfo, "grow");
 	
 		rightPanle.add(btnHero2Deck, "grow, wrap, w 100!");
 		rightPanle.add(btnEndTurn	, "growx, wrap, w 100!");
@@ -222,6 +231,13 @@ public class GameScreen extends JFrame implements ActionListener{
 		CardButton btn = new CardButton(hidden, showOverlay,clickable);
 		btn.setCard(Card);
 		
+		btn.addMouseListener(new MouseAdapter() {			
+			public void mouseEntered(MouseEvent me) {
+				updatetxtCardInfo(Card);
+			}
+		});
+			
+			
 
 		btn.setListener(this);
 		
@@ -233,6 +249,23 @@ public class GameScreen extends JFrame implements ActionListener{
 
 	
 	
+	private void updatetxtCardInfo(Card card) {
+		String r = "====[CARD INFO]====";
+		r += "\nName: " + card.getName();
+		r += "\nManaCost: " + card.getManaCost();
+		r += "\nRairty: " + card.getRarity().toString();
+		if(card instanceof Minion) {
+			r += "\nis Taunt: " + ((Minion) card).isTaunt();
+			r += "\nis Divine: " + ((Minion) card).isDivine();			
+			r += "\nis Charged: " + !((Minion) card).isSleeping();
+		}
+		txtCardInfo.setText(r);
+	}
+
+
+
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 //		Listens to ImageButtons
