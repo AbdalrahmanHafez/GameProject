@@ -223,7 +223,7 @@ public class GameScreen extends JFrame implements ActionListener{
 		
 		panHero2Field.removeAll();
 		for(Card c : OpponentHero.getField()) {
-			addCardTo(c, panHero2Field, false, false, false,false);
+			addCardTo(c, panHero2Field, false, false, false,true);
 		}
 	
 		this.repaint();
@@ -284,16 +284,21 @@ public class GameScreen extends JFrame implements ActionListener{
 
 
 
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		System.out.println("gamescrenne");
+		
+		
 			listener.actionPerformed(e);
 	}
 	
 	
 	
 
+	
+	
 
 
 

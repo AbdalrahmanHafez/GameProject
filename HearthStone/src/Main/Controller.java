@@ -25,6 +25,12 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	private GameScreen gamesc;
 	private Game game;
 	private alertBox alert = new alertBox();
+	
+	private Minion minionattacker = null;
+	private Minion minionattacktarget = null;
+	private boolean waitingforatarget = false;
+	
+	
 //testdel
 	
 	public Controller(){
@@ -46,10 +52,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	public void actionPerformed(ActionEvent e) {
 		// TODO button Actions 
 		
-		if(e.getActionCommand().equals("initialStart")) {
+		if(e.getActionCommand().equals("initialStart")) { 
 			Startsc.setVisible(false);
 			welcomesc.setVisible(true);
-			return;
+			return; //to avoid call the update method
 		}
 		
 		switch (e.getActionCommand()){
@@ -99,12 +105,47 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 							alert.info("You don't have enough Mana - Crystals !");
 						} catch (FullFieldException e1) {
 							alert.info("Your field is FULL");
-						}catch (Exception e1) {System.out.println("error i think");;}
+						}catch (Exception e1) {System.out.println("error i think??");}
 			
 			;break;
 				
 			case "minionattack":
-				System.out.println("attacking");
+				System.out.println("controller attack method");
+
+				if(waitingforatarget == true) { //this is our target
+					waitingforatarget = false;
+					try {
+						minionattacktarget = ((MinionCardButton)e.getSource()).getCard();
+					}catch(ClassCastException ex) { // if error => not a minion,
+						alert.error("You selected an invalid target");
+					}
+					
+					System.out.println("attacker" + minionattacker.getName()
+												+"attacking " + minionattacktarget.getName());	
+					
+								
+				}
+				if(minionattacktarget == null) {
+					System.out.println("wating for another minion to attack him");
+					minionattacker = ((MinionCardButton)e.getSource()).getCard();
+					waitingforatarget = true;
+					
+					for(Component comp : gamesc.getComponents()) 
+						if(comp instanceof CardButton) 
+							((CardButton) comp).setEnabled(false);
+						
+					
+					gamesc.panHero2Field.removeAll();
+					for(Component comp : gamesc.panHero2Field.getComponents()) { 
+							((CardButton) comp).setEnabled(true);
+							((CardButton) comp).setClickable(true);
+					}
+				
+				
+				}
+				
+				
+				
 			;break;
 			
 				
@@ -112,7 +153,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				try {
 					game.getCurrentHero().useHeroPower();
 				} catch (NotEnoughManaException e1) {
-					alert.info("You don't have enoggggggggggggggugh Mana - Crystals !");
+					alert.info("You don't have enough Mana - Crystals !");
 				} catch (HeroPowerAlreadyUsedException e1) {
 					alert.error("You've used your power this turn");
 				} catch (NotYourTurnException e1) {

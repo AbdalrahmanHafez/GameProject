@@ -55,7 +55,7 @@ public class MinionCardButton extends CardButton implements ActionListener{
 				
 				if(this.isinField()) {
 //					meaning the minion want to attack something
-					e = new ActionEvent(this, 50,"minionattack");
+					e = new ActionEvent(this, 0,"minionattack");
 				}
 				
 				listener.actionPerformed(e);

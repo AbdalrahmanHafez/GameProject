@@ -29,7 +29,7 @@ public class StartScreen extends JFrame implements ActionListener{
 	    
 		 this.setTitle("HearthStone version 1.0");
 		this.add(startGame);
-		this.setVisible(true);
+		this.setVisible(false);
               
         this.setLocationRelativeTo(null);
         
@@ -38,7 +38,7 @@ public class StartScreen extends JFrame implements ActionListener{
 		
         startGame.addActionListener(this);
 		startGame.setActionCommand("initialStart");
-		setVisible(true);
+		
     }
    
    
