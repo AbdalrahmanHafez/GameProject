@@ -51,21 +51,25 @@ public class MinionCardButton extends CardButton implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-				System.out.println("minion card trig");
-				
-				if(this.isinField()) {
-//					meaning the minion want to attack something
-					e = new ActionEvent(this, 0,"minionattack");
-				}
-				
+				System.out.println("minion card trig AC: " + e.getActionCommand());
 				listener.actionPerformed(e);
 	}
+	
+	@Override
+	public void setinField(boolean inField) {
+		if(inField) {
+			this.setActionCommand("minionattack");
+		}
+		super.isinField = inField;
+	}
+	
 	
 	
 	public Minion getCard() {
 		return card;
 	}
 
+	
 	
 
 }

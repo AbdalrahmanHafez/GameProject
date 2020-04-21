@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.sound.midi.MidiDevice.Info;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
@@ -22,7 +23,7 @@ import model.cards.spells.Spell;
 public class CardButton extends ImageButton{
 	protected boolean hidden = false;
 	private boolean showOverlay = true;
-	private boolean isinField; //meaning in the current hero field only
+	protected boolean isinField; //meaning in the current hero field only
 
 	CardButton target =null;
 	
@@ -97,6 +98,9 @@ public class CardButton extends ImageButton{
 
 	
 	
+	public void setinField(boolean inField) {
+		this.isinField = inField;
+	}
 	
 		
 	public boolean isShowOverlay() {
@@ -121,9 +125,6 @@ public class CardButton extends ImageButton{
 	}
 	public boolean isinField() {
 		return isinField;
-	}
-	public void setinField(boolean inField) {
-		this.isinField = inField;
 	}
 
 	

@@ -7,20 +7,21 @@ import java.awt.event.MouseEvent;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.cards.spells.AOESpell;
+import model.cards.spells.LeechingSpell;
 import model.cards.spells.MinionTargetSpell;
 import model.cards.spells.Spell;
 
 public class SpellCardButton extends CardButton{
 
 	private Spell card;
-
+	
 	public SpellCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);
 		// TODO Auto-generated constructor stub
 
 		setImage("resources/images/Cards/spell.png");
-		
-		this.addActionListener(this);
+		this.setActionCommand("spellcast");
+
 
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseExited(MouseEvent me) {
@@ -31,16 +32,14 @@ public class SpellCardButton extends CardButton{
 		
 	}
 	
-	
 
-		
-	
-
-	public boolean spellNeedaTarget() {
-		// this method checks if a spell card need a specific target to hit/select
-		
-		if(card instanceof MinionTargetSpell) 
+	public boolean doesspellNeedaTarget() {
+		// this method checks if a spell card need a specific starget to hit/select
+		if(card instanceof MinionTargetSpell)
 			return true;
+		if(card instanceof LeechingSpell)
+			return true;
+		
 		return false;
 	}
 	
@@ -61,7 +60,7 @@ public class SpellCardButton extends CardButton{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("spell card trig");
+		System.out.println("spell card trig  ac " + e.getActionCommand());
 		listener.actionPerformed(e);
 	}
 	

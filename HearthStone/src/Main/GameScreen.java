@@ -101,6 +101,7 @@ public class GameScreen extends JFrame implements ActionListener{
 		btnHeroDeck.setActionCommand("draw"); btnHeroDeck.addActionListener(this);
 		btnEndTurn.setActionCommand("endturn"); btnEndTurn.addActionListener(this);		
 		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
+		btnHero2Pic.setActionCommand("minionattack"); btnHero2Pic.setListener(this);
 		
 		 /* END Buttons action assignments */
 
@@ -271,12 +272,13 @@ public class GameScreen extends JFrame implements ActionListener{
 	private void updatetxtCardInfo(Card card) {
 		String r = "====[CARD INFO]====";
 		r += "\nName: " + card.getName();
-		r += "\n\nManaCost: " + card.getManaCost();
-		r += "\n\nRairty: " + card.getRarity().toString();
+		r += "\nManaCost: " + card.getManaCost();
+		r += "\nRairty: " + card.getRarity().toString();
 		if(card instanceof Minion) {
-			r += "\n\nis Taunt: " + ((Minion) card).isTaunt();
-			r += "\n\nis Divine: " + ((Minion) card).isDivine();			
-			r += "\n\nis Charged: " + !((Minion) card).isSleeping();
+			r += "\nHealth: " +((Minion) card).getCurrentHP() + "/" + ((Minion) card).getMaxHP();
+			r += "\nis Taunt: " + ((Minion) card).isTaunt();
+			r += "\nis Divine: " + ((Minion) card).isDivine();			
+			r += "\nis Charged: " + !((Minion) card).isSleeping();
 		}
 		txtCardInfo.setText(r);
 	}
