@@ -39,6 +39,7 @@ public abstract class Hero implements MinionListener {
 	private int fatigueDamage;
 	private HeroListener listener;
 	private ActionValidator validator;
+	private boolean cardDrawn;
 
 	public Hero(String name) throws IOException, CloneNotSupportedException {
 		this.name = name;
@@ -311,6 +312,12 @@ public abstract class Hero implements MinionListener {
 
 	public void setValidator(ActionValidator validator) {
 		this.validator = validator;
+	}
+	public void setCardDrawn(boolean cardDrawn) {
+		this.cardDrawn = cardDrawn;
+	}
+	public boolean getCardDrawn() {
+		return cardDrawn;
 	}
 
 }

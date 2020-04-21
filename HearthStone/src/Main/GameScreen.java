@@ -290,7 +290,7 @@ public class GameScreen extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		System.out.println("gamescrenne");
+		System.out.println("gamescreen");
 		
 		
 			listener.actionPerformed(e);
@@ -309,8 +309,6 @@ public class GameScreen extends JFrame implements ActionListener{
 		this.listener = listener;
 	}
 	
-	
-
 	
 	
 	
