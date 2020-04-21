@@ -6,11 +6,15 @@ import assets.MinionCardButton;
 import assets.alertBox;
 import assets.CardButton;
 import engine.Game;
+import exceptions.CannotAttackException;
 import exceptions.FullFieldException;
 import exceptions.FullHandException;
 import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.InvalidTargetException;
 import exceptions.NotEnoughManaException;
+import exceptions.NotSummonedException;
 import exceptions.NotYourTurnException;
+import exceptions.TauntBypassException;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.cards.spells.Spell;
@@ -123,24 +127,23 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					System.out.println("attacker" + minionattacker.getName()
 												+"attacking " + minionattacktarget.getName());	
 					
+//					What if target was a hero ?
+					try {
+						game.getCurrentHero().attackWithMinion(minionattacker, minionattacktarget);
+					} catch (CannotAttackException | NotYourTurnException | TauntBypassException
+							| InvalidTargetException | NotSummonedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					minionattacker = null;
+					minionattacktarget = null;
 								
 				}
 				if(minionattacktarget == null) {
 					System.out.println("wating for another minion to attack him");
 					minionattacker = ((MinionCardButton)e.getSource()).getCard();
 					waitingforatarget = true;
-					
-					for(Component comp : gamesc.getComponents()) 
-						if(comp instanceof CardButton) 
-							((CardButton) comp).setEnabled(false);
-						
-					
-					gamesc.panHero2Field.removeAll();
-					for(Component comp : gamesc.panHero2Field.getComponents()) { 
-							((CardButton) comp).setEnabled(true);
-							((CardButton) comp).setClickable(true);
-					}
-				
 				
 				}
 				
