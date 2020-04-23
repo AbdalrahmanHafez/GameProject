@@ -15,7 +15,6 @@ import model.cards.minions.Minion;
 public class MinionCardButton extends CardButton implements ActionListener{
 	
 	private Minion card;
-	
 
 	public MinionCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);
@@ -49,12 +48,7 @@ public class MinionCardButton extends CardButton implements ActionListener{
 	
 	
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-				System.out.println("minion card trig AC: " + e.getActionCommand());
-				listener.actionPerformed(e);
-	}
-	
+
 	@Override
 	public void setinField(boolean inField) {
 		if(inField) {
