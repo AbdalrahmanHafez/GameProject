@@ -86,7 +86,7 @@ public class GameScreen extends JFrame implements ActionListener{
 //											CONSTRUCTOR
 	public GameScreen() {
 		this.setTitle("HearthStone version 0.4");
-//		this.setBounds(10, 20, 1930, 1030);
+		this.setBounds(10, 20, 1930, 1030);
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
@@ -96,7 +96,6 @@ public class GameScreen extends JFrame implements ActionListener{
 		/* Buttons action assignments */
 
 		
-		btnHeroDeck.setActionCommand("draw"); btnHeroDeck.addActionListener(this);
 		btnEndTurn.setActionCommand("endturn"); btnEndTurn.addActionListener(this);		
 		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
 		btnHero2Pic.setActionCommand("minionattack"); btnHero2Pic.setListener(this);

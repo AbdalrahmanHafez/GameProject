@@ -81,38 +81,14 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 				;break;
 				
-			case "draw":
-				Card drawnCard = null;
-				if(game.getCurrentHero().getCardDrawn()== false) {
-					game.getCurrentHero().setCardDrawn(true);
-
-					try {
-						drawnCard = game.getCurrentHero().drawCard();
-					} catch (FullHandException | CloneNotSupportedException e1) {	
-						alert.info(e1.getMessage());
-					}
-					
-				
-				}else {
-					alert.info("You've already drawn a card");
-				}
-
-				;break;
-
 			case "endturn":
-			if(game.getCurrentHero().getCardDrawn()== true) {
-				game.getCurrentHero().setCardDrawn(false); //reset it
 				try { //TODO 	endturn could this give an error
 					game.endTurn();
 				} catch (FullHandException | CloneNotSupportedException e2) {
-					e2.printStackTrace();
+					alert.info(e2.getMessage());
 				}
-			}
-			else {
-				alert.info("Please draw a card first");
-			}
-
-				;break;
+			;break;
+				
 				
 			case "minionplay":
 //					TODO cardButton action
