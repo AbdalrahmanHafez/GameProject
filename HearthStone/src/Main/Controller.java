@@ -38,15 +38,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	private Game game;
 	private alertBox alert = new alertBox();
 	
-	private Minion minionattacker = null;
-	private Minion minionattacktarget = null;
-	
-	private Spell spellattacker = null;
-
-	
-	private boolean waitingforatarget = false;
-	private boolean waitingforatargetspell = false;
-
 	
 //testdel
 	
@@ -70,11 +61,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		// TODO button Actions 
 		
 		boolean _updatethisround = true; // used to keep the current action commands, and not replace them by the default AC
-		Component[] panhero2fieldContainer = gamesc.panHero2Field.getComponents();
-		Component[] panherofieldContainer = gamesc.panHeroField.getComponents();
-		Component[] panhero2handContainer = gamesc.panHero2Hand.getComponents();
-		Component[] panherohandContainer = gamesc.panHeroHand.getComponents();
-		
+	
 		if(e.getActionCommand().equals("initialStart")) { 
 			Startsc.setVisible(false);
 			welcomesc.setVisible(true);
@@ -97,14 +84,16 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			case "draw":
 				Card drawnCard = null;
 				if(game.getCurrentHero().getCardDrawn()== false) {
-				game.getCurrentHero().setCardDrawn(true);
+					game.getCurrentHero().setCardDrawn(true);
 
-				try {
-					drawnCard = game.getCurrentHero().drawCard();
-				} catch (FullHandException | CloneNotSupportedException e1) {	
-					alert.info("Your Hand is FULL");}
-				}
-				else {
+					try {
+						drawnCard = game.getCurrentHero().drawCard();
+					} catch (FullHandException | CloneNotSupportedException e1) {	
+						alert.info(e1.getMessage());
+					}
+					
+				
+				}else {
 					alert.info("You've already drawn a card");
 				}
 
@@ -112,11 +101,12 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 
 			case "endturn":
 			if(game.getCurrentHero().getCardDrawn()== true) {
-			try { //TODO endturn could this give an error
-				game.endTurn();
-			} catch (FullHandException | CloneNotSupportedException e2) {
-				e2.printStackTrace();
-			}
+				game.getCurrentHero().setCardDrawn(false); //reset it
+				try { //TODO 	endturn could this give an error
+					game.endTurn();
+				} catch (FullHandException | CloneNotSupportedException e2) {
+					e2.printStackTrace();
+				}
 			}
 			else {
 				alert.info("Please draw a card first");
@@ -141,148 +131,106 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 			case "minionattack":
 				System.out.println("controller attack method");
-				boolean _attacked = false;
+				CardButton minionsource = (CardButton)e.getSource();
+				Minion attackerMinion = ((MinionCardButton)minionsource.getAttackedBy()).getCard();
+				Minion targetMinion = ((MinionCardButton)minionsource).getCard();
 				
-				if(waitingforatarget == true) { //this is our target
-					waitingforatarget = false;
-					
-					if(e.getSource() == gamesc.btnHero2Pic) { // the target is a hero
-							try {
-								game.getCurrentHero().attackWithMinion(minionattacker, game.getOpponent());
-								gamesc.btnHero2Pic.setClickable(false);
-								_attacked = true;
-								System.out.println("attacked the hero");
-							} catch (CannotAttackException | NotYourTurnException | TauntBypassException
-									| NotSummonedException | InvalidTargetException e1) {
-								alert.error(e1.getMessage());
-							}
-					}else {
-						minionattacktarget = ((MinionCardButton)e.getSource()).getCard();
-							try {
-								game.getCurrentHero().attackWithMinion(minionattacker, minionattacktarget);
-								_attacked = true;
-								System.out.println("attacked a minion");
-							} catch (CannotAttackException | NotYourTurnException | TauntBypassException
-									| InvalidTargetException | NotSummonedException e1) {
-								alert.error(e1.getMessage());
-							}
-					}
-				
+				try {
+					game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
+					System.out.println("attacked a Minion" + "attacker" + attackerMinion.getName() + " target"
+							+ targetMinion.getName());
+				} catch (CannotAttackException | NotYourTurnException | TauntBypassException
+						| InvalidTargetException | NotSummonedException e1) {
+					alert.error(e1.getMessage());
 				}
-
-					if( !_attacked) {
-					System.out.println("wating for another minion to attack him");
-					minionattacker = ((MinionCardButton)e.getSource()).getCard();
-					waitingforatarget = true;
-					gamesc.btnHero2Pic.setClickable(true);
-					}
-								
-
-				
+						
 			;break;
 			
-				
-			case "HeroPower":
-				
-			try {
-				game.getCurrentHero().useHeroPower();
-			} catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException | FullHandException
-					| FullFieldException | CloneNotSupportedException e1) {
-				// TODO Auto-generated catch block
-					alert.error(e1.getMessage());
-			}
-					
-				;break;
+			case "minionattackhero":
+				System.out.println("controller minion attack hero method");
+				try {
+						game.getCurrentHero().attackWithMinion(((MinionCardButton)gamesc.attacker).getCard() , game.getOpponent());
+						System.out.println("attacked the hero");
+					} catch (CannotAttackException | NotYourTurnException | TauntBypassException
+							| NotSummonedException | InvalidTargetException e1) {
+						alert.error(e1.getMessage());
+					}
+			;break;
 
 			case "spellcast":
-				System.out.println("controller castspell method");
+				System.out.println("controller spellcast method");
+				Spell s = ((SpellCardButton)gamesc.attacker).getCard();
 				
-				if(waitingforatargetspell == true) { //then this is our target
-					Minion m = ((MinionCardButton) e.getSource()).getCard();
-					
-					try {
-						game.getCurrentHero().castSpell((MinionTargetSpell) spellattacker, m);
-					} catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e1) {
-						alert.error(e1.getMessage());
-					} catch (ClassCastException ee) {;}
-					
-					try {
-						game.getCurrentHero().castSpell((LeechingSpell) spellattacker, m);
-					} catch (NotYourTurnException | NotEnoughManaException e1) {
-						alert.error(e1.getMessage());
-					} catch (ClassCastException ee) {;}
-					
-					
-					
-					waitingforatargetspell = false;
-					spellattacker = null;
-				}else{
-				SpellCardButton btn = (SpellCardButton) e.getSource();
-				Spell s = btn.getCard();
-											
-				if(btn.doesspellNeedaTarget()) { // Either minion target spell, leeching spell
-					System.out.println("spell need a target");
-					this.spellattacker = s;
-					
-					MinionCardButton[] panhero2fieldbuttons = Arrays.copyOf(panhero2fieldContainer, panhero2fieldContainer.length, MinionCardButton[].class);
-					MinionCardButton[] panherofieldbuttons = Arrays.copyOf(panherofieldContainer, panherofieldContainer.length, MinionCardButton[].class);
-					MinionCardButton[] panhero2handbuttons = Arrays.copyOf(panhero2handContainer, panhero2handContainer.length, MinionCardButton[].class);
-					MinionCardButton[] panherohandbuttons = Arrays.copyOf(panherohandContainer, panherohandContainer.length, MinionCardButton[].class);
-					
-					for(MinionCardButton sbtn : panhero2fieldbuttons) {
-						sbtn.setActionCommand("spellcast");
-						sbtn.setClickable(true);
-						_updatethisround = false;
-					}
-					for(MinionCardButton sbtn : panherofieldbuttons) {
-						sbtn.setActionCommand("spellcast");
-						sbtn.setClickable(true);
-						_updatethisround = false;
-					}
-					for(MinionCardButton sbtn : panhero2handbuttons) {
-						sbtn.setActionCommand("spellcast");
-						sbtn.setClickable(false);
-						_updatethisround = false;
-					}
-					for(MinionCardButton sbtn : panherohandbuttons) {
-						sbtn.setActionCommand("spellcast");
-						sbtn.setClickable(false);
-						_updatethisround = false;
-					}
-					
-					
-					waitingforatargetspell = true;
-					
-				}else {
-					System.out.println("spell does not need a target");
-					try {
-						game.getCurrentHero().castSpell((FieldSpell)s);
-					} catch (NotYourTurnException | NotEnoughManaException e1) {
-						e1.printStackTrace();
-					} catch (ClassCastException ee) {;} // if can't cast it => dont use this method 
-					
-					try {
-						game.getCurrentHero().castSpell((AOESpell)s, game.getOpponent().getField());
-					} catch (NotYourTurnException | NotEnoughManaException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassCastException ee) {;}
-					
-					try {
-						game.getCurrentHero().castSpell((HeroTargetSpell)s, game.getOpponent());
-					} catch (NotYourTurnException | NotEnoughManaException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (ClassCastException ee) {;}	
-					
-					waitingforatargetspell = false;
-				}
+				if(s instanceof FieldSpell)
+				try {
+					game.getCurrentHero().castSpell((FieldSpell)s);
+				} catch (NotYourTurnException | NotEnoughManaException e1) {
+					alert.error(e1.getMessage());}
 				
-				}
+				if(s instanceof AOESpell)
+				try {
+					game.getCurrentHero().castSpell((AOESpell)s, game.getOpponent().getField());
+				} catch (NotYourTurnException | NotEnoughManaException e1) {
+					alert.error(e1.getMessage());}
+
+				if(s instanceof HeroTargetSpell)
+				try {
+					game.getCurrentHero().castSpell((HeroTargetSpell)s, game.getOpponent());
+				} catch (NotYourTurnException | NotEnoughManaException e1) {
+					alert.error(e1.getMessage());}
 				
 				
 			;break;
 		
+			case "spellcastontarget":
+				System.out.println("controller spellcast method");
+				CardButton esource = (CardButton) e.getSource();
+				MinionCardButton em = ((MinionCardButton)esource);
+				Minion spelltargetminion	=	em.getCard();
+				Spell sp = ((SpellCardButton)em.getAttackedBy()).getCard();
+				
+				if(sp instanceof MinionTargetSpell)
+					try {
+						game.getCurrentHero().castSpell((MinionTargetSpell)sp, spelltargetminion);
+					} catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e2) {
+						alert.error(e2.getMessage());
+					}
+			
+				if(sp instanceof LeechingSpell)
+					try {
+						game.getCurrentHero().castSpell((LeechingSpell)sp, spelltargetminion);
+					} catch (NotYourTurnException | NotEnoughManaException e2) {
+						alert.error(e2.getMessage());
+					}
+			
+				
+			;break;
+			
+			case "spellattackhero":
+				System.out.println("controller spellcast method");
+
+				Spell spell = ((SpellCardButton)gamesc.attacker).getCard();
+				
+				if(spell instanceof HeroTargetSpell)
+					try {
+						game.getCurrentHero().castSpell((HeroTargetSpell)spell, game.getCurrentHero());
+					} catch (NotYourTurnException | NotEnoughManaException e2) {
+						alert.error(e2.getMessage());
+					}
+				
+			;break;
+			
+			case "HeroPower":
+				
+				try {
+					game.getCurrentHero().useHeroPower();
+				} catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException | FullHandException
+						| FullFieldException | CloneNotSupportedException e1) {
+					// TODO Auto-generated catch block
+					alert.error(e1.getMessage());
+				}
+				
+				;break;
 
 				
 				

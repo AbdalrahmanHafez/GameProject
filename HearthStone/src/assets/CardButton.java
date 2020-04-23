@@ -18,13 +18,18 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import model.cards.Card;
+import model.cards.minions.Minion;
 import model.cards.spells.Spell;
 
 public class CardButton extends ImageButton{
 	protected boolean hidden = false;
 	private boolean showOverlay = true;
 	protected boolean isinField; //meaning in the current hero field only
+	private Card card;
 
+	private CardButton attackedBy = null;
+	
+	
 	CardButton target =null;
 	
 
@@ -126,6 +131,11 @@ public class CardButton extends ImageButton{
 	public boolean isinField() {
 		return isinField;
 	}
-
+	public CardButton getAttackedBy() {
+		return attackedBy;
+	}
+	public void setAttackedBy(CardButton attackedBy) {
+		this.attackedBy = attackedBy;
+	}
 	
 }

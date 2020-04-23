@@ -15,7 +15,6 @@ import model.cards.minions.Minion;
 public class MinionCardButton extends CardButton implements ActionListener{
 	
 	private Minion card;
-	
 
 	public MinionCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);

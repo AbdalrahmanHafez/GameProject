@@ -17,7 +17,6 @@ public class SpellCardButton extends CardButton{
 	
 	public SpellCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);
-		// TODO Auto-generated constructor stub
 
 		setImage("resources/images/Cards/spell.png");
 		this.setActionCommand("spellcast");

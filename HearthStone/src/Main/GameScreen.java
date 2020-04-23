@@ -38,6 +38,7 @@ import assets.ImageButton;
 import assets.ImagePanel;
 import assets.MinionCardButton;
 import assets.SpellCardButton;
+import assets.alertBox;
 import assets.CardButton;
 import model.cards.Card;
 import model.cards.minions.Minion;
@@ -47,11 +48,9 @@ import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
 public class GameScreen extends JFrame implements ActionListener{
-	
-	GameScreenListener listener;
+	private alertBox alert = new alertBox();
 
-	CardButton RequestingaTarget;
-	boolean waitingForaTarget = false;
+	GameScreenListener listener;
 
 	ImageButton btnHero2Pic = new ImageButton(0,0, false);
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
@@ -286,11 +285,77 @@ public class GameScreen extends JFrame implements ActionListener{
 
 
 
+	private boolean waitingfortarget = false;
+	public CardButton attacker = null;
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		System.out.println("gamescreen");
+		
+		if(waitingfortarget) {
+			if(	!(e.getSource() instanceof CardButton) && e.getSource() != btnHero2Pic) {
+				alert.error("Please select a valid target");
+				return;
+			}//otherwise
+			waitingfortarget = false;
+//			the opp field cards now not clickable 
+			setFieldOppTo(false);
+
+			if(e.getSource() == btnHero2Pic) {
+				if(attacker instanceof SpellCardButton) {
+					e = new ActionEvent(e.getSource(), 0, "spellattackhero");
+				}else
+				if(attacker instanceof MinionCardButton) {
+					e = new ActionEvent(e.getSource(), 0, "minionattackhero");
+				}
+
+				
+			}else {
+			
+				if(attacker instanceof SpellCardButton) {
+					CardButton source = (CardButton)  e.getSource(); 
+					source.setAttackedBy(attacker);
+					e = new ActionEvent(e.getSource(), 0, "spellcastontarget");
+				}else
+				if(attacker instanceof MinionCardButton) {
+					CardButton source = (CardButton)  e.getSource(); 
+					source.setAttackedBy(attacker);
+					e = new ActionEvent(e.getSource(), 0, "minionattack");
+				}
+
+			}
+
+			listener.actionPerformed(e); // sending the attack
+			return;
+		}
+		
+		
+		if ( e.getSource() instanceof CardButton ) {
+			CardButton source = (CardButton)  e.getSource(); 
+			
+			if(e.getActionCommand() == "minionattack") {
+				attacker = source;
+				waitingfortarget = true;
+//				enable the opp field cards to be clickable
+				setFieldOppTo(true);
+				return;
+			}
+			
+			if(e.getActionCommand() == "spellcast") {
+				attacker = source;
+				if(((SpellCardButton)source).doesspellNeedaTarget()) {
+					waitingfortarget =true; 
+//				enable the opp field cards to be clickable
+					setFieldOppTo(true);
+					return;
+				}
+				//othrwise cast the spell
+			}
+		}
+		
+		
+		
 		
 		
 			listener.actionPerformed(e);
@@ -309,6 +374,13 @@ public class GameScreen extends JFrame implements ActionListener{
 		this.listener = listener;
 	}
 	
+	private void setFieldOppTo(boolean flag) {
+		for(int i = 0 ; i < panHero2Field.getComponentCount() ; i++) {
+			CardButton btn = (CardButton)panHero2Field.getComponent(i);
+			btn.setClickable(flag);
+		}
+		btnHero2Pic.setClickable(flag);
+	}
 	
 	
 	
