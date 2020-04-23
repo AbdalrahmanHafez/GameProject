@@ -342,8 +342,7 @@ public class GameScreen extends JFrame implements ActionListener{
 			}
 			
 			}
-		
-		
+
 		
 		
 		
