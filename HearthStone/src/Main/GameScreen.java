@@ -43,6 +43,7 @@ import assets.MinionCardButton;
 import assets.SpellCardButton;
 import assets.alertBox;
 import assets.CardButton;
+import assets.CardOverlayWindow;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.cards.spells.AOESpell;
@@ -53,22 +54,30 @@ import net.miginfocom.swing.MigLayout;
 public class GameScreen extends JFrame implements ActionListener, ImageButtonListener{
 	private alertBox alert = new alertBox();
 	GameScreenListener listener;
-
+	CardOverlayWindow cardoverlay = new CardOverlayWindow();
+	
+	
 	ImageButton btnHero2Pic = new ImageButton(0,0, false);
+		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
-	JButton btnHero2Deck = new JButton("Oponent Deck");
-
+//	JButton btnHero2Deck = new JButton("Oponent Deck");
+//	JButton btnHeroDeck = new JButton("Hero Deck");
+	ImagePanel btnHero2Deck = new ImagePanel("resources/images/Cards/spell.png");
+	ImagePanel btnHeroDeck = new ImagePanel("resources/images/Cards/spell.png");
+	
+	
 	JPanel 	panHero2Field = new JPanel(new FlowLayout());
 	JPanel 	panHeroField = new JPanel(new FlowLayout());
 	JPanel	panHeroHand = new JPanel(new FlowLayout());
 	JPanel 	panHero2Hand = new JPanel(new FlowLayout());
 	
-	JButton btnHeroDeck = new JButton("Hero Deck, Draw a new Card");
 
 	ImageButton btnHeroPic = new ImageButton(0,0, false);
 	ImageButton btnHeroPower = new ImageButton(0,0,true);
-//	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png",1,1);
+	
+	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
+	
 	JTextPane txtCardInfo= new JTextPane();
 
 
@@ -86,10 +95,12 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	
 
-//											CONSTRUCTOR
+//														CONSTRUCTOR
 	public GameScreen() {
 		this.setTitle("HearthStone version 0.7");
 		this.setBounds(10, 20, 1930, 1030);
+//		TODO minimum window size
+		this.setMinimumSize(new Dimension(1500, 800));
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
@@ -111,8 +122,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 		/* components Adjustments */
 	
-		topPanle.setPreferredSize(new Dimension(100,180));
-		bottomPanle.setPreferredSize(new Dimension(100,180));
+
 		leftPanle.setPreferredSize(new Dimension(250, 0));
 	
 		
@@ -151,10 +161,11 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 		leftPanle.add(txtInfo, "growx, wrap");
 		leftPanle.add(txtCardInfo, "grow");
+		
 	
-		rightPanle.add(btnHero2Deck, "grow, wrap, w 100!");
-		rightPanle.add(btnEndTurn	, "growx, wrap, w 100!");
-		rightPanle.add(btnHeroDeck	, "grow, wrap, w 100!");
+		rightPanle.add(btnHero2Deck, "grow, wrap, w 150!");
+		rightPanle.add(btnEndTurn	, "growx, wrap, w 150!, h 70::");
+		rightPanle.add(btnHeroDeck	, "grow, wrap, w 150!");
   
 
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
@@ -230,18 +241,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 			addCardTo(c, panHero2Field, false, false, false,true);
 		}
 	
-//		TODO remove 
-		for(int i = 0; i < 15 ; i++) {
-			MinionCardButton btn = new MinionCardButton(false, true,false);
-			btn.setinField(true);
-			panHero2Field.add(btn);
-
-		}
-	for(int i = 0; i < 15 ; i++) {
-			MinionCardButton btn = new MinionCardButton(false, true,false);
-			btn.setinField(true);
-			panHeroField.add(btn);
-		}
 		
 
 		
@@ -373,6 +372,20 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	public void setListener(GameScreenListener listener) {
 		this.listener = listener;
 	}
+
+
+
+	@Override
+	public void updateCardOverlay(CardButton btn, boolean show) {
+		if ( show ) {
+			cardoverlay.showoverlay(true);
+			cardoverlay.updateLocation(btn);
+			
+		}else {
+			cardoverlay.showoverlay(false);
+		}
+
+	}
 	
 	private void setFieldOppTo(boolean flag) {
 		for(int i = 0 ; i < panHero2Field.getComponentCount() ; i++) {
@@ -382,6 +395,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		}
 		btnHero2Pic.setClickable(flag);
 	}
+
+
 	
 	
 	

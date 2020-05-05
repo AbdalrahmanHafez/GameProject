@@ -33,6 +33,7 @@ public class CardButton extends ImageButton{
 	private CardButton attackedBy = null;
 	
 
+	
 	public CardButton(boolean h, boolean showOverlay, boolean clickable)	{
 		
 		super(120, 150, clickable);
@@ -46,14 +47,18 @@ public class CardButton extends ImageButton{
 					 try{
 						if(!btn.isHidden()) {
 								btn.listener.updatetxtCardInfo(btn.getCard());}					 }catch(Exception ee) {;}
+					 btn.listener.updateCardOverlay(btn, true);
+
 					 border_activate();
 					 if(showOverlay)
 						 	btn.setImage("resources/images/uparrow.png");
+
+					 
 				 }
 				public void mouseExited(MouseEvent e) {
 					 CardButton btn =  ((CardButton) e.getSource());
-
-					border_deactivate();
+					 btn.listener.updateCardOverlay(btn, true);
+					 border_deactivate();
 					
 					(btn).setImage(btn.imageDefualtPath);
 		         }

@@ -10,48 +10,41 @@ import java.awt.geom.AffineTransform;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class ImagePanel extends JPanel
-{
-    Image image, scaledImage;
+public class ImagePanel extends JPanel{
+    Image scaledImage;
+    private String imagePath;
     int w,h;
-    private boolean fullimageflag = false;
-    
+    private boolean yetToDraw = true;
+
     public ImagePanel(String imgpath) {
     	this(imgpath, 0, 0);
     }
     
-    public ImagePanel(String imgpath, int w, int h)
+    public ImagePanel(String img, int w, int h)
     {
-    	
-		Image image = new ImageIcon(imgpath).getImage();
-        this.image = image;
-
-        this.w = w;
-        this.h = h;        	
-                   	
-        scaledImage = image.getScaledInstance(w,h,
-                                              Image.SCALE_DEFAULT);
+    	this.imagePath = img;
+    	this.w = w;
+    	this.h = h;        	
     }
     
-    public void setImageToFull() {
-    	fullimageflag = true;
-	}
-  
+
     protected void paintComponent(Graphics g)
     {
     	super.paintComponent(g);
-    	if(this.getWidth() != 0 && this.getHeight() !=0 && fullimageflag) {
-			scaledImage = image.getScaledInstance(this.getWidth(),  this.getHeight(),
-	                Image.SCALE_DEFAULT);		
-			fullimageflag = false;
-		}
-        g.drawImage(scaledImage, 0,0 , this);
+		if(yetToDraw) 
+			scaledImage = new ImageIcon(imagePath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
+		yetToDraw = false;
+		
+		
+		g.drawImage(scaledImage, 0, 0, null);
+        this.repaint();
+		this.revalidate();
+
+
+    	
     }
-  
-    public Dimension getPreferredSize()
-    {
-        return new Dimension(this.w, this.h);
-    }
+ 
+
 
 	
 }
