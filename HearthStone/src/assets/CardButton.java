@@ -19,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 import model.cards.Card;
+import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.Spell;
 import javafx.scene.effect.DropShadow;
@@ -40,14 +41,21 @@ public class CardButton extends ImageButton{
 		this.hidden = h;
 		
 		this.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent me) {
+			public void mouseEntered(MouseEvent e) {
+					 CardButton btn =  ((CardButton) e.getSource());
+					 try{
+						if(!btn.isHidden()) {
+								btn.listener.updatetxtCardInfo(btn.getCard());}					 }catch(Exception ee) {;}
 					 border_activate();
 					 if(showOverlay)
-						 ((ImageButton) me.getSource()).setImage("resources/images/uparrow.png");
+						 	btn.setImage("resources/images/uparrow.png");
 				 }
-				public void mouseExited(MouseEvent me) {
+				public void mouseExited(MouseEvent e) {
+					 CardButton btn =  ((CardButton) e.getSource());
+
 					border_deactivate();
-					((ImageButton) me.getSource()).setImage(((CardButton)me.getSource()).imageDefualtPath);
+					
+					(btn).setImage(btn.imageDefualtPath);
 		         }
 		      });
 		}
@@ -98,7 +106,9 @@ public class CardButton extends ImageButton{
 
 
 	
-	
+	public Card getCard() {
+		return card;
+	}
 	public void setinField(boolean inField) {
 		this.isinField = inField;
 	}

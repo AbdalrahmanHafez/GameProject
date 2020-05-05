@@ -50,7 +50,7 @@ import model.cards.spells.Spell;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
-public class GameScreen extends JFrame implements ActionListener{
+public class GameScreen extends JFrame implements ActionListener, ImageButtonListener{
 	private alertBox alert = new alertBox();
 	GameScreenListener listener;
 
@@ -144,8 +144,8 @@ public class GameScreen extends JFrame implements ActionListener{
 		/* End components Adj */
 
 		
-		topPanle.add(btnHero2Pic, "grow");
-		topPanle.add(panHero2Hand, "grow, w 1300");
+		topPanle.add(btnHero2Pic, "grow, w 170::170");
+		topPanle.add(panHero2Hand, "grow, w 1000:100%:");
 		topPanle.add(lblHero2Mana, "grow");
 		  
 		
@@ -156,19 +156,18 @@ public class GameScreen extends JFrame implements ActionListener{
 		rightPanle.add(btnEndTurn	, "growx, wrap, w 100!");
 		rightPanle.add(btnHeroDeck	, "grow, wrap, w 100!");
   
-		
-		bottomPanle.add(btnHeroPic, "grow");
-		bottomPanle.add(panHeroHand, "grow,w 1100");
-		bottomPanle.add(btnHeroPower, "grow");
-		
-		
+
+		bottomPanle.add(btnHeroPic, "grow, w 170::170");
+		bottomPanle.add(panHeroHand, "grow, w 1000:100%:");
+		bottomPanle.add(btnHeroPower, "grow, w 150::");
 		
 		bottomPanle.add(lblHeroMana, "grow");
  
-		  
-		centerPanle.add(panHero2Field,"grow, wrap");
-		centerPanle.add(panHeroField,"grow");
-		  
+		centerPanle.add(panHero2Field,"grow, height 170:: , wrap");
+		centerPanle.add(panHeroField,"grow, height 170::");
+		
+		
+		
 	
 		
 		this.add(topPanle			, BorderLayout.NORTH); 
@@ -231,6 +230,21 @@ public class GameScreen extends JFrame implements ActionListener{
 			addCardTo(c, panHero2Field, false, false, false,true);
 		}
 	
+//		TODO remove 
+		for(int i = 0; i < 15 ; i++) {
+			MinionCardButton btn = new MinionCardButton(false, true,false);
+			btn.setinField(true);
+			panHero2Field.add(btn);
+
+		}
+	for(int i = 0; i < 15 ; i++) {
+			MinionCardButton btn = new MinionCardButton(false, true,false);
+			btn.setinField(true);
+			panHeroField.add(btn);
+		}
+		
+
+		
 		this.repaint();
 		this.revalidate();
 		
@@ -246,7 +260,7 @@ public class GameScreen extends JFrame implements ActionListener{
 			btn = new MinionCardButton(hidden, showOverlay,clickable);
 			((MinionCardButton) btn).setinField(inField);
 			((MinionCardButton) btn).setTheCard((Minion)Card);
-//			btn.setImageToFull();
+
 			
 		}else
 		if(Card instanceof Spell) {
@@ -265,7 +279,7 @@ public class GameScreen extends JFrame implements ActionListener{
 
 	
 	
-	private void updatetxtCardInfo(Card card) {
+	public void updatetxtCardInfo(Card card) {
 		String r = "====[CARD INFO]====";
 		r += "\nName: " + card.getName();
 		r += "\nManaCost: " + card.getManaCost();

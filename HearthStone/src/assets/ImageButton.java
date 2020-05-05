@@ -25,6 +25,7 @@ import javax.swing.UIManager;
 import javax.xml.bind.Marshaller.Listener;
 
 import Main.GameScreenListener;
+import Main.ImageButtonListener;
 import model.cards.Card;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
@@ -40,13 +41,12 @@ public class ImageButton extends JButton implements ActionListener {
 	protected boolean clickable = true;
 	private boolean yetToDraw = true;
 
-	protected ActionListener listener;
+	protected ImageButtonListener listener;
 
 	Image scaledImage;
     int w,h;
 	
-	public ImageButton(int w, int h, boolean clickable)
-	{
+	public ImageButton(int w, int h, boolean clickable)	{
 		this.w = w;
 		this.h = h;        	
 		
@@ -115,7 +115,7 @@ public class ImageButton extends JButton implements ActionListener {
 	}
 	
 	
-	public void setListener(ActionListener listener) {
+	public void setListener(ImageButtonListener listener) {
 		this.listener = listener;
 	}
 
