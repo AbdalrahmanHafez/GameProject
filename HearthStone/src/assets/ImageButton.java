@@ -33,6 +33,7 @@ import model.cards.spells.Spell;
 
 public class ImageButton extends JButton implements ActionListener {
 	protected String imagePath;
+	protected String imageDefultPath;
 	protected JLabel Label;
 	protected boolean clickable = true;
 	private boolean fullimageflag = false;
@@ -75,10 +76,15 @@ public class ImageButton extends JButton implements ActionListener {
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;
 		try {
-		scaledImage = new ImageIcon(imgPath).getImage().getScaledInstance(w,h, Image.SCALE_DEFAULT);
+			scaledImage = new ImageIcon(imgPath).getImage().getScaledInstance(w,h, Image.SCALE_DEFAULT);
 		}catch(Exception e) {}
 		
 	}
+	public void setDefultImage(String imgPath) {
+		this.imageDefultPath = imgPath;
+	}
+	
+	
 	public void setText(String txt) {
 		this.Label.setText(txt);
 	}

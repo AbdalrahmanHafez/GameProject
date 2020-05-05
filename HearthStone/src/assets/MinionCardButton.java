@@ -19,15 +19,11 @@ public class MinionCardButton extends CardButton implements ActionListener{
 	public MinionCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);
 
+		setDefultImage("resources/images/Cards/minion.png");
 		setImage("resources/images/Cards/minion.png");
 		this.setActionCommand("minionplay");
 	
-		
-		this.addMouseListener(new MouseAdapter() {
-			public void mouseExited(MouseEvent me) {
-				 ((ImageButton) me.getSource()).setImage("resources/images/Cards/minion.png");
-	         }
-		      });
+
 		
 	}
 

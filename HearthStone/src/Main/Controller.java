@@ -60,7 +60,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	public void actionPerformed(ActionEvent e) {
 		// TODO button Actions 
 		
-		boolean _updatethisround = true; // used to keep the current action commands, and not replace them by the default AC
 	
 		if(e.getActionCommand().equals("initialStart")) { 
 			Startsc.setVisible(false);
@@ -91,9 +90,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 				
 			case "minionplay":
-//					TODO cardButton action
 				System.out.println("controller minionplay");
-						
 				try {
 					MinionCardButton btnminion =(MinionCardButton) e.getSource();
 					Minion m = (btnminion).getCard();
@@ -212,9 +209,9 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 		}
 		
-		if(_updatethisround) {
-			gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
-		}
+		
+		gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
+		
 		
 		
 	}

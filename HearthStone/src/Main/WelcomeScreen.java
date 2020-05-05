@@ -8,8 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.awt.event.*;    
-
+import java.awt.event.*;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -301,9 +301,12 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		if(e.getActionCommand().equals("start")){
 //			TODO assuming players 
+			
 			try {
-			p1 = new Priest();
-			p2 = new Mage();}catch(Exception ee) {;}
+				p1 = new Priest();
+				p2 = new Mage();
+			}catch(Exception ee) {;}
+			
 				if (	p1 == null || p2 == null 	) {
 					alert.error("Please choose a hero for each player");
 					return;

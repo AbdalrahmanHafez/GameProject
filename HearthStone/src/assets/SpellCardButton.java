@@ -18,16 +18,10 @@ public class SpellCardButton extends CardButton{
 	public SpellCardButton(boolean h, boolean showOverlay, boolean clickable) {
 		super(h, showOverlay, clickable);
 
+		setDefultImage("resources/images/Cards/spell.png");
 		setImage("resources/images/Cards/spell.png");
 		this.setActionCommand("spellcast");
 
-
-		this.addMouseListener(new MouseAdapter() {
-			public void mouseExited(MouseEvent me) {
-				 ((ImageButton) me.getSource()).setImage("resources/images/Cards/spell.png");
-	         }
-
-		      });
 		
 	}
 	

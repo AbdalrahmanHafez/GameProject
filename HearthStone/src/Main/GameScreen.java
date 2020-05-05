@@ -2,6 +2,7 @@ package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -11,6 +12,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -85,13 +88,17 @@ public class GameScreen extends JFrame implements ActionListener{
 
 //											CONSTRUCTOR
 	public GameScreen() {
-		this.setTitle("HearthStone version 0.4");
+		this.setTitle("HearthStone version 0.7");
 		this.setBounds(10, 20, 1930, 1030);
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/cur.png")).getImage(),new Point(), "Normal Cursor");
+		this.setCursor(cursor);
+		
+		
 		
 		/* Buttons action assignments */
 
@@ -299,7 +306,9 @@ public class GameScreen extends JFrame implements ActionListener{
 			waitingfortarget = false;
 //			the opp field cards now not clickable 
 			setFieldOppTo(false);
+			attacker.setHighlightRemove();
 
+			
 			if(e.getSource() == btnHero2Pic) {
 				if(attacker instanceof SpellCardButton) {
 					e = new ActionEvent(e.getSource(), 0, "spellattackhero");
@@ -328,6 +337,7 @@ public class GameScreen extends JFrame implements ActionListener{
 			return;
 		}
 		
+//		IF not Waiting for target, 
 		
 		if ( e.getSource() instanceof CardButton ) {
 			CardButton source = (CardButton)  e.getSource(); 
@@ -336,11 +346,12 @@ public class GameScreen extends JFrame implements ActionListener{
 				attacker = source;
 				waitingfortarget = true;
 //				enable the opp field cards to be clickable
+				attacker.setHighlightMode();
 				setFieldOppTo(true);
 				return;
 			}
 			
-			}
+		}
 
 		
 		
@@ -352,11 +363,6 @@ public class GameScreen extends JFrame implements ActionListener{
 	
 	
 
-	
-	
-
-
-
 
 	public void setListener(GameScreenListener listener) {
 		this.listener = listener;
@@ -366,6 +372,7 @@ public class GameScreen extends JFrame implements ActionListener{
 		for(int i = 0 ; i < panHero2Field.getComponentCount() ; i++) {
 			CardButton btn = (CardButton)panHero2Field.getComponent(i);
 			btn.setClickable(flag);
+			
 		}
 		btnHero2Pic.setClickable(flag);
 	}

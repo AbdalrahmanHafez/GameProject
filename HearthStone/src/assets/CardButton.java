@@ -1,6 +1,7 @@
 package assets;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,23 +21,19 @@ import javax.swing.JLabel;
 import model.cards.Card;
 import model.cards.minions.Minion;
 import model.cards.spells.Spell;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 
 public class CardButton extends ImageButton{
 	protected boolean hidden = false;
 	private boolean showOverlay = true;
 	protected boolean isinField; //meaning in the current hero field only
 	private Card card;
-
+	public boolean hightlighted = false;
 	private CardButton attackedBy = null;
 	
-	
-	CardButton target =null;
-	
 
-
-	
-	public CardButton(boolean h, boolean showOverlay, boolean clickable)
-	{
+	public CardButton(boolean h, boolean showOverlay, boolean clickable)	{
 		
 		super(120, 150, clickable);
 	
@@ -49,24 +46,37 @@ public class CardButton extends ImageButton{
 					 if(showOverlay)
 						 ((ImageButton) me.getSource()).setImage("resources/images/uparrow.png");
 				 }
-
 				public void mouseExited(MouseEvent me) {
-		        	 border_deactivate();
-					 ((ImageButton) me.getSource()).setImage("resources/images/default.png");
+					border_deactivate();
+					((ImageButton) me.getSource()).setImage(((CardButton)me.getSource()).imageDefultPath);
 		         }
-
 		      });
 		}
-		
-		
 	
-    private void border_activate() {
-		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
+	
 		
-	}
-	private void border_deactivate() {
-		this.setBorder(null);
+		
+    private void border_activate() {
+    	if(!hightlighted) {
+    		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.green));
+    	}else {
+    		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+    	}
+    }
+    private void border_deactivate() {
+    	if(!hightlighted) {
+    		this.setBorder(null);
+    	}else {
+    		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+    	}
+    }
 
+	public void setHighlightMode() {
+		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+		this.hightlighted = true;
+	}
+	public void setHighlightRemove() {
+		this.hightlighted = false;
 	}
 
 	
@@ -77,11 +87,10 @@ public class CardButton extends ImageButton{
 
 	
 	
-	protected void paintComponent(Graphics g)
-	{
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		try {
-			if(hidden) {g.drawImage(ImageIO.read(new File("resources/images/qmark.png")), 0, 0, null);return;}
+			if(hidden) {g.drawImage(ImageIO.read(new File("resources/images/hiddencard.png")), 0, 0, null);return;}
 			
 			g.drawImage(ImageIO.read(new File(super.imagePath)), 0, 0, null);
 		} catch (IOException e) {
@@ -122,12 +131,6 @@ public class CardButton extends ImageButton{
 		return this.hidden; 
 	}
 
-	public CardButton getTarget() {
-		return target;
-	}
-	public void setTarget(CardButton target) {
-		this.target = target;
-	}
 	public boolean isinField() {
 		return isinField;
 	}
