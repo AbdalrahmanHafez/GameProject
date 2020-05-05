@@ -25,7 +25,6 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 
 public class CardButton extends ImageButton{
-	protected boolean hidden = false;
 	private boolean showOverlay = true;
 	protected boolean isinField; //meaning in the current hero field only
 	private Card card;
@@ -48,7 +47,7 @@ public class CardButton extends ImageButton{
 				 }
 				public void mouseExited(MouseEvent me) {
 					border_deactivate();
-					((ImageButton) me.getSource()).setImage(((CardButton)me.getSource()).imageDefultPath);
+					((ImageButton) me.getSource()).setImage(((CardButton)me.getSource()).imageDefualtPath);
 		         }
 		      });
 		}
@@ -85,18 +84,6 @@ public class CardButton extends ImageButton{
 		this.Label.setText(txt);
 	}
 
-	
-	
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		try {
-			if(hidden) {g.drawImage(ImageIO.read(new File("resources/images/hiddencard.png")), 0, 0, null);return;}
-			
-			g.drawImage(ImageIO.read(new File(super.imagePath)), 0, 0, null);
-		} catch (IOException e) {
-		}
-	}
-
 
 
 	@Override
@@ -116,7 +103,6 @@ public class CardButton extends ImageButton{
 		this.isinField = inField;
 	}
 	
-		
 	public boolean isShowOverlay() {
 		return showOverlay;
 	}
@@ -124,12 +110,6 @@ public class CardButton extends ImageButton{
 		this.showOverlay = showOverlay;
 	}
 	
-	public void setHidden(boolean h) {
-		this.hidden = h; 
-	}
-	public boolean isHidden() {
-		return this.hidden; 
-	}
 
 	public boolean isinField() {
 		return isinField;

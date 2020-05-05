@@ -32,12 +32,14 @@ import model.cards.spells.Spell;
 
 
 public class ImageButton extends JButton implements ActionListener {
+	protected boolean hidden = false;
 	protected String imagePath;
-	protected String imageDefultPath;
+	protected String imageDefualtPath;
+	protected String imageHiddenPath = "resources/images/hiddencard.png";
 	protected JLabel Label;
 	protected boolean clickable = true;
-	private boolean fullimageflag = false;
-	
+	private boolean yetToDraw = true;
+
 	protected ActionListener listener;
 
 	Image scaledImage;
@@ -45,6 +47,9 @@ public class ImageButton extends JButton implements ActionListener {
 	
 	public ImageButton(int w, int h, boolean clickable)
 	{
+		this.w = w;
+		this.h = h;        	
+		
 		this.setPreferredSize(new Dimension(w, h));
 		this.setLayout(new BorderLayout());
 		
@@ -54,11 +59,6 @@ public class ImageButton extends JButton implements ActionListener {
 		
 		this.add(Label, BorderLayout.SOUTH);	
 		
-		 this.w = w;
-		 this.h = h;        	
-	     
-		 if(w == 0 || h == 0) { this.fullimageflag = true;}
-		 
 		setText("");
 		setImage("");
     	
@@ -69,19 +69,15 @@ public class ImageButton extends JButton implements ActionListener {
 		
 		}
 	
-	public void setImageToFull() {
-			fullimageflag = true;
-	}
+
 	
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;
-		try {
-			scaledImage = new ImageIcon(imgPath).getImage().getScaledInstance(w,h, Image.SCALE_DEFAULT);
-		}catch(Exception e) {}
-		
+		this.yetToDraw = true;
 	}
+	
 	public void setDefultImage(String imgPath) {
-		this.imageDefultPath = imgPath;
+		this.imageDefualtPath = imgPath;
 	}
 	
 	
@@ -90,15 +86,16 @@ public class ImageButton extends JButton implements ActionListener {
 	}
 
 	
-	
-	protected void paintComponent(Graphics g)
-	{
+	protected void paintComponent(Graphics g)	{
 		super.paintComponent(g);
 		
-		if(this.getWidth() != 0 && this.getHeight() !=0 && fullimageflag) {
-			scaledImage = new ImageIcon(imagePath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),
-	                Image.SCALE_DEFAULT);		
-			fullimageflag = false;
+		if(yetToDraw) { 
+			if(!hidden) {
+				scaledImage = new ImageIcon(imagePath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
+			}else {
+				scaledImage = new ImageIcon(imageHiddenPath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
+			}
+			yetToDraw = false;
 		}
 		
 		g.drawImage(scaledImage, 0, 0, null);
@@ -122,8 +119,12 @@ public class ImageButton extends JButton implements ActionListener {
 		this.listener = listener;
 	}
 
-
-
+	public void setHidden(boolean h) {
+		this.hidden = h; 
+	}
+	public boolean isHidden() {
+		return this.hidden; 
+	}
 	public boolean isClickable() {
 		return clickable;
 	}

@@ -246,7 +246,7 @@ public class GameScreen extends JFrame implements ActionListener{
 			btn = new MinionCardButton(hidden, showOverlay,clickable);
 			((MinionCardButton) btn).setinField(inField);
 			((MinionCardButton) btn).setTheCard((Minion)Card);
-			
+//			btn.setImageToFull();
 			
 		}else
 		if(Card instanceof Spell) {
@@ -254,14 +254,6 @@ public class GameScreen extends JFrame implements ActionListener{
 			((SpellCardButton) btn).setTheCard((Spell)Card);
 		}
 		
-		
-		if(!btn.isHidden()){
-			btn.addMouseListener(new MouseAdapter() {			
-				public void mouseEntered(MouseEvent me) {
-					updatetxtCardInfo(Card);
-				}
-			});
-		}
 			
 		
 		btn.setListener(this);
