@@ -17,6 +17,7 @@ import model.cards.spells.SealOfChampions;
 public class Paladin extends Hero {
 	public Paladin() throws IOException, CloneNotSupportedException {
 		super("Uther Lightbringer");
+		super.setAvatar("resources/images/Heros/Paladin.gif");
 	}
 
 	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,

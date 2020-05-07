@@ -41,6 +41,8 @@ public abstract class Hero implements MinionListener {
 	private ActionValidator validator;
 	private boolean cardDrawn;
 
+	private String avatar;
+	
 	public Hero(String name) throws IOException, CloneNotSupportedException {
 		this.name = name;
 		currentHP = 30;
@@ -319,5 +321,21 @@ public abstract class Hero implements MinionListener {
 	public boolean getCardDrawn() {
 		return cardDrawn;
 	}
-
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	
+	public static void main(String[] args) {
+		Hero h1 = null;
+		try {
+				h1 = new Hunter();
+		}catch(Exception e) {;}
+		
+		System.out.println(h1.getAvatar());
+		
+	}
+	
 }

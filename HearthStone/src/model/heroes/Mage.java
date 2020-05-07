@@ -24,6 +24,7 @@ public class Mage extends Hero {
 
 	public Mage() throws IOException, CloneNotSupportedException {
 		super("Jaina Proudmoore");
+		super.setAvatar("resources/images/Heros/Mage.gif");
 	}
 
 	@Override

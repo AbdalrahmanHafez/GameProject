@@ -20,6 +20,8 @@ public class Warlock extends Hero {
 
 	public Warlock() throws IOException, CloneNotSupportedException {
 		super("Gul'dan");
+		super.setAvatar("resources/images/Heros/Warlock.gif");
+
 	}
 
 	@Override

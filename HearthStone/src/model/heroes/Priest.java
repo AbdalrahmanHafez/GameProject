@@ -19,6 +19,8 @@ public class Priest extends Hero {
 
 	public Priest() throws IOException, CloneNotSupportedException {
 		super("Anduin Wrynn");
+		super.setAvatar("resources/images/Heros/Priest.gif");
+
 	}
 
 	@Override

@@ -37,19 +37,19 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	private GameScreen gamesc;
 	private Game game;
 	private alertBox alert = new alertBox();
-	
-	
-//testdel
+ 	
+	ControllerListener Listener;
 	
 	public Controller(){
 		Startsc = new StartScreen();
 		welcomesc  = new WelcomeScreen();
 		gamesc = new GameScreen();
-		
+				
 		Startsc.setListener(this);
 		welcomesc.setListener(this);
 		gamesc.setListener(this);
 		
+		this.setListener(gamesc);
 	}
 	
 	
@@ -73,6 +73,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
 				
+
 				game.getCurrentHero().setTotalManaCrystals(10);
 				game.getCurrentHero().setCurrentManaCrystals(10);
 				game.getOpponent().setTotalManaCrystals(10);
@@ -226,13 +227,22 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			e.printStackTrace();
 		}
 		
-		
 		gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
 		
+		Listener.initializeGameScreen(game.getCurrentHero(), game.getOpponent());
+		
+
 	}
 
 	
 		
+	public ControllerListener getListener() {
+		return Listener;
+	}
 
+
+	public void setListener(ControllerListener listener) {
+		Listener = listener;
+	}
 }
 

@@ -15,9 +15,9 @@ import model.cards.spells.KillCommand;
 import model.cards.spells.MultiShot;
 
 public class Hunter extends Hero {
-
 	public Hunter() throws IOException, CloneNotSupportedException {
 		super("Rexxar");
+		super.setAvatar("resources/images/Heros/Hunter.gif");
 	}
 
 	@Override

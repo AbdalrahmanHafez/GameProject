@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -13,6 +14,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -55,7 +57,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	            Arrays.asList(	"Mage","Hunter","Paladin","Priest","Warlock"));
 	 
 	 alertBox alert = new alertBox();
-	 
+	
 	int posX=0,posY=0;
 			
 	public WelcomeScreen() {
@@ -69,6 +71,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");	
 		this.setCursor(cursor);
 		
+	
 		
 		JPanel migpanel = new JPanel() {
 			@Override
@@ -135,7 +138,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 				new EmptyBorder(0,10,0,0))
 			);
 		
-		migpanel.add(txtchoose1, "grow, wrap, gaptop 100");
+		migpanel.add(txtchoose1, "wrap, gaptop 15%");
 
 
 		JPanel panel1 = new JPanel(new FlowLayout());
@@ -162,7 +165,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	        btn.Label.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
 	        btn.Label.setFont(new Font("Tahoma", Font.BOLD, 18));
-  
+	        
 	        panel1btns.add(btn);
 			panel1.add(btn);
 		}
@@ -305,26 +308,23 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		}catch(Exception err) 
 			{err.getMessage();}
 		
-
-		
-		
 		
 		
 		if(e.getActionCommand().equals("start")){
 //			TODO assuming players 
 			
 			try {
-				p1 = new Priest();
+				p1 = new Hunter();
 				p2 = new Mage();
 			}catch(Exception ee) {;}
 			
-				if (	p1 == null || p2 == null 	) {
-					alert.error("Please choose a hero for each player");
-					return;
-				}
+			if (	p1 == null || p2 == null 	) {
+				alert.error("Please choose a hero for each player");
+				return;
+			}
 
-				listener.initializeGame(p1, p2);
-				listener.actionPerformed(e);
+			listener.initializeGame(p1, p2);
+			listener.actionPerformed(e);
 		}
 		
 		
@@ -337,6 +337,9 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	public void setListener(WelcomeScreenListener listener) {
 		this.listener = listener;
 	}
+
+
+
 	
 	
 }

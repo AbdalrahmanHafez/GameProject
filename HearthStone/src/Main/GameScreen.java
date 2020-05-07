@@ -38,6 +38,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+import org.omg.CORBA.Current;
+import org.omg.CORBA.CurrentHelper;
+
 import assets.ImageButton;
 import assets.ImagePanel;
 import assets.MinionCardButton;
@@ -52,16 +55,15 @@ import model.cards.spells.Spell;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
-public class GameScreen extends JFrame implements ActionListener, ImageButtonListener{
+public class GameScreen extends JFrame implements ActionListener, ImageButtonListener,ControllerListener{
 	private alertBox alert = new alertBox();
 	GameScreenListener listener;
 	CardOverlayWindow cardoverlay = new CardOverlayWindow();
 	
-	
+
 	ImageButton btnHero2Pic = new ImageButton(false);
 		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
-
 
 	ImagePanel btnHero2Deck = new ImagePanel("resources/images/Cards/spell.png");
 	ImagePanel btnHeroDeck = new ImagePanel("resources/images/Cards/spell.png");
@@ -91,7 +93,14 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	JPanel leftPanle 		= new JPanel(new MigLayout("fill"));
 	JPanel rightPanle 		= new JPanel(new MigLayout("fill"));
 	JPanel bottomPanle 	= new JPanel(new MigLayout("fill"));
-	JPanel centerPanle 	= new JPanel(new MigLayout("fill"));
+	JPanel centerPanle 	= new JPanel(new MigLayout("fill")) {
+	    public void paintComponent(Graphics g) 
+	    {
+	        super.paintComponent(g);
+	        ImageIcon img = new ImageIcon("resources/images/wsbackground.png");
+	        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+	    }
+	};
 	
 	
 
@@ -108,7 +117,9 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 		this.updateCursor("");
 		
-				
+		
+		panHeroField.setOpaque(false);
+		
 		/* Buttons action assignments */
 
 		
@@ -144,9 +155,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 //		TODO imagebutton should be giving in the constructor the image path, not like this
 		btnEndTurn.setImage("resources/images/endTurn.png");
-		btnHeroPic.setImage("resources/images/Heros/Mage.gif");
-		
-		
+
 		
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
@@ -166,7 +175,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 	
 		rightPanle.add(btnHero2Deck, "grow, wrap, w 150!");
-		rightPanle.add(btnEndTurn	, "growx, wrap, w 170!, h 70::");
+		rightPanle.add(btnEndTurn	, "growx, wrap, w 20%, h 7%");
 		rightPanle.add(btnHeroDeck	, "grow, wrap, w 150!");
 		
 		
@@ -196,13 +205,16 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.revalidate();
 
 	}
-	
 
+	public void initializeGameScreen(Hero CurrentHero, Hero OpponentHero) { // will be called when the game window is shown
+		btnHeroPic.setImage(CurrentHero.getAvatar());
+		btnHero2Pic.setImage(OpponentHero.getAvatar());
 
+	}
 		
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {
-		
+
 		txtInfo.setText("====[GAME INFO]===="
 				+ "\nPlaying : " 	     	+ CurrentHero.getName()
 				+ "\nHP: " 					+ CurrentHero.getCurrentHP()
@@ -412,6 +424,11 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		}
 		this.setCursor(cursor);
 	}
+
+
+
+
+
 
 
 	
