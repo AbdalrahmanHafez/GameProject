@@ -1,12 +1,15 @@
 package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.event.*;
@@ -41,11 +44,6 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	Hero p1;
 	Hero p2;
 	
-	private Color colorDarkBlue = new 		Color(59, 89, 182);
-	private Color colorGrayBlue = new 		Color(161, 225, 255);
-	private Color colorWhiteBlue = new		Color(62, 157, 201);
-	private Color colorLightBlue = new		Color(161, 225, 255);
-
 	 ArrayList<String> Heronames = new ArrayList<String>( 
 	            Arrays.asList(	"<html><center> [Mage] <br> Jaina Proudmore		</html>", //1
 	            					"<html><center>	[Hunter] <br> Rexxar					</html>", 	//2
@@ -62,14 +60,14 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 			
 	public WelcomeScreen() {
 		
-		this.setTitle("HearthStone version 0.01");
 		this.setBounds(10,20, 	 1500, 800);
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setUndecorated( true );
 		this.setResizable( true );
 		this.setVisible( true );
 
-		
+		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");	
+		this.setCursor(cursor);
 		
 		
 		JPanel migpanel = new JPanel() {
@@ -85,7 +83,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 				
 		
 		migpanel.setLayout(new MigLayout("fill"));
-		migpanel.setBackground(colorWhiteBlue);
+
 		
 		JButton btnMin = new JButton("-");
 		btnMin.setBackground(new Color(235, 188, 49));
@@ -129,13 +127,11 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		migpanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, new Color(143, 106, 31)));
 		
 
-		
-
 		JLabel txtchoose1 = new JLabel("Choose Player 1:");
 		txtchoose1.setForeground(Color.white);
 		txtchoose1.setFont (txtchoose1.getFont().deriveFont (24.0f)); 
 		txtchoose1.setBorder(new CompoundBorder( 
-				BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.green),
+				BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.RED),
 				new EmptyBorder(0,10,0,0))
 			);
 		
@@ -144,23 +140,33 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 		JPanel panel1 = new JPanel(new FlowLayout());
 		panel1.setBackground(new Color(173,144,89,100));
-		panel1.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, colorGrayBlue));
-
-
+		panel1.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(214, 158, 45)));
+		ArrayList<ImageButton> panel1btns = new ArrayList<ImageButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
-			ImageButton btn = new ImageButton(false);
+			ImageButton btn = new ImageButton(false) {
+				public void actionPerformed(ActionEvent e) {
+					txtchoose1.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.GREEN),new EmptyBorder(0,10,0,0)));
+					for (ImageButton btn : panel1btns)
+						if(btn.equals(e.getSource()))
+							btn.Label.setForeground(Color.WHITE);
+						else
+							btn.Label.setForeground(Color.GRAY);
+					}
+			};
 			btn.setImage("resources/images/Heros/"+ Heroclasses.get(i)  + ".png");
 			btn.addActionListener(this);
 			btn.setActionCommand("p1"+i) ;
 			btn.setText(Heronames.get(i));
 			btn.setPreferredSize(new Dimension(200,200));
+			btn.setShadow(true);
 	        btn.Label.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
 	        btn.Label.setFont(new Font("Tahoma", Font.BOLD, 18));
-	        	        
+  
+	        panel1btns.add(btn);
 			panel1.add(btn);
 		}
-		migpanel.add(panel1, "grow, h 250, wrap");
+		migpanel.add(panel1, "grow, h 200, wrap");
 		
 		
 		
@@ -170,7 +176,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		txtchoose2.setForeground(Color.white);
 		txtchoose2.setFont (txtchoose2.getFont ().deriveFont (24.0f));
 		txtchoose2.setBorder(new CompoundBorder( 
-				BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.green),
+				BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.RED),
 				new EmptyBorder(0,10,0,0))
 			);
 
@@ -180,28 +186,38 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
 		panel2.setBackground(new Color(173,144,89,100));
-		panel2.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, colorGrayBlue));
-		
+		panel2.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, new Color(214, 158, 45)));
+		ArrayList<ImageButton> panel2btns = new ArrayList<ImageButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
-			ImageButton btn = new ImageButton(false);
+			ImageButton btn = new ImageButton(false) {
+				public void actionPerformed(ActionEvent e) {
+					txtchoose2.setBorder(new CompoundBorder(BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.GREEN),new EmptyBorder(0,10,0,0)));
+					for (ImageButton btn : panel2btns)
+						if(btn.equals(e.getSource()))
+							btn.Label.setForeground(Color.WHITE);
+						else
+							btn.Label.setForeground(Color.GRAY);
+				}
+			};
 			btn.setImage("resources/images/Heros/"+ Heroclasses.get(i)  + ".png");
 			btn.addActionListener(this);
 			btn.setActionCommand("p2"+i) ;
 			btn.setText(Heronames.get(i));
 			btn.setPreferredSize(new Dimension(200,200));
+			btn.setShadow(true);
 	        btn.Label.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
 	        btn.Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 	        
+	        panel2btns.add(btn);
 			panel2.add(btn);
 		}
 		
-		migpanel.add(panel2,"grow, h 250, wrap");
+		migpanel.add(panel2,"grow, h 200, gapbottom 50, wrap");
 		
-			
+		
 		
 		JButton StartGamebtn = new JButton("Lets GO !");
-		StartGamebtn.setPreferredSize(new Dimension(1500,50));
 		StartGamebtn.setBackground(new Color(235, 188, 49));
 		StartGamebtn.setForeground(Color.white);
 		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -209,7 +225,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		StartGamebtn.addActionListener(this);
 		StartGamebtn.setActionCommand("start");
 		
-		migpanel.add(StartGamebtn, "grow x, dock south");
+		migpanel.add(StartGamebtn, "grow x, h 50!, dock south");
 
 		
 		
@@ -227,10 +243,8 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		
 		// Drag and -Resize undecorated JFrame
-		this.addMouseListener(new MouseAdapter()
-		{
-		   public void mousePressed(MouseEvent e)
-		   {
+		this.addMouseListener(new MouseAdapter()	{
+		   public void mousePressed(MouseEvent e)		   {
 		      posX=e.getX();
 		      posY=e.getY();
 		   }
@@ -238,20 +252,17 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		});
 		
 		
-		this.addMouseMotionListener(new MouseAdapter()
-		{
-		     public void mouseDragged(MouseEvent evt)
-		     {
+		this.addMouseMotionListener(new MouseAdapter(){
+		     public void mouseDragged(MouseEvent evt){
 				//sets frame position when mouse dragged			
 				setLocation (evt.getXOnScreen()-posX,evt.getYOnScreen()-posY);
-							
 		     }
 		});
 		
 		
 				
 		
-	}
+	} // END Construnctor
 
 
 	public void actionPerformed(ActionEvent e) {
@@ -281,18 +292,22 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 			case "p15":
 							p1 = new Warlock() 		;break;
 			case "p21":
-							p2 = new Mage() 			;break;
+						p2 = new Mage() 			;break;
 			case "p22":
-							p2 = new Hunter() 		;break;
+						p2 = new Hunter() 		;break;
 			case "p23":
-							p2 = new Paladin() 		;break;
+						p2 = new Paladin() 		;break;
 			case "p24":
-							p2 = new Priest() 			;break;
+						p2 = new Priest() 			;break;
 			case "p25":
-							p2 = new Warlock() 		;break;
+						p2 = new Warlock() 		;break;
 		}
 		}catch(Exception err) 
 			{err.getMessage();}
+		
+
+		
+		
 		
 		
 		if(e.getActionCommand().equals("start")){

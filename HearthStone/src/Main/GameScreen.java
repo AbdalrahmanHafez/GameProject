@@ -62,8 +62,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
-//	JButton btnHero2Deck = new JButton("Oponent Deck");
-//	JButton btnHeroDeck = new JButton("Hero Deck");
+
 	ImagePanel btnHero2Deck = new ImagePanel("resources/images/Cards/spell.png");
 	ImagePanel btnHeroDeck = new ImagePanel("resources/images/Cards/spell.png");
 	
