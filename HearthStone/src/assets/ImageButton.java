@@ -37,7 +37,8 @@ public class ImageButton extends JButton implements ActionListener {
 	protected String imagePath;
 	protected String imageDefualtPath;
 	protected String imageHiddenPath = "resources/images/hiddencard.png";
-	protected JLabel Label;
+
+	public JLabel Label;
 	protected boolean clickable = true;
 	private boolean yetToDraw = true;
 
@@ -46,6 +47,10 @@ public class ImageButton extends JButton implements ActionListener {
 	Image scaledImage;
     int w,h;
 	
+    public ImageButton(boolean clickable) {
+    		this(0, 0, clickable);
+    }
+    
 	public ImageButton(int w, int h, boolean clickable)	{
 		this.w = w;
 		this.h = h;        	
@@ -89,16 +94,24 @@ public class ImageButton extends JButton implements ActionListener {
 	protected void paintComponent(Graphics g)	{
 		super.paintComponent(g);
 		
+		Image shadow = null;
+		
 		if(yetToDraw) { 
 			if(!hidden) {
 				scaledImage = new ImageIcon(imagePath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
+//				shadow = new ImageIcon("resources/images/bottomshadow.png").getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
 			}else {
 				scaledImage = new ImageIcon(imageHiddenPath).getImage().getScaledInstance(this.getWidth(),  this.getHeight(),Image.SCALE_DEFAULT);
 			}
 			yetToDraw = false;
 		}
 		
+//		shadow = new ImageIcon("resources/images/bottomshadow.png").getImage();
 		g.drawImage(scaledImage, 0, 0, null);
+		g.drawImage(shadow ,0,0,null);
+		
+		
+		
         this.repaint();
 		this.revalidate();
 
@@ -131,5 +144,5 @@ public class ImageButton extends JButton implements ActionListener {
 	public void setClickable(boolean clickable) {
 		this.clickable = clickable;
 	}
-	
+
 }

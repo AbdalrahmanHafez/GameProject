@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -51,6 +52,9 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	            					"<html><center>	[Paladin] <br> Uther Lightbringer </html>",	//3
 	            					"<html><center>	[Priest] <br> Anduin Wrynn			</html>",	//4
 	            					"<html><center>	[Warlock] <br> Gul'dan				</html>")); 	//5
+
+	 ArrayList<String> Heroclasses = new ArrayList<String>( 
+	            Arrays.asList(	"Mage","Hunter","Paladin","Priest","Warlock"));
 	 
 	 alertBox alert = new alertBox();
 	 
@@ -59,7 +63,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	public WelcomeScreen() {
 		
 		this.setTitle("HearthStone version 0.01");
-		this.setBounds(10,20, 	 1500, 700);
+		this.setBounds(10,20, 	 1500, 800);
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setUndecorated( true );
 		this.setResizable( true );
@@ -68,13 +72,23 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		
 		
-		JPanel migpanel = new JPanel(new MigLayout("fill"));
+		JPanel migpanel = new JPanel() {
+			@Override
+		    public void paintComponent(Graphics g) 
+		    {
+		        super.paintComponent(g);
+		        ImageIcon img = new ImageIcon("resources/images/wsbackground.png");
+		        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+		    }
+		};
+		
+				
+		
+		migpanel.setLayout(new MigLayout("fill"));
 		migpanel.setBackground(colorWhiteBlue);
 		
-
-		
 		JButton btnMin = new JButton("-");
-		btnMin.setBackground(colorDarkBlue);
+		btnMin.setBackground(new Color(235, 188, 49));
 		btnMin.setForeground(Color.WHITE);
 		btnMin.setFocusPainted(false);
 		btnMin.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -83,7 +97,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 		
 		JButton btnMax = new JButton("🗖");
-		btnMax.setBackground(colorDarkBlue);
+		btnMax.setBackground(new Color(235, 188, 49));
 		btnMax.setForeground(Color.WHITE);
 		btnMax.setFocusPainted(false);
 		btnMax.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -92,7 +106,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 				
 		JButton btnclose = new JButton("x");
-        btnclose.setBackground(colorDarkBlue);
+		btnclose.setBackground(new Color(235, 188, 49));
         btnclose.setForeground(Color.WHITE);
         btnclose.setFocusPainted(false);
         btnclose.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -104,7 +118,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		});
 		
 		JPanel controlBtnsPanel = new JPanel(new MigLayout("align right"));
-		controlBtnsPanel.setBackground(colorDarkBlue);
+		controlBtnsPanel.setBackground(new Color(235, 188, 49,0)); //not visible
 		controlBtnsPanel.add(btnMin);
 		controlBtnsPanel.add(btnMax);
 		controlBtnsPanel.add(btnclose);
@@ -112,54 +126,41 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		
 		
-		migpanel.setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, colorLightBlue));
+		migpanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, new Color(143, 106, 31)));
 		
 
 		
-		JLabel txtheadTitle = new JLabel("HearthStone");
-		txtheadTitle.setForeground(Color.white);
-		txtheadTitle.setFont (txtheadTitle.getFont ().deriveFont (64.0f));
-		txtheadTitle.setBorder(new CompoundBorder( 
-				BorderFactory.createMatteBorder(0, 0, 3, 0,  Color.white ),
-				new EmptyBorder(10,50,10,10))
-			);
-		
-		migpanel.add(txtheadTitle, "grow, wrap");
-		
-		
+
 		JLabel txtchoose1 = new JLabel("Choose Player 1:");
 		txtchoose1.setForeground(Color.white);
-		txtchoose1.setFont (txtheadTitle.getFont ().deriveFont (24.0f)); 
+		txtchoose1.setFont (txtchoose1.getFont().deriveFont (24.0f)); 
 		txtchoose1.setBorder(new CompoundBorder( 
 				BorderFactory.createMatteBorder(0, 4, 0, 0,  Color.green),
 				new EmptyBorder(0,10,0,0))
 			);
 		
-		migpanel.add(txtchoose1, "grow, wrap, gaptop 50");
+		migpanel.add(txtchoose1, "grow, wrap, gaptop 100");
 
 
 		JPanel panel1 = new JPanel(new FlowLayout());
-		panel1.setBackground(new Color(87, 138, 201));
+		panel1.setBackground(new Color(173,144,89,100));
 		panel1.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, colorGrayBlue));
 
 
-		ArrayList<JButton> btnsChoose1 = new ArrayList<JButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
-			JButton btn = new JButton("Button " + (i+1));
-			btn.setIcon(new ImageIcon("resources/Card.png"));
+			ImageButton btn = new ImageButton(false);
+			btn.setImage("resources/images/Heros/"+ Heroclasses.get(i)  + ".png");
 			btn.addActionListener(this);
 			btn.setActionCommand("p1"+i) ;
 			btn.setText(Heronames.get(i));
-			btnsChoose1.add(btn);
-			btn.setPreferredSize(new Dimension(250,150));
-			btn.setBackground(colorDarkBlue);
-	        btn.setForeground(Color.WHITE);
+			btn.setPreferredSize(new Dimension(200,200));
+	        btn.Label.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
-	        btn.setFont(new Font("Tahoma", Font.BOLD, 20));
+	        btn.Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 	        	        
 			panel1.add(btn);
 		}
-		migpanel.add(panel1, "grow, wrap");
+		migpanel.add(panel1, "grow, h 250, wrap");
 		
 		
 		
@@ -178,43 +179,38 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 
 		
 		JPanel panel2 = new JPanel(new FlowLayout());
-		panel2.setBackground(new Color(87, 138, 201));
+		panel2.setBackground(new Color(173,144,89,100));
 		panel2.setBorder(BorderFactory.createMatteBorder(2, 0, 2, 0, colorGrayBlue));
 		
-		ArrayList<JButton> btnsChoose2 = new ArrayList<JButton> (5);
 		for(int i = 0 ; i<5 ; i++) {
-			JButton btn = new JButton("Button " + (i+1));
-			btnsChoose2.add(btn);
+			ImageButton btn = new ImageButton(false);
+			btn.setImage("resources/images/Heros/"+ Heroclasses.get(i)  + ".png");
 			btn.addActionListener(this);
 			btn.setActionCommand("p2"+i) ;
 			btn.setText(Heronames.get(i));
-			btn.setPreferredSize(new Dimension(250,150));
-			btn.setBackground(colorDarkBlue);
-	        btn.setForeground(Color.WHITE);
+			btn.setPreferredSize(new Dimension(200,200));
+	        btn.Label.setForeground(Color.WHITE);
 	        btn.setFocusPainted(false);
-	        btn.setFont(new Font("Tahoma", Font.BOLD, 20));
+	        btn.Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 	        
 			panel2.add(btn);
 		}
 		
-		migpanel.add(panel2, "grow, wrap");
-
+		migpanel.add(panel2,"grow, h 250, wrap");
+		
 			
 		
 		JButton StartGamebtn = new JButton("Lets GO !");
 		StartGamebtn.setPreferredSize(new Dimension(1500,50));
-		StartGamebtn.setBackground(colorDarkBlue);
-//		StartGamebtn.setBackground(UIManager.getColor("control"));
+		StartGamebtn.setBackground(new Color(235, 188, 49));
 		StartGamebtn.setForeground(Color.white);
-		StartGamebtn.setFocusPainted(false);
-		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		
-		migpanel.add(StartGamebtn, "grow, gaptop 20");
-
+		StartGamebtn.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
 		StartGamebtn.addActionListener(this);
 		StartGamebtn.setActionCommand("start");
+		
+		migpanel.add(StartGamebtn, "grow x, dock south");
+
 		
 		
 

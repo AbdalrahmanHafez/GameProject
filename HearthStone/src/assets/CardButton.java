@@ -3,9 +3,12 @@ package assets;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -16,6 +19,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.sound.midi.MidiDevice.Info;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import model.cards.Card;
@@ -46,7 +50,6 @@ public class CardButton extends ImageButton{
 					 CardButton btn =  ((CardButton) e.getSource());
 					 if(!btn.isHidden()) {
 						 try{
-								
 								btn.listener.updatetxtCardInfo(btn.getCard());					 }catch(Exception ee) {;}
 						 		btn.listener.updateCardOverlay(btn, true);
 					 }
@@ -87,12 +90,21 @@ public class CardButton extends ImageButton{
 
 	public void setHighlightMode() {
 		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+		
+		listener.updateCursor("resources/images/Cursors/selectingTarget.png");
+
 		this.hightlighted = true;
 	}
 	public void setHighlightRemove() {
+		
+		listener.updateCursor("");
+		
 		this.hightlighted = false;
 	}
 
+	
+	
+	
 	
 	
 	public void setText(String txt) {

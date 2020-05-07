@@ -232,10 +232,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	}
 
 	
-	
-	
-	
-	
-	
+		
+
 }
 

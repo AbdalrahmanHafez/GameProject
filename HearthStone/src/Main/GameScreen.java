@@ -2,6 +2,7 @@ package Main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -57,7 +58,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	CardOverlayWindow cardoverlay = new CardOverlayWindow();
 	
 	
-	ImageButton btnHero2Pic = new ImageButton(0,0, false);
+	ImageButton btnHero2Pic = new ImageButton(false);
 		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
@@ -72,9 +73,10 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	JPanel	panHeroHand = new JPanel(new FlowLayout());
 	JPanel 	panHero2Hand = new JPanel(new FlowLayout());
 	
-
-	ImageButton btnHeroPic = new ImageButton(0,0, false);
-	ImageButton btnHeroPower = new ImageButton(0,0,true);
+	ImageButton btnHeroPic = new ImageButton(false);
+	ImageButton btnHeroPower = new ImageButton(true);
+	ImageButton btnEndTurn = new ImageButton(true);
+	
 	
 	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
 	
@@ -83,7 +85,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
-	JButton btnEndTurn = new JButton("EndTurn");
 
 	
 	JTextPane txtInfo = new JTextPane();
@@ -105,16 +106,14 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/cur.png")).getImage(),new Point(), "Normal Cursor");
-		this.setCursor(cursor);
 		
+		this.updateCursor("");
 		
-		
+				
 		/* Buttons action assignments */
 
 		
-		btnEndTurn.setActionCommand("endturn"); btnEndTurn.addActionListener(this);		
+		btnEndTurn.setActionCommand("endturn"); btnEndTurn.setListener(this);		
 		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
 		btnHero2Pic.setActionCommand("minionattack"); btnHero2Pic.setListener(this);
 		
@@ -143,8 +142,12 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		lblHeroMana.setFont(fontPrince);
 
 		btnHeroPower.setText("use POWER");
+
+//		TODO imagebutton should be giving in the constructor the image path, not like this
+		btnEndTurn.setImage("resources/images/endTurn.png");
+		btnHeroPic.setImage("resources/images/Heros/Mage.gif");
 		
-//		imgPreview.setImageToFull();
+		
 		
 		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
 		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
@@ -164,10 +167,10 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 	
 		rightPanle.add(btnHero2Deck, "grow, wrap, w 150!");
-		rightPanle.add(btnEndTurn	, "growx, wrap, w 150!, h 70::");
+		rightPanle.add(btnEndTurn	, "growx, wrap, w 170!, h 70::");
 		rightPanle.add(btnHeroDeck	, "grow, wrap, w 150!");
-  
-
+		
+		
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
 		bottomPanle.add(panHeroHand, "grow, w 1000:100%:");
 		bottomPanle.add(btnHeroPower, "grow, w 150::");
@@ -397,7 +400,21 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 
 
-	
+
+
+
+	@Override
+	public void updateCursor(String Path) {
+		Cursor cursor = null;
+		if(Path == "") { // set the default mouse
+			cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");	
+		}else {
+			cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon(Path)).getImage(),new Point(), "Normal Cursor");
+		}
+		this.setCursor(cursor);
+	}
+
+
 	
 	
 

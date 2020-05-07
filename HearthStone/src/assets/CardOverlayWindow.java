@@ -22,7 +22,7 @@ public class CardOverlayWindow extends JFrame{
 	        JPanel pn = new JPanel();
 	        pn.setLayout(new MigLayout("fill"));
 	        
-	        ImagePanel img = new ImagePanel("resources/images/testcard.png");
+	        ImagePanel img = new ImagePanel("resources/images/JainaProudmoore.gif");
 	     
 	        pn.add(img, "grow, w 286, h 395");
 	        
