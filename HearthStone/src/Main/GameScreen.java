@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import org.omg.CORBA.Current;
 import org.omg.CORBA.CurrentHelper;
@@ -65,8 +66,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
-	ImagePanel btnHero2Deck = new ImagePanel("resources/images/Cards/spell.png");
-	ImagePanel btnHeroDeck = new ImagePanel("resources/images/Cards/spell.png");
+	ImagePanel imgHero2Deck = new ImagePanel("resources/images/cardleft.png");
+	ImagePanel imgHeroDeck = new ImagePanel("resources/images/cardleft.png");
 	
 	
 	JPanel 	panHero2Field = new JPanel(new FlowLayout());
@@ -75,7 +76,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	JPanel 	panHero2Hand = new JPanel(new FlowLayout());
 	
 	ImageButton btnHeroPic = new ImageButton(false);
-	ImageButton btnHeroPower = new ImageButton(true);
+	ImageButton btnHeroPower = new ImageButton(true);	
 	ImageButton btnEndTurn = new ImageButton(true);
 	
 	
@@ -83,21 +84,38 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	JTextPane txtCardInfo= new JTextPane();
 
-
+	
+	
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
 	
 
+	public class customMig extends JPanel{
+		public customMig() {this.setLayout(new MigLayout("fill"));}
+		public void paintComponent(Graphics g){
+	        super.paintComponent(g);
+	        ImageIcon img = new ImageIcon("resources/images/back.png");
+	        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+	    }
+	}
+	public class topbot extends JPanel{
+		public topbot() {this.setLayout(new MigLayout("fill"));}
+		 public void paintComponent(Graphics g)	    {
+		        super.paintComponent(g);
+		        ImageIcon img = new ImageIcon("resources/images/back2.png");
+		        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
+		    }
+	}
+	
 	
 	JTextPane txtInfo = new JTextPane();
-	JPanel topPanle		 	= new JPanel(new MigLayout("fill"));
-	JPanel leftPanle 		= new JPanel(new MigLayout("fill"));
-	JPanel rightPanle 		= new JPanel(new MigLayout("fill"));
-	JPanel bottomPanle 	= new JPanel(new MigLayout("fill"));
+	JPanel topPanle		 	= new topbot();
+	JPanel leftPanle 		= new customMig();
+	JPanel rightPanle 		= new customMig();
+	JPanel bottomPanle 	= new topbot();
 	JPanel centerPanle 	= new JPanel(new MigLayout("fill")) {
-	    public void paintComponent(Graphics g) 
-	    {
+	    public void paintComponent(Graphics g)	    {
 	        super.paintComponent(g);
-	        ImageIcon img = new ImageIcon("resources/images/wsbackground.png");
+	        ImageIcon img = new ImageIcon("resources/images/back.png");
 	        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
 	    }
 	};
@@ -116,9 +134,43 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.updateCursor("");
-		
+
 		
 		panHeroField.setOpaque(false);
+		panHero2Field.setOpaque(false);
+		panHeroHand.setOpaque(false);
+		panHero2Hand.setOpaque(false);
+		
+		btnHero2Pic.setOpaque(false);
+		btnHero2Pic.setBackground(new Color(0,0,0,0));
+		btnHero2Pic.setBorder(null);
+		
+		btnHeroPic.setOpaque(false);
+		btnHeroPic.setBackground(new Color(0,0,0,0));
+		btnHeroPic.setBorder(null);
+		
+		txtInfo.setOpaque(false);
+		txtInfo.setBackground(new Color(0,0,0,0));
+		txtInfo.setForeground(Color.WHITE);
+		
+		txtCardInfo.setOpaque(false);
+		txtCardInfo.setBackground(new Color(0,0,0,0));
+		txtCardInfo.setForeground(Color.WHITE);
+		
+		imgHero2Deck.setOpaque(false);
+		imgHero2Deck.setBackground(new Color(0,0,0,0));
+		
+		imgHeroDeck.setOpaque(false);
+		imgHeroDeck.setBackground(new Color(0,0,0,0));
+		
+		btnEndTurn.setOpaque(false);
+		btnEndTurn.setBackground(new Color(0,0,0,0));
+		btnEndTurn.setBorder(null);
+		
+		btnHeroPower.setOpaque(false);
+		btnHeroPower.setBackground(new Color(0,0,0,0));
+		btnHeroPower.setBorder(null);
+
 		
 		/* Buttons action assignments */
 
@@ -150,17 +202,13 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 				e.printStackTrace();}
 		lblHero2Mana.setFont(fontPrince);
 		lblHeroMana.setFont(fontPrince);
+		lblHero2Mana.setForeground(Color.WHITE);
+		lblHeroMana.setForeground(Color.WHITE);
 
-		btnHeroPower.setText("use POWER");
-
-//		TODO imagebutton should be giving in the constructor the image path, not like this
-		btnEndTurn.setImage("resources/images/endTurn.png");
+		btnHeroPower.setImage("resources/images/heropower.png");
+		btnEndTurn.setImage("resources/images/endturn.png");
 
 		
-		panHeroField.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
-		panHero2Field.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
-		panHeroHand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
-		panHero2Hand.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.gray));
 		
 		/* End components Adj */
 
@@ -174,9 +222,9 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		leftPanle.add(txtCardInfo, "grow");
 		
 	
-		rightPanle.add(btnHero2Deck, "grow, wrap, w 150!");
-		rightPanle.add(btnEndTurn	, "growx, wrap, w 20%, h 7%");
-		rightPanle.add(btnHeroDeck	, "grow, wrap, w 150!");
+		rightPanle.add(imgHero2Deck, "grow, wrap, w 200!");
+		rightPanle.add(btnEndTurn	, "growx, wrap, w 20%, h 8%");
+		rightPanle.add(imgHeroDeck	, "grow, wrap, w 200!");
 		
 		
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
@@ -393,6 +441,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	public void updateCardOverlay(CardButton btn, boolean show) {
 		if ( show ) {
 			cardoverlay.showoverlay(true);
+			cardoverlay.setImage(btn.getCard());
 			cardoverlay.updateLocation(btn);
 			
 		}else {

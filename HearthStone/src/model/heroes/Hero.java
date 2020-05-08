@@ -328,14 +328,4 @@ public abstract class Hero implements MinionListener {
 		return avatar;
 	}
 	
-	public static void main(String[] args) {
-		Hero h1 = null;
-		try {
-				h1 = new Hunter();
-		}catch(Exception e) {;}
-		
-		System.out.println(h1.getAvatar());
-		
-	}
-	
 }

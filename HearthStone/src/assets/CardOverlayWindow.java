@@ -3,38 +3,51 @@ package assets;
 import java.awt.*;
 import javax.swing.*;
 
+import model.cards.Card;
 import net.miginfocom.swing.MigLayout;
 
 public class CardOverlayWindow extends JFrame{
-	
-	 public CardOverlayWindow() {
+    	ImagePanel img;
+	 
+    	public CardOverlayWindow() {
 	        this.setTitle("Transparent Window");
 	        this.setUndecorated(true);
 	        this.setBackground(new Color(0, 0, 0, 0));
 
 	        this.setAlwaysOnTop(true);
-//		hides the window from the taskbar
+//			TODO hides the window from the taskbar
 	        //	        this.setType(Type.UTILITY);
 	        
 	        this.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
 	        
 	        
-	        JPanel pn = new JPanel();
-	        pn.setLayout(new MigLayout("fill"));
-	        
-	        ImagePanel img = new ImagePanel("resources/images/JainaProudmoore.gif");
+	        this.setLayout(new MigLayout("fill"));
 	     
-	        pn.add(img, "grow, w 286, h 395");
+	        img = new ImagePanel("resources/images/JainaProudmoore.gif");
+	        img.setOpaque(false);
+	        img.setBackground(new Color(0,0,0,0));
+
 	        
-	        this.getContentPane().add(pn);
+	        this.getContentPane().add(img , "grow, w 286, h 395");
+	        
+
+	        
+	        
+	        
 	        
 	        this.setBounds(500, 500, 0, 0);
 	        this.pack();
 	        this.setVisible(false);
 	    }
 	 
+		public void setImage(Card card) {
+			this.img = new ImagePanel(card.getCardImage());
+			this.getContentPane().removeAll();
+			this.getContentPane().add(img , "grow, w 286, h 395");
+		}
+	 
 	 public void updateLocation(CardButton btn) {
-// 		the window location is based on the btn location on screen
+// 		this window location is based on the btn location on screen
 		 
 		 java.awt.Point pt = btn.getLocationOnScreen();
 		 this.setBounds(pt.x - 100, pt.y - 420   , 0, 0);
@@ -49,6 +62,8 @@ public class CardOverlayWindow extends JFrame{
 		this.setVisible(b);
 		this.pack();
     }
+
+
 }
 	 
 

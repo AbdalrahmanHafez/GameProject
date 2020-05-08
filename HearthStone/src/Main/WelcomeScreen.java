@@ -68,7 +68,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		this.setResizable( true );
 		this.setVisible( true );
 
-		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");	
+		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");
 		this.setCursor(cursor);
 		
 	
@@ -231,9 +231,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		migpanel.add(StartGamebtn, "grow x, h 50!, dock south");
 
 		
-		
 
-		
 		this.add(migpanel);
 		
 		
@@ -322,7 +320,8 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 				alert.error("Please choose a hero for each player");
 				return;
 			}
-
+			
+			
 			listener.initializeGame(p1, p2);
 			listener.actionPerformed(e);
 		}
