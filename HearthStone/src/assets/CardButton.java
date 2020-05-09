@@ -112,11 +112,14 @@ public class CardButton extends ImageButton{
 	
 	protected void paintComponent(Graphics g)	{
 		super.paintComponent(g);
-		
-		java.awt.Image cardborderimg = (new ImageIcon("resources/images/cardborder.png")).getImage();
-		g.drawImage(super.resizeTo(cardborderimg, this.getWidth(),this.getHeight()) ,0,0, null);
-		
-        this.repaint();
+		if(this.getCard() instanceof Spell) {
+			java.awt.Image cardborderimg = (new ImageIcon("resources/images/spellcardborder.png")).getImage();
+			g.drawImage(super.resizeTo(cardborderimg, this.getWidth(),this.getHeight()) ,0,0, null);
+		}else {
+			java.awt.Image cardborderimg = (new ImageIcon("resources/images/cardborder.png")).getImage();
+			g.drawImage(super.resizeTo(cardborderimg, this.getWidth(),this.getHeight()) ,0,0, null);
+		}
+			        this.repaint();
 		this.revalidate();
 	}
 

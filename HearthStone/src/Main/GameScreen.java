@@ -241,7 +241,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		topPanle.add(panHero2Hand, "grow, w 1000:100%:");
 		JPanel mana2Pan = new JPanel(new MigLayout("fill , insets 0"));
 		mana2Pan.setOpaque(false); mana2Pan.setBackground(new Color(0,0,0,0));
-		JLabel lblmana2 = new JLabel("MANA");
+		JLabel lblmana2 = new JLabel("Mana");
 		lblmana2.setFont(fontPrince.deriveFont(35.0f));
 		lblmana2.setForeground(Color.WHITE);
 		mana2Pan.add(lblHero2Mana, "grow, wrap");
@@ -264,7 +264,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 		JPanel manaPan = new JPanel(new MigLayout("fill , insets 0"));
 		manaPan.setOpaque(false); manaPan.setBackground(new Color(0,0,0,0));
-		JLabel lblmana = new JLabel("MANA");
+		JLabel lblmana = new JLabel("Mana");
 		lblmana.setFont(fontPrince.deriveFont(35.0f));
 		lblmana.setForeground(Color.WHITE);
 		manaPan.add(lblHeroMana, "grow, wrap");
