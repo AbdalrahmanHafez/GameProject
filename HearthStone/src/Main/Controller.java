@@ -1,4 +1,9 @@
 package Main;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import assets.ImageButton;
@@ -29,7 +34,18 @@ import model.heroes.Hero;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Random;
+import java.io.File;
+
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 public class Controller implements ActionListener, WelcomeScreenListener, GameScreenListener{
 
 	private StartScreen Startsc;
@@ -50,6 +66,9 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		gamesc.setListener(this);
 		
 		this.setListener(gamesc);
+		
+		Controller.playSound("welcomescreen");
+		
 	}
 	
 	
@@ -58,9 +77,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// TODO button Actions 
-		
-	
 		if(e.getActionCommand().equals("initialStart")) { 
 			Startsc.setVisible(false);
 			welcomesc.setVisible(true);
@@ -82,11 +98,14 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				;break;
 				
 			case "endturn":
-				try { //TODO 	endturn could this give an error
+				Controller.playSound("endTurn");
+				try {
 					game.endTurn();
 				} catch (FullHandException | CloneNotSupportedException e2) {
 					alert.info(e2.getMessage());
 				}
+				
+
 			;break;
 				
 				
@@ -96,11 +115,11 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					MinionCardButton btnminion =(MinionCardButton) e.getSource();
 					Minion m = (btnminion).getCard();
 					game.getCurrentHero().playMinion(m);
+					Controller.playSound(new String[] {"cardPlace1","cardPlace2"});
 				} catch (NotYourTurnException | NotEnoughManaException | FullFieldException e2) {
 					alert.error(e2.getMessage());
 				}
-						
-			
+
 			;break;
 				
 			case "minionattack":
@@ -113,6 +132,11 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
 					System.out.println("attacked a Minion" + "attacker" + attackerMinion.getName() + " target"
 							+ targetMinion.getName());
+					if(targetMinion.getCurrentHP() == 0) // if dead
+						{Controller.playSound("damage-dead");}
+					else
+						{Controller.playSound("damage");}
+					
 				} catch (CannotAttackException | NotYourTurnException | TauntBypassException
 						| InvalidTargetException | NotSummonedException e1) {
 					alert.error(e1.getMessage());
@@ -125,31 +149,26 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				try {
 						game.getCurrentHero().attackWithMinion(((MinionCardButton)gamesc.attacker).getCard() , game.getOpponent());
 						System.out.println("attacked the hero");
+						Controller.playSound("damage");
 					} catch (CannotAttackException | NotYourTurnException | TauntBypassException
 							| NotSummonedException | InvalidTargetException e1) {
 						alert.error(e1.getMessage());
 					}
+
 			;break;
 
 			case "spellcast":
 				System.out.println("controller spellcast method");
 				Spell s = ((SpellCardButton)gamesc.attacker).getCard();
-				
+				try {
 				if(s instanceof FieldSpell)
-				try {
 					game.getCurrentHero().castSpell((FieldSpell)s);
-				} catch (NotYourTurnException | NotEnoughManaException e1) {
-					alert.error(e1.getMessage());}
-				
 				if(s instanceof AOESpell)
-				try {
 					game.getCurrentHero().castSpell((AOESpell)s, game.getOpponent().getField());
-				} catch (NotYourTurnException | NotEnoughManaException e1) {
-					alert.error(e1.getMessage());}
-
 				if(s instanceof HeroTargetSpell)
-				try {
 					game.getCurrentHero().castSpell((HeroTargetSpell)s, game.getOpponent());
+
+				Controller.playSound("spellCast");
 				} catch (NotYourTurnException | NotEnoughManaException e1) {
 					alert.error(e1.getMessage());}
 				
@@ -162,20 +181,14 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				MinionCardButton em = ((MinionCardButton)esource);
 				Minion spelltargetminion	=	em.getCard();
 				Spell sp = ((SpellCardButton)em.getAttackedBy()).getCard();
-				
-				if(sp instanceof MinionTargetSpell)
-					try {
+				try {
+					if(sp instanceof MinionTargetSpell)
 						game.getCurrentHero().castSpell((MinionTargetSpell)sp, spelltargetminion);
-					} catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e2) {
-						alert.error(e2.getMessage());
-					}
-			
-				if(sp instanceof LeechingSpell)
-					try {
+					if(sp instanceof LeechingSpell)
 						game.getCurrentHero().castSpell((LeechingSpell)sp, spelltargetminion);
-					} catch (NotYourTurnException | NotEnoughManaException e2) {
-						alert.error(e2.getMessage());
-					}
+				} catch (NotYourTurnException | NotEnoughManaException | InvalidTargetException e2) {
+					alert.error(e2.getMessage());
+				}
 			
 				
 			;break;
@@ -198,13 +211,12 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 				try {
 					game.getCurrentHero().useHeroPower();
+					Controller.playSound("damage-heropower");
 				} catch (NotEnoughManaException | HeroPowerAlreadyUsedException | NotYourTurnException | FullHandException
 						| FullFieldException | CloneNotSupportedException e1) {
-					// TODO Auto-generated catch block
 					alert.error(e1.getMessage());
 				}
-				
-				;break;
+			;break;
 
 				
 				
@@ -233,6 +245,42 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		
 
 	}
+	
+	static AudioInputStream x = null;
+	static Clip clip = null;
+	
+	public static void playSound(String name)	{
+		File soundFile = new File("resources/other/sounds/" +name+ ".wav");
+	
+		try {
+				x = AudioSystem.getAudioInputStream(soundFile);
+				clip = AudioSystem.getClip();
+				clip.open(x);
+
+				if(name.equals("gameplay"))
+					clip.loop(1000);
+				else
+					clip.start();
+			
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+			}
+	}
+	public static void playSound(String[] names)	{
+		 Random rand = new Random(); 
+		 int randIndex = rand.nextInt(names.length); 
+		 playSound(names[randIndex]);
+	}
+	public static void stopSound()	{
+		if(clip != null && clip.isActive()) {
+			clip.stop();
+		}
+	}
+	
+	
+	
+	
 
 	
 		

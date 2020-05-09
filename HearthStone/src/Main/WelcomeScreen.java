@@ -17,6 +17,11 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -67,6 +72,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		this.setUndecorated( true );
 		this.setResizable( true );
 		this.setVisible( true );
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");
 		this.setCursor(cursor);
@@ -75,8 +81,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		JPanel migpanel = new JPanel() {
 			@Override
-		    public void paintComponent(Graphics g) 
-		    {
+		    public void paintComponent(Graphics g) {
 		        super.paintComponent(g);
 		        ImageIcon img = new ImageIcon("resources/images/wsbackground.png");
 		        g.drawImage(img.getImage(), 0, 0, this.getWidth(), this.getHeight(), null);
@@ -269,6 +274,8 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton btnpressed = (JButton)e.getSource();
 
+		Controller.playSound("click");
+		
 		if(e.getActionCommand().equals("max"))
 			if(this.getExtendedState() == JFrame.MAXIMIZED_BOTH)
 				this.setExtendedState(0); 
@@ -309,13 +316,6 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		
 		if(e.getActionCommand().equals("start")){
-//			TODO assuming players 
-			
-			try {
-				p1 = new Hunter();
-				p2 = new Mage();
-			}catch(Exception ee) {;}
-			
 			if (	p1 == null || p2 == null 	) {
 				alert.error("Please choose a hero for each player");
 				return;
@@ -329,6 +329,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 	}
 
+	
 
 
 	
@@ -336,7 +337,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 	public void setListener(WelcomeScreenListener listener) {
 		this.listener = listener;
 	}
-
+	
 
 
 	

@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.xml.bind.Marshaller.Listener;
 
@@ -67,7 +68,7 @@ public class ImageButton extends JButton implements ActionListener {
 		Label=new JLabel("", JLabel.CENTER);
 		Label.setFont(new Font("Tahoma", Font.BOLD, 15));
 		Label.setForeground(Color.WHITE);
-		
+
 		this.add(Label, BorderLayout.SOUTH);	
 		
 		setText("");
@@ -84,7 +85,8 @@ public class ImageButton extends JButton implements ActionListener {
 	
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;
-		this.yetToDraw = true;
+		if(!this.hidden) // to avoid refreshing the already hidden card
+			this.yetToDraw = true;
 	}
 	
 	public void setDefultImage(String imgPath) {

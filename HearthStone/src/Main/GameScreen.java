@@ -146,7 +146,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	public GameScreen() {
 		this.setTitle("HearthStone version 0.8");
 		this.setBounds(10, 20, 1930, 1030);
-//		TODO minimum window size
 		this.setMinimumSize(new Dimension(1500, 800));
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
@@ -291,29 +290,32 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 
 	public void initializeGameScreen(Hero CurrentHero, Hero OpponentHero) { // will be called when the game window is shown
+		Controller.stopSound();;
+		Controller.playSound("gameplay");
+		
 		btnHeroPic.setImage(CurrentHero.getAvatar());
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
-	
+		
+		Controller.playSound("myGreetings");
+		
 	
 	}
-//		TODO remove temp original images from the resources files
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {
 
 		txtGeneralInfo.setText("====[GAME INFO]===="
+				+ "\nAgainst : " 	     	+ OpponentHero.getName()
+				+ "\nHP: " 					+ OpponentHero.getCurrentHP()
+				+ "\nMana: " 				+ OpponentHero.getCurrentManaCrystals() + "/" + OpponentHero.getTotalManaCrystals()
+				+ "\nHand left: "			+ OpponentHero.getHand().size()
+				+ "\nDeck left: "			+ OpponentHero.getDeck().size()
+				+ "\n"
 				+ "\nPlaying : " 	     	+ CurrentHero.getName()
 				+ "\nHP: " 					+ CurrentHero.getCurrentHP()
 				+ "\nMana: " 				+ CurrentHero.getCurrentManaCrystals() + "/" + CurrentHero.getTotalManaCrystals()
 				+ "\nHand left: "			+ CurrentHero.getHand().size()
 				+ "\nDeck left: "			+ CurrentHero.getDeck().size()
 				
-				+"\n "
-				
-				+ "\nAgainst : " 	     	+ OpponentHero.getName()
-				+ "\nHP: " 					+ OpponentHero.getCurrentHP()
-				+ "\nMana: " 				+ OpponentHero.getCurrentManaCrystals() + "/" + OpponentHero.getTotalManaCrystals()
-				+ "\nHand left: "			+ OpponentHero.getHand().size()
-				+ "\nDeck left: "			+ OpponentHero.getDeck().size()
 				);
 		lblHeroMana.setText(CurrentHero.getCurrentManaCrystals() + " / " + CurrentHero.getTotalManaCrystals());
 		lblHero2Mana.setText(OpponentHero.getCurrentManaCrystals() + " / " + OpponentHero.getTotalManaCrystals());
@@ -381,11 +383,12 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	
 	public void updatetxtCardInfo(Card card) {
-		String r = "\n\n\n====[CARD INFO]====";
+		String r = "\n====[CARD INFO]====";
 		r += "\nName: " + card.getName();
 		r += "\nManaCost: " + card.getManaCost();
 		r += "\nRairty: " + card.getRarity().toString();
 		if(card instanceof Minion) {
+			r+= "\nAttack: " + ((Minion) card).getAttack();
 			r += "\nHealth: " +((Minion) card).getCurrentHP() + "/" + ((Minion) card).getMaxHP();
 			r += "\nis Taunt: " + ((Minion) card).isTaunt();
 			r += "\nis Divine: " + ((Minion) card).isDivine();			
@@ -447,10 +450,13 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 //		IF not Waiting for target, 
 		
 		if ( e.getSource() instanceof CardButton ) {
-
 			CardButton source = (CardButton)  e.getSource(); 
-			
+		
 			if(e.getActionCommand() == "minionattack" || e.getActionCommand() == "spellcast") {
+				if(e.getActionCommand() == "spellcast") {
+					Controller.playSound("spellCast");
+
+				}
 				attacker = source;
 				waitingfortarget = true;
 //				enable the opp field cards to be clickable

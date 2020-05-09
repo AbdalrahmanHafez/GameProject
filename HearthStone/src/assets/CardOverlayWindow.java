@@ -10,13 +10,12 @@ public class CardOverlayWindow extends JFrame{
     	ImagePanel img;
 	 
     	public CardOverlayWindow() {
-	        this.setTitle("Transparent Window");
+	        this.setTitle("CardOverlayWindow");
 	        this.setUndecorated(true);
 	        this.setBackground(new Color(0, 0, 0, 0));
 
-	        this.setAlwaysOnTop(true);
-//			TODO hides the window from the taskbar
-	        //	        this.setType(Type.UTILITY);
+//	        this.setAlwaysOnTop(true);
+	        this.setType(Type.UTILITY);
 	        
 	        this.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
 	        

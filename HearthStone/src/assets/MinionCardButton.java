@@ -30,7 +30,6 @@ public class MinionCardButton extends CardButton implements ActionListener{
 
 	
 	public void setTheCard(Minion card) {
-//		TODO setCradButton
 		this.card = card;
 		this.setImage(card.getAvatar());
 		if(super.hidden) {

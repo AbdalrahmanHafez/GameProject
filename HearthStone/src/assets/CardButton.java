@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 
 import com.sun.prism.Image;
 
+import Main.Controller;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -56,14 +57,13 @@ public class CardButton extends ImageButton{
 					 if(!btn.isHidden()) {
 						 try{
 								btn.listener.updatetxtCardInfo(btn.getCard());					 }catch(Exception ee) {;}
-						 		btn.listener.showCardOverlay(btn, true);
+						 if(!isinField)
+							 btn.listener.showCardOverlay(btn, true);
 					 }
 					
 					 border_activate();
 					 if(showOverlay)
 						 	btn.setImage("resources/images/uparrow.png");
-
-					 
 				 }
 				public void mouseExited(MouseEvent e) {
 					 CardButton btn =  ((CardButton) e.getSource());
@@ -127,6 +127,8 @@ public class CardButton extends ImageButton{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("card butt trig");
+
+		
 		this.listener.showCardOverlay(this, false);
 
 		if( clickable && !hidden)
