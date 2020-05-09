@@ -277,7 +277,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		centerPanle.add(panHeroField,"grow, height 170::");
 		
 		
-		
 	
 		
 		this.add(topPanle			, BorderLayout.NORTH); 
