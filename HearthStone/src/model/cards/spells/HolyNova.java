@@ -10,6 +10,8 @@ public class HolyNova extends Spell implements AOESpell {
 	public HolyNova() {
 		super("Holy Nova", 5, Rarity.BASIC);
 		super.setCardImage("resources/images/Spells/HolyNova.png");
+		super.setAvatar("resources/images/Spells/avatar/HolyNova.png");
+
 	}
 
 	@Override

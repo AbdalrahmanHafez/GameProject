@@ -9,7 +9,7 @@ public class ShadowWordDeath extends Spell implements MinionTargetSpell {
 	public ShadowWordDeath() {
 		super("Shadow Word: Death", 3, Rarity.BASIC);
 		super.setCardImage("resources/images/Spells/ShadowWordDeath.png");
-
+		super.setAvatar("resources/images/Spells/avatar/ShadowWordDeath.png");
 	}
 
 	@Override

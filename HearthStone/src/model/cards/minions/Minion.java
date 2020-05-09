@@ -60,7 +60,7 @@ public class Minion extends Card implements Cloneable {
 
 	}
 	
-	
+	@Override
 	public String getCardImage() {
 		switch (this.getName()) {
 		case "Goldshire Footman":
@@ -92,19 +92,56 @@ public class Minion extends Card implements Cloneable {
 		case "Colossus of the Moon":
 			return "resources/images/Minions/ColossusoftheMoon.png";
 		case "King Krush":
-			return "resources/images/Minions/KingKruch.png";
+			return "resources/images/Minions/KingKrush.png";
+		case "Kalycgos":
+			return "resources/images/Minions/Kalycgos.png";
 		case "Sheep":
 			return "resources/images/Minions/Sheep.png";
-
-			
-			
-
 		}
-		
 		return "";
 	}
 	
-	
+	@Override
+	public String getAvatar() {
+		switch (this.getName()) {
+		case "Goldshire Footman":
+			return "resources/images/Minions/avatar/GoldshireFootman.png";
+		case "Stonetusk Boar":
+			return "resources/images/Minions/avatar/StonetuskBoar.jpg";
+		case "Bloodfen Raptor":
+			return "resources/images/Minions/avatar/BloodfenRaptor.jpg";
+		case "Frostwolf Grunt":
+			return "resources/images/Minions/avatar/FrostwolfGrunt.jpg";
+		case "Wolfrider":
+			return "resources/images/Minions/avatar/Wolfrider.jpg";
+		case "Chilwind Yeti":
+			return "resources/images/Minions/avatar/ChillwindYeti.jpg";
+		case "Boulderfist Ogre":
+			return "resources/images/Minions/avatar/BoulderfistOgre.jpg";
+		case "Core Hound":
+			return "resources/images/Minions/avatar/CoreHound.jpg";
+		case "Argent Commander":
+			return "resources/images/Minions/avatar/ArgentCommander.jpg";
+		case "Sunwalker":
+			return "resources/images/Minions/avatar/Sunwalker.jpg";
+		case "Chromaggus":
+			return "resources/images/Minions/avatar/Chromaggus.jpg";
+		case "The LichKing":
+			return "resources/images/Minions/avatar/TheLichKing.jpg";
+		case "Icehowl":
+			return "resources/images/Minions/avatar/Icehowl.png";
+		case "Colossus of the Moon":
+			return "resources/images/Minions/avatar/ColossusoftheMoon.jpg";
+		case "King Krush":
+			return "resources/images/Minions/avatar/KingKrush.jpg";
+		case "Kalycgos":
+			return "resources/images/Minions/avatar/Kalycgos.jpg";
+		case "Sheep":
+			return "resources/images/Minions/avatar/Sheep.jpg";
+		}
+		return "";
+	}
+
 	
 	
 	

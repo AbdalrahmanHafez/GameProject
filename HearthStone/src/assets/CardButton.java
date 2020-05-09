@@ -22,6 +22,8 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.sun.prism.Image;
+
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
@@ -42,7 +44,10 @@ public class CardButton extends ImageButton{
 		
 		super(120, 150, clickable);
 	
-
+		this.setBorder(null);
+		this.setOpaque(false);
+		this.setBackground(new Color(0,0,0,0));
+		
 		this.hidden = h;
 		
 		this.addMouseListener(new MouseAdapter() {
@@ -65,13 +70,12 @@ public class CardButton extends ImageButton{
 					 btn.listener.showCardOverlay(btn, false);
 					 border_deactivate();
 					
-					(btn).setImage(btn.imageDefualtPath);
+					(btn).setImage(btn.getCard().getAvatar());
 		         }
 		      });
 		}
 	
 	
-		
 		
     private void border_activate() {
     	if(!hightlighted) {
@@ -96,21 +100,25 @@ public class CardButton extends ImageButton{
 		this.hightlighted = true;
 	}
 	public void setHighlightRemove() {
-		
 		listener.updateCursor("");
-		
 		this.hightlighted = false;
-	}
-
-	
-	
-	
-	
-	
+}
 	public void setText(String txt) {
 		this.Label.setText(txt);
 	}
+	
 
+	
+	
+	protected void paintComponent(Graphics g)	{
+		super.paintComponent(g);
+		
+		java.awt.Image cardborderimg = (new ImageIcon("resources/images/cardborder.png")).getImage();
+		g.drawImage(super.resizeTo(cardborderimg, this.getWidth(),this.getHeight()) ,0,0, null);
+		
+        this.repaint();
+		this.revalidate();
+	}
 
 
 	@Override

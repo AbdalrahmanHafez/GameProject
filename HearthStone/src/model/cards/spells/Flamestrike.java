@@ -10,7 +10,10 @@ public class Flamestrike extends Spell implements AOESpell {
 	public Flamestrike() {
 		super("Flamestrike", 7, Rarity.BASIC);
 		super.setCardImage("resources/images/Spells/Flamestrike.png");
+		super.setAvatar("resources/images/Spells/avatar/Flamestrike.png");
+
 	}
+	
 
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
 

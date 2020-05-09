@@ -8,6 +8,8 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 	public Pyroblast() {
 		super("Pyroblast", 10, Rarity.EPIC);
 		super.setCardImage("resources/images/Spells/Pyroblast.png");
+		super.setAvatar("resources/images/Spells/avatar/Pyroblast.png");
+
 	}
 
 	@Override

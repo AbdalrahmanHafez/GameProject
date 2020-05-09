@@ -8,6 +8,8 @@ public class SealOfChampions extends Spell implements MinionTargetSpell {
 	public SealOfChampions() {
 		super("Seal of Champions", 3, Rarity.COMMON);
 		super.setCardImage("resources/images/Spells/SealofChampions.png");
+		super.setAvatar("resources/images/Spells/avatar/SealofChampions.png");
+
 	}
 
 	@Override

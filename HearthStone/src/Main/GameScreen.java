@@ -102,10 +102,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	ImageButton btnEndTurn = new ImageButton(true);
 	
 	
-	ImagePanel imgPreview = new ImagePanel("resources/images/Cards/spell.png");
-	
 	JTextPane txtCardInfo= new JTextPane();
-
+	JTextPane txtGeneralInfo = new JTextPane();
 	
 	
 	JLabel	lblHeroMana = new JLabel("Hero mana", SwingConstants.CENTER);
@@ -129,7 +127,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 	
 	
-	JTextPane txtInfo = new JTextPane();
+	
 	JPanel topPanle		 	= new topbot();
 	JPanel leftPanle 		= new customMig();
 	JPanel rightPanle 		= new customMig();
@@ -182,11 +180,11 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		leftPanle.setPreferredSize(new Dimension(250, 0));
 	
 		
-		txtInfo.setEditable(false);
-		txtInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtGeneralInfo.setEditable(false);
+		txtGeneralInfo.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
 		txtCardInfo.setEditable(false);
-		txtCardInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtCardInfo.setFont(new Font("Tahoma", Font.BOLD, 17));
 		
 		
 		
@@ -213,9 +211,9 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		btnHeroPic.setBackground(new Color(0,0,0,0));
 		btnHeroPic.setBorder(null);
 		
-		txtInfo.setOpaque(false);
-		txtInfo.setBackground(new Color(0,0,0,0));
-		txtInfo.setForeground(Color.WHITE);
+		txtGeneralInfo.setOpaque(false);
+		txtGeneralInfo.setBackground(new Color(0,0,0,0));
+		txtGeneralInfo.setForeground(Color.WHITE);
 		
 		txtCardInfo.setOpaque(false);
 		txtCardInfo.setBackground(new Color(0,0,0,0));
@@ -251,7 +249,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		topPanle.add(mana2Pan, "grow");
 		  
 		
-		leftPanle.add(txtInfo, "growx, wrap");
+		leftPanle.add(txtGeneralInfo, "growx, wrap");
 		leftPanle.add(txtCardInfo, "grow");
 		
 	
@@ -262,7 +260,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
 		bottomPanle.add(panHeroHand, "grow, w 1000:100%:");
-		bottomPanle.add(btnHeroPower, "grow, w 150::");
+		bottomPanle.add(btnHeroPower, "grow, w 150::, gapright 2%");
 
 		JPanel manaPan = new JPanel(new MigLayout("fill , insets 0"));
 		manaPan.setOpaque(false); manaPan.setBackground(new Color(0,0,0,0));
@@ -298,11 +296,11 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	
 	}
-		
+//		TODO remove temp original images from the resources files
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {
 
-		txtInfo.setText("====[GAME INFO]===="
+		txtGeneralInfo.setText("====[GAME INFO]===="
 				+ "\nPlaying : " 	     	+ CurrentHero.getName()
 				+ "\nHP: " 					+ CurrentHero.getCurrentHP()
 				+ "\nMana: " 				+ CurrentHero.getCurrentManaCrystals() + "/" + CurrentHero.getTotalManaCrystals()
@@ -364,7 +362,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 			btn = new MinionCardButton(hidden, showOverlay,clickable);
 			((MinionCardButton) btn).setinField(inField);
 			((MinionCardButton) btn).setTheCard((Minion)Card);
-
+			
 			
 		}else
 		if(Card instanceof Spell) {
@@ -373,7 +371,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		}
 		
 			
-		
 		btn.setListener(this);
 		panel.add(btn);
 		
@@ -384,7 +381,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	
 	public void updatetxtCardInfo(Card card) {
-		String r = "\n\n\n\n====[CARD INFO]====";
+		String r = "\n\n\n====[CARD INFO]====";
 		r += "\nName: " + card.getName();
 		r += "\nManaCost: " + card.getManaCost();
 		r += "\nRairty: " + card.getRarity().toString();

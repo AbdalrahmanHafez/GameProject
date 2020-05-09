@@ -10,6 +10,7 @@ public class CurseOfWeakness extends Spell implements AOESpell {
 	public CurseOfWeakness() {
 		super("Curse of Weakness", 2, Rarity.RARE);
 		super.setCardImage("resources/images/Spells/CurseofWeakness.png");
+		super.setAvatar("resources/images/Spells/avatar/CurseofWeakness.png");
 
 	}
 

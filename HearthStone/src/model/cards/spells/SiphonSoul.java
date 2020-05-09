@@ -8,6 +8,7 @@ public class SiphonSoul extends Spell implements LeechingSpell {
 	public SiphonSoul() {
 		super("Siphon Soul", 6, Rarity.RARE);
 		super.setCardImage("resources/images/Spells/SiphonSoul.png");
+		super.setAvatar("resources/images/Spells/avatar/SiphonSoul.png");
 	}
 
 	@Override

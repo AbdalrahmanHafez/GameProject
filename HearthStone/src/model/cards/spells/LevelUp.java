@@ -10,6 +10,8 @@ public class LevelUp extends Spell implements FieldSpell {
 	public LevelUp() {
 		super("Level Up!", 6, Rarity.EPIC);
 		super.setCardImage("resources/images/Spells/LevelUp!.png");
+		super.setAvatar("resources/images/Spells/avatar/LevelUp!.png");
+
 	}
 
 	@Override

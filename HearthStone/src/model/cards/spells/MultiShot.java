@@ -10,6 +10,8 @@ public class MultiShot extends Spell implements AOESpell {
 	public MultiShot() {
 		super("Multi-Shot", 4, Rarity.BASIC);
 		super.setCardImage("resources/images/Spells/Multi-Shot.png");
+		super.setAvatar("resources/images/Spells/avatar/Multi-Shot.png");
+
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class SpellCardButton extends CardButton{
 	public void setTheCard(Spell card) {
 //		TODO setCradButton
 		this.card = card;
-		this.setImage(super.imagePath);
+		this.setImage(card.getAvatar());
 		if(super.hidden) {
 			this.setText("");
 			

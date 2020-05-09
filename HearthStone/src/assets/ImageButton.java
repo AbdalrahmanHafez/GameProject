@@ -65,8 +65,8 @@ public class ImageButton extends JButton implements ActionListener {
 		this.setLayout(new BorderLayout());
 		
 		Label=new JLabel("", JLabel.CENTER);
-		Label.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		Label.setForeground(Color.black);
+		Label.setFont(new Font("Tahoma", Font.BOLD, 15));
+		Label.setForeground(Color.WHITE);
 		
 		this.add(Label, BorderLayout.SOUTH);	
 		
@@ -127,7 +127,7 @@ public class ImageButton extends JButton implements ActionListener {
 
 	}
 
-	private Image resizeTo(Image originalImage, int biggerWidth, int biggerHeight) {
+	protected Image resizeTo(Image originalImage, int biggerWidth, int biggerHeight) {
 	    int type = BufferedImage.TYPE_INT_ARGB;
 
 	    BufferedImage resizedImage = new BufferedImage(biggerWidth, biggerHeight, type);
