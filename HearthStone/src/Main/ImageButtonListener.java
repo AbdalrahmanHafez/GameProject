@@ -8,8 +8,7 @@ import model.cards.Card;
 
 public interface ImageButtonListener extends ActionListener{
 	public void updatetxtCardInfo(Card card);
-	public void updateCardOverlay(CardButton btn , boolean show);
+	public void showCardOverlay(CardButton btn , boolean show);
 	public void updateCursor(String Path);
-	
 	
 }

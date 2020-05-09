@@ -5,8 +5,10 @@ public abstract class Card implements Cloneable {
 	private int manaCost;
 	private Rarity rarity;
 
+	private String avatar;
+	private String cardImage;
 
-
+	
 
 	public Card(String name, int manaCost, Rarity rarity) {
 		this.name = name;
@@ -43,6 +45,20 @@ public abstract class Card implements Cloneable {
 	}
 
 	
+	public String getAvatar() {
+		return avatar;
+	}
 
+	public String getCardImage() {
+		return cardImage;
+	}
+	
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public void setCardImage(String cardImage) {
+		this.cardImage = cardImage;
+	}
 	
 }

@@ -51,7 +51,7 @@ public class CardButton extends ImageButton{
 					 if(!btn.isHidden()) {
 						 try{
 								btn.listener.updatetxtCardInfo(btn.getCard());					 }catch(Exception ee) {;}
-						 		btn.listener.updateCardOverlay(btn, true);
+						 		btn.listener.showCardOverlay(btn, true);
 					 }
 					
 					 border_activate();
@@ -62,7 +62,7 @@ public class CardButton extends ImageButton{
 				 }
 				public void mouseExited(MouseEvent e) {
 					 CardButton btn =  ((CardButton) e.getSource());
-					 btn.listener.updateCardOverlay(btn, false);
+					 btn.listener.showCardOverlay(btn, false);
 					 border_deactivate();
 					
 					(btn).setImage(btn.imageDefualtPath);
@@ -116,6 +116,8 @@ public class CardButton extends ImageButton{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("card butt trig");
+		this.listener.showCardOverlay(this, false);
+
 		if( clickable && !hidden)
 			super.listener.actionPerformed(e);
 	}

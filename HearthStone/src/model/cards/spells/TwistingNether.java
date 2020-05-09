@@ -9,7 +9,7 @@ public class TwistingNether extends Spell implements AOESpell {
 
 	public TwistingNether() {
 		super("Twisting Nether", 8, Rarity.EPIC);
-
+		super.setCardImage("resources/images/Spells/TwistingNether.png");
 	}
 
 	@Override

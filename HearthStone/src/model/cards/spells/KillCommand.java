@@ -8,7 +8,7 @@ public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetS
 
 	public KillCommand() {
 		super("Kill Command", 3, Rarity.COMMON);
-
+		super.setCardImage("resources/images/Spells/KillCommand.png");
 	}
 
 	@Override

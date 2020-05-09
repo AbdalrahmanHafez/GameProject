@@ -15,6 +15,7 @@ public class Minion extends Card implements Cloneable {
 	private boolean attacked;
 	private MinionListener listener;
 
+	
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
 		super(name, manaCost, rarity);
@@ -58,6 +59,56 @@ public class Minion extends Card implements Cloneable {
 		target.setCurrentHP(target.getCurrentHP() - attack);
 
 	}
+	
+	
+	public String getCardImage() {
+		switch (this.getName()) {
+		case "Goldshire Footman":
+			return "resources/images/Minions/GoldshireFootman.png";
+		case "Stonetusk Boar":
+			return "resources/images/Minions/StonetuskBoar.png";
+		case "Bloodfen Raptor":
+			return "resources/images/Minions/BloodfenRaptor.png";
+		case "Frostwolf Grunt":
+			return "resources/images/Minions/FrostwolfGrunt.png";
+		case "Wolfrider":
+			return "resources/images/Minions/Wolfrider.png";
+		case "Chilwind Yeti":
+			return "resources/images/Minions/ChillwindYeti.png";
+		case "Boulderfist Ogre":
+			return "resources/images/Minions/BoulderfistOgre.png";
+		case "Core Hound":
+			return "resources/images/Minions/CoreHound.png";
+		case "Argent Commander":
+			return "resources/images/Minions/ArgentCommander.png";
+		case "Sunwalker":
+			return "resources/images/Minions/Sunwalker.png";
+		case "Chromaggus":
+			return "resources/images/Minions/Chromaggus.png";
+		case "The LichKing":
+			return "resources/images/Minions/TheLichKing.png";
+		case "Icehowl":
+			return "resources/images/Minions/Icehowl.png";
+		case "Colossus of the Moon":
+			return "resources/images/Minions/ColossusoftheMoon.png";
+		case "King Krush":
+			return "resources/images/Minions/KingKruch.png";
+		case "Sheep":
+			return "resources/images/Minions/Sheep.png";
+
+			
+			
+
+		}
+		
+		return "";
+	}
+	
+	
+	
+	
+	
+	
 
 	public boolean isTaunt() {
 		return taunt;

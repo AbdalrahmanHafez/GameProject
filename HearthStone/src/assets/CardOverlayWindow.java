@@ -22,18 +22,6 @@ public class CardOverlayWindow extends JFrame{
 	        
 	        
 	        this.setLayout(new MigLayout("fill"));
-	     
-	        img = new ImagePanel("resources/images/JainaProudmoore.gif");
-	        img.setOpaque(false);
-	        img.setBackground(new Color(0,0,0,0));
-
-	        
-	        this.getContentPane().add(img , "grow, w 286, h 395");
-	        
-
-	        
-	        
-	        
 	        
 	        this.setBounds(500, 500, 0, 0);
 	        this.pack();
@@ -42,16 +30,23 @@ public class CardOverlayWindow extends JFrame{
 	 
 		public void setImage(Card card) {
 			this.img = new ImagePanel(card.getCardImage());
+	        img.setOpaque(false);
+	        img.setBackground(new Color(0,0,0,0));
+
 			this.getContentPane().removeAll();
 			this.getContentPane().add(img , "grow, w 286, h 395");
+			this.repaint();
+			this.revalidate();
 		}
 	 
-	 public void updateLocation(CardButton btn) {
+	 public void updateLocation(CardButton btn, boolean inverted) {
 // 		this window location is based on the btn location on screen
-		 
+
 		 java.awt.Point pt = btn.getLocationOnScreen();
-		 this.setBounds(pt.x - 100, pt.y - 420   , 0, 0);
-				 
+		 if(!inverted)
+			 this.setBounds(pt.x - 85, pt.y - 400   , 0, 0);
+		 else
+			 this.setBounds(pt.x - 85, pt.y + 150   , 0, 0);
 		 
 	     this.pack();
 	     this.repaint();

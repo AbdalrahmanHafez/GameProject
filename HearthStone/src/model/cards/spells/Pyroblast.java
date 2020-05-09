@@ -7,6 +7,7 @@ import model.heroes.Hero;
 public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpell {
 	public Pyroblast() {
 		super("Pyroblast", 10, Rarity.EPIC);
+		super.setCardImage("resources/images/Spells/Pyroblast.png");
 	}
 
 	@Override

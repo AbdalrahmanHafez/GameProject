@@ -56,19 +56,41 @@ import model.cards.spells.Spell;
 import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
-public class GameScreen extends JFrame implements ActionListener, ImageButtonListener,ControllerListener{
+public class GameScreen extends JFrame implements ActionListener, ImageButtonListener,ControllerListener, ImagePanelListener{
 	private alertBox alert = new alertBox();
+	Font fontPrince = null;
 	GameScreenListener listener;
 	CardOverlayWindow cardoverlay = new CardOverlayWindow();
 	
 
 	ImageButton btnHero2Pic = new ImageButton(false);
-		
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
-	ImagePanel imgHero2Deck = new ImagePanel("resources/images/cardleft.png");
-	ImagePanel imgHeroDeck = new ImagePanel("resources/images/cardleft.png");
+	public class cardsLeft extends ImagePanel {
+		public JLabel txt = new JLabel("#Value");
+		public cardsLeft(String imgpath) {
+			super(imgpath);
+			txt.setForeground(Color.white);
+			this.setLayout(null);
+		    this.add(txt);
+		}
+		public void setText(String str) {
+			txt.setText(str);
+			txt.setFont(fontPrince.deriveFont(40.0f));
+		}
+		
+		public void setTextLoc(int panw, int panh) {
+			int xloc =(int) ( panw* 0.4);
+			int yloc =(int) ( panh* 0.57);
+			txt.setBounds(xloc, yloc, 100 , 100);
+		}
+		
+		
+	}
 	
+	cardsLeft imgHero2Deck = new cardsLeft("resources/images/cardleft.png"); 
+	cardsLeft imgHeroDeck = new cardsLeft("resources/images/cardleft.png");
+
 	
 	JPanel 	panHero2Field = new JPanel(new FlowLayout());
 	JPanel 	panHeroField = new JPanel(new FlowLayout());
@@ -124,7 +146,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 //														CONSTRUCTOR
 	public GameScreen() {
-		this.setTitle("HearthStone version 0.7");
+		this.setTitle("HearthStone version 0.8");
 		this.setBounds(10, 20, 1930, 1030);
 //		TODO minimum window size
 		this.setMinimumSize(new Dimension(1500, 800));
@@ -135,6 +157,48 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 		this.updateCursor("");
 
+		try {
+			fontPrince = Font.createFont(Font.TRUETYPE_FONT, new File("resources/other/prince.ttf")).deriveFont(40f);
+		} catch (FontFormatException | IOException e) {
+			System.out.println("Error importing Prince font");
+			e.printStackTrace();}
+		
+		
+		imgHero2Deck.setListener(this);
+		imgHeroDeck.setListener(this);
+
+		/* Buttons action assignments */
+
+		
+		btnEndTurn.setActionCommand("endturn"); btnEndTurn.setListener(this);		
+		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
+		btnHero2Pic.setActionCommand("minionattack"); btnHero2Pic.setListener(this);
+		
+		 /* END Buttons action assignments */
+
+		/* components Adjustments */
+	
+
+		leftPanle.setPreferredSize(new Dimension(250, 0));
+	
+		
+		txtInfo.setEditable(false);
+		txtInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		
+		txtCardInfo.setEditable(false);
+		txtCardInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		
+		
+		
+		lblHero2Mana.setFont(fontPrince);
+		lblHeroMana.setFont(fontPrince);
+		lblHero2Mana.setForeground(Color.WHITE);
+		lblHeroMana.setForeground(Color.WHITE);
+
+		btnHeroPower.setImage("resources/images/heropower.png");
+		btnEndTurn.setImage("resources/images/endturn.png");
+
+		
 		
 		panHeroField.setOpaque(false);
 		panHero2Field.setOpaque(false);
@@ -172,50 +236,19 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		btnHeroPower.setBorder(null);
 
 		
-		/* Buttons action assignments */
-
-		
-		btnEndTurn.setActionCommand("endturn"); btnEndTurn.setListener(this);		
-		btnHeroPower.setActionCommand("HeroPower");	btnHeroPower.setListener(this);
-		btnHero2Pic.setActionCommand("minionattack"); btnHero2Pic.setListener(this);
-		
-		 /* END Buttons action assignments */
-
-		/* components Adjustments */
-	
-
-		leftPanle.setPreferredSize(new Dimension(250, 0));
-	
-		
-		txtInfo.setEditable(false);
-		txtInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		
-		txtCardInfo.setEditable(false);
-		txtCardInfo.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		
-		
-		Font fontPrince = null;
-			try {
-				fontPrince = Font.createFont(Font.TRUETYPE_FONT, new File("resources\\other\\prince.ttf")).deriveFont(40f);
-			} catch (FontFormatException | IOException e) {
-				System.out.println("Error importing Prince font");
-				e.printStackTrace();}
-		lblHero2Mana.setFont(fontPrince);
-		lblHeroMana.setFont(fontPrince);
-		lblHero2Mana.setForeground(Color.WHITE);
-		lblHeroMana.setForeground(Color.WHITE);
-
-		btnHeroPower.setImage("resources/images/heropower.png");
-		btnEndTurn.setImage("resources/images/endturn.png");
-
-		
-		
 		/* End components Adj */
 
 		
 		topPanle.add(btnHero2Pic, "grow, w 170::170");
 		topPanle.add(panHero2Hand, "grow, w 1000:100%:");
-		topPanle.add(lblHero2Mana, "grow");
+		JPanel mana2Pan = new JPanel(new MigLayout("fill , insets 0"));
+		mana2Pan.setOpaque(false); mana2Pan.setBackground(new Color(0,0,0,0));
+		JLabel lblmana2 = new JLabel("MANA");
+		lblmana2.setFont(fontPrince.deriveFont(35.0f));
+		lblmana2.setForeground(Color.WHITE);
+		mana2Pan.add(lblHero2Mana, "grow, wrap");
+		mana2Pan.add(lblmana2, "center, gapbottom 10%");;
+		topPanle.add(mana2Pan, "grow");
 		  
 		
 		leftPanle.add(txtInfo, "growx, wrap");
@@ -230,8 +263,15 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
 		bottomPanle.add(panHeroHand, "grow, w 1000:100%:");
 		bottomPanle.add(btnHeroPower, "grow, w 150::");
-		
-		bottomPanle.add(lblHeroMana, "grow");
+
+		JPanel manaPan = new JPanel(new MigLayout("fill , insets 0"));
+		manaPan.setOpaque(false); manaPan.setBackground(new Color(0,0,0,0));
+		JLabel lblmana = new JLabel("MANA");
+		lblmana.setFont(fontPrince.deriveFont(35.0f));
+		lblmana.setForeground(Color.WHITE);
+		manaPan.add(lblHeroMana, "grow, wrap");
+		manaPan.add(lblmana, "center, gapbottom 10%");
+		bottomPanle.add(manaPan, "grow");
  
 		centerPanle.add(panHero2Field,"grow, height 170:: , wrap");
 		centerPanle.add(panHeroField,"grow, height 170::");
@@ -247,8 +287,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.add(centerPanle		, BorderLayout.CENTER);
 
 
-		
-		
+				
 		this.repaint();
 		this.revalidate();
 
@@ -257,7 +296,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	public void initializeGameScreen(Hero CurrentHero, Hero OpponentHero) { // will be called when the game window is shown
 		btnHeroPic.setImage(CurrentHero.getAvatar());
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
-
+	
+	
 	}
 		
 	
@@ -281,6 +321,10 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		lblHeroMana.setText(CurrentHero.getCurrentManaCrystals() + " / " + CurrentHero.getTotalManaCrystals());
 		lblHero2Mana.setText(OpponentHero.getCurrentManaCrystals() + " / " + OpponentHero.getTotalManaCrystals());
 
+		imgHero2Deck.setText(OpponentHero.getDeck().size()+"");
+		imgHeroDeck.setText(CurrentHero.getDeck().size()+"");
+
+		
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
 			addCardTo(c, panHeroHand, false, true, true, false);
@@ -341,7 +385,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	
 	public void updatetxtCardInfo(Card card) {
-		String r = "====[CARD INFO]====";
+		String r = "\n\n\n\n====[CARD INFO]====";
 		r += "\nName: " + card.getName();
 		r += "\nManaCost: " + card.getManaCost();
 		r += "\nRairty: " + card.getRarity().toString();
@@ -407,6 +451,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 //		IF not Waiting for target, 
 		
 		if ( e.getSource() instanceof CardButton ) {
+
 			CardButton source = (CardButton)  e.getSource(); 
 			
 			if(e.getActionCommand() == "minionattack" || e.getActionCommand() == "spellcast") {
@@ -419,10 +464,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 			}
 			
 		}
-
-		
-		
-		
 		
 			listener.actionPerformed(e);
 	}
@@ -438,11 +479,11 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 
 	@Override
-	public void updateCardOverlay(CardButton btn, boolean show) {
+	public void showCardOverlay(CardButton btn, boolean show) {
 		if ( show ) {
 			cardoverlay.showoverlay(true);
 			cardoverlay.setImage(btn.getCard());
-			cardoverlay.updateLocation(btn);
+			cardoverlay.updateLocation(btn, !btn.isClickable());
 			
 		}else {
 			cardoverlay.showoverlay(false);
@@ -460,7 +501,12 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 
 
-
+	@Override
+	public void updateDeckLabelLocation(int width, int height) {
+		imgHero2Deck.setTextLoc(width, height);
+		imgHeroDeck.setTextLoc(width, height);
+	}
+	
 
 
 	@Override
@@ -473,6 +519,10 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		}
 		this.setCursor(cursor);
 	}
+
+
+
+	
 
 
 
