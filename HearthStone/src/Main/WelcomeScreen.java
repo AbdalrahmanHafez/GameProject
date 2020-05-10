@@ -104,7 +104,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		btnMin.addActionListener (this);
 
 		
-		JButton btnMax = new JButton("🗖");
+		JButton btnMax = new JButton("M");
 		btnMax.setBackground(new Color(235, 188, 49));
 		btnMax.setForeground(Color.WHITE);
 		btnMax.setFocusPainted(false);
@@ -324,7 +324,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 			}
 			
 			
-			listener.initializeGame(p1, p2);
+			listener.initializeGame(p2, p1);
 			listener.actionPerformed(e);
 		}
 		

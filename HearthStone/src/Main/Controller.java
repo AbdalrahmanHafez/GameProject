@@ -225,7 +225,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	@Override
 	public void initializeGame(Hero p1, Hero p2) {
 		try {
-			game = new Game(p1, p2);
+			game = new Game(p2, p1);
 		} catch (FullHandException | CloneNotSupportedException e) {
 			(new alertBox()).error("Error initilizeing the game engine");
 			e.printStackTrace();

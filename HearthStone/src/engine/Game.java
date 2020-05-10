@@ -37,7 +37,7 @@ public class Game implements ActionValidator, HeroListener {
 		for (int i = 0; i < 3; i++) {
 			currentHero.drawCard();
 		}
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			opponent.drawCard();
 		}
 	}
