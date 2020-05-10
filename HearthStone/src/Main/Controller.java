@@ -12,6 +12,7 @@ import assets.SpellCardButton;
 import assets.alertBox;
 import assets.CardButton;
 import engine.Game;
+import engine.GameListener;
 import exceptions.AlreadyDrawnException;
 import exceptions.CannotAttackException;
 import exceptions.FullFieldException;
@@ -46,7 +47,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class Controller implements ActionListener, WelcomeScreenListener, GameScreenListener{
+public class Controller implements ActionListener, WelcomeScreenListener, GameScreenListener, GameListener{
 
 	private StartScreen Startsc;
 	private WelcomeScreen welcomesc;
@@ -65,9 +66,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		welcomesc.setListener(this);
 		gamesc.setListener(this);
 		
+		
 		this.setListener(gamesc);
 		
-		Controller.playSound("welcomescreen");
+		Controller.playSound("gameplay");
 		
 	}
 	
@@ -110,7 +112,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 				
 			case "minionplay":
-				System.out.println("controller minionplay");
 				try {
 					MinionCardButton btnminion =(MinionCardButton) e.getSource();
 					Minion m = (btnminion).getCard();
@@ -123,15 +124,12 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			;break;
 				
 			case "minionattack":
-				System.out.println("controller attack method");
 				CardButton minionsource = (CardButton)e.getSource();
 				Minion attackerMinion = ((MinionCardButton)minionsource.getAttackedBy()).getCard();
 				Minion targetMinion = ((MinionCardButton)minionsource).getCard();
 				
 				try {
 					game.getCurrentHero().attackWithMinion(attackerMinion, targetMinion);
-					System.out.println("attacked a Minion" + "attacker" + attackerMinion.getName() + " target"
-							+ targetMinion.getName());
 					if(targetMinion.getCurrentHP() == 0) // if dead
 						{Controller.playSound("damage-dead");}
 					else
@@ -145,10 +143,8 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			;break;
 			
 			case "minionattackhero":
-				System.out.println("controller minion attack hero method");
 				try {
 						game.getCurrentHero().attackWithMinion(((MinionCardButton)gamesc.attacker).getCard() , game.getOpponent());
-						System.out.println("attacked the hero");
 						Controller.playSound("damage");
 					} catch (CannotAttackException | NotYourTurnException | TauntBypassException
 							| NotSummonedException | InvalidTargetException e1) {
@@ -158,7 +154,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			;break;
 
 			case "spellcast":
-				System.out.println("controller spellcast method");
 				Spell s = ((SpellCardButton)gamesc.attacker).getCard();
 				try {
 				if(s instanceof FieldSpell)
@@ -176,7 +171,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			;break;
 		
 			case "spellcastontarget":
-				System.out.println("controller spellcast method");
 				CardButton esource = (CardButton) e.getSource();
 				MinionCardButton em = ((MinionCardButton)esource);
 				Minion spelltargetminion	=	em.getCard();
@@ -194,8 +188,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 			;break;
 			
 			case "spellattackhero":
-				System.out.println("controller spellcast method");
-
 				Spell spell = ((SpellCardButton)gamesc.attacker).getCard();
 				
 				if(spell instanceof HeroTargetSpell)
@@ -242,12 +234,22 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		gamesc.updateInfo(game.getCurrentHero(), game.getOpponent());
 		
 		Listener.initializeGameScreen(game.getCurrentHero(), game.getOpponent());
-		
+		game.setListener(this);
+
 
 	}
 	
-	static AudioInputStream x = null;
-	static Clip clip = null;
+	@Override
+	public void onGameOver() {
+//		TODO on GameOVER
+		Controller.playSound("victory");
+		
+		
+	}
+	
+	
+	public static AudioInputStream x = null;
+	public static Clip clip = null;
 	
 	public static void playSound(String name)	{
 		File soundFile = new File("resources/other/sounds/" +name+ ".wav");
@@ -261,22 +263,19 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					clip.loop(1000);
 				else
 					clip.start();
-			
+
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-			System.out.println("ERROR");
-			e.printStackTrace();
+				(new alertBox()).error(e.getMessage());
 			}
 	}
+	
 	public static void playSound(String[] names)	{
 		 Random rand = new Random(); 
 		 int randIndex = rand.nextInt(names.length); 
 		 playSound(names[randIndex]);
 	}
-	public static void stopSound()	{
-		if(clip != null && clip.isActive()) {
-			clip.stop();
-		}
-	}
+
+
 	
 	
 	
@@ -292,5 +291,8 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	public void setListener(ControllerListener listener) {
 		Listener = listener;
 	}
+
+
+
 }
 

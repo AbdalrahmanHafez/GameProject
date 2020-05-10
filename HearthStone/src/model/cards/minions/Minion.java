@@ -97,6 +97,10 @@ public class Minion extends Card implements Cloneable {
 			return "resources/images/Minions/Kalycgos.png";
 		case "Sheep":
 			return "resources/images/Minions/Sheep.png";
+		case "Tirion Fordring":
+			return "resources/images/Minions/TirionFordring.png";
+		case "Prophet Velen":
+			return "resources/images/Minions/ProphetVelen.png";
 		}
 		return "";
 	}
@@ -138,6 +142,10 @@ public class Minion extends Card implements Cloneable {
 			return "resources/images/Minions/avatar/Kalycgos.jpg";
 		case "Sheep":
 			return "resources/images/Minions/avatar/Sheep.jpg";
+		case "Tirion Fordring":
+			return "resources/images/Minions/avatar/TirionFordring.jpg";
+		case "Prophet Velen":
+			return "resources/images/Minions/avatar/ProphetVelen.jpg";
 		}
 		return "";
 	}

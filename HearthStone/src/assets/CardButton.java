@@ -126,9 +126,7 @@ public class CardButton extends ImageButton{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("card butt trig");
 
-		
 		this.listener.showCardOverlay(this, false);
 
 		if( clickable && !hidden)

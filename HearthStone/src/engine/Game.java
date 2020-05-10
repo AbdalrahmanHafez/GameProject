@@ -109,7 +109,6 @@ public class Game implements ActionValidator, HeroListener {
 
 	@Override
 	public void onHeroDeath() {
-
 		listener.onGameOver();
 
 	}

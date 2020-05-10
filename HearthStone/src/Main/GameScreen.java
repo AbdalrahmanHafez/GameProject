@@ -157,8 +157,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		try {
 			fontPrince = Font.createFont(Font.TRUETYPE_FONT, new File("resources/other/prince.ttf")).deriveFont(40f);
 		} catch (FontFormatException | IOException e) {
-			System.out.println("Error importing Prince font");
-			e.printStackTrace();}
+		}
 		
 		
 		imgHero2Deck.setListener(this);
@@ -270,6 +269,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		manaPan.add(lblmana, "center, gapbottom 10%");
 		bottomPanle.add(manaPan, "grow");
  
+		
 		centerPanle.add(panHero2Field,"grow, height 170:: , wrap");
 		centerPanle.add(panHeroField,"grow, height 170::");
 		
@@ -290,9 +290,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 
 	public void initializeGameScreen(Hero CurrentHero, Hero OpponentHero) { // will be called when the game window is shown
-		Controller.stopSound();;
-		Controller.playSound("gameplay");
-		
+	
 		btnHeroPic.setImage(CurrentHero.getAvatar());
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
@@ -374,7 +372,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 			
 		btn.setListener(this);
-		panel.add(btn);
+		panel.add(btn, BorderLayout.CENTER);
 		
 		this.repaint();
 		this.revalidate();
@@ -405,9 +403,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println("gamescreen");
-		
 		if(waitingfortarget) {
 			if(	!(e.getSource() instanceof CardButton) && e.getSource() != btnHero2Pic) {
 				alert.error("Please select a valid target");
@@ -452,10 +447,17 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		if ( e.getSource() instanceof CardButton ) {
 			CardButton source = (CardButton)  e.getSource(); 
 		
+			if(e.getActionCommand() == "spellcast") {
+				if (! ((SpellCardButton) source).doesspellNeedaTarget() ) { // does not need a target
+					attacker = source;
+					listener.actionPerformed(e);
+					return;
+				}
+			}
+			
 			if(e.getActionCommand() == "minionattack" || e.getActionCommand() == "spellcast") {
 				if(e.getActionCommand() == "spellcast") {
 					Controller.playSound("spellCast");
-
 				}
 				attacker = source;
 				waitingfortarget = true;

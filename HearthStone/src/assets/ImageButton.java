@@ -148,7 +148,6 @@ public class ImageButton extends JButton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(clickable+"image button "+ e.getActionCommand());
 		if(clickable)
 			listener.actionPerformed(e);
 	}
