@@ -71,7 +71,7 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setUndecorated( true );
 		this.setResizable( true );
-		this.setVisible( true );
+		this.setVisible( false );
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor((new ImageIcon("resources/images/Cursors/cur.png")).getImage(),new Point(), "Normal Cursor");

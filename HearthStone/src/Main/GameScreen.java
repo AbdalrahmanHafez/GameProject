@@ -144,9 +144,10 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 //														CONSTRUCTOR
 	public GameScreen() {
-		this.setTitle("HearthStone version 0.8");
+		this.setTitle("HearthStone version 1.0");
 		this.setBounds(10, 20, 1930, 1030);
-		this.setMinimumSize(new Dimension(1500, 800));
+//		this.setMinimumSize(new Dimension(1500, 800)); //recommended 
+		this.setMinimumSize(new Dimension(1366, 768)); // to match small screen laptops
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );

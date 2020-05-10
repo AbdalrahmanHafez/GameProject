@@ -82,7 +82,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 		if(e.getActionCommand().equals("initialStart")) { 
 			Startsc.setVisible(false);
 			welcomesc.setVisible(true);
-			return; //to avoid call the update method
+			return; //to avoid calling the update method
 		}
 		
 		switch (e.getActionCommand()){
@@ -92,10 +92,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				gamesc.setVisible(true);
 				
 
-				game.getCurrentHero().setTotalManaCrystals(10);
-				game.getCurrentHero().setCurrentManaCrystals(10);
-				game.getOpponent().setTotalManaCrystals(10);
-				game.getOpponent().setCurrentManaCrystals(10);
+//				game.getCurrentHero().setTotalManaCrystals(10);
+//				game.getCurrentHero().setCurrentManaCrystals(10);
+//				game.getOpponent().setTotalManaCrystals(10);
+//				game.getOpponent().setCurrentManaCrystals(10);
 				
 				;break;
 				
@@ -241,10 +241,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 	
 	@Override
 	public void onGameOver() {
-//		TODO on GameOVER
 		Controller.playSound("victory");
-		
-		
+		alert.info("YOU won horray!");
+		alert.info("Hope you had fun :)");
+		System.exit(0);
 	}
 	
 	
