@@ -291,25 +291,25 @@ public class WelcomeScreen extends JFrame implements ActionListener {
 		
 		try {
 		switch (e.getActionCommand()){
-			case "p11":
+			case "p10":
 							p1 = new Mage() 			;break;
-			case "p12":
+			case "p11":
 							p1 = new Hunter() 		;break;
-			case "p13":
+			case "p12":
 							p1 = new Paladin() 		;break;
-			case "p14":
+			case "p13":
 							p1 = new Priest() 			;break;
-			case "p15":
+			case "p14":
 							p1 = new Warlock() 		;break;
-			case "p21":
+			case "p20":
 						p2 = new Mage() 			;break;
-			case "p22":
+			case "p21":
 						p2 = new Hunter() 		;break;
-			case "p23":
+			case "p22":
 						p2 = new Paladin() 		;break;
-			case "p24":
+			case "p23":
 						p2 = new Priest() 			;break;
-			case "p25":
+			case "p24":
 						p2 = new Warlock() 		;break;
 		}
 		}catch(Exception err) 
