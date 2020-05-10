@@ -147,7 +147,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.setTitle("HearthStone version 1.0");
 		this.setBounds(10, 20, 1930, 1030);
 //		this.setMinimumSize(new Dimension(1500, 800)); //recommended 
-		this.setMinimumSize(new Dimension(1366, 768)); // to match small screen laptops
+		this.setMinimumSize(new Dimension(1470, 768)); // to match small screen laptops
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
@@ -268,7 +268,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		lblmana.setForeground(Color.WHITE);
 		manaPan.add(lblHeroMana, "grow, wrap");
 		manaPan.add(lblmana, "center, gapbottom 10%");
-		bottomPanle.add(manaPan, "grow");
+		bottomPanle.add(manaPan);
  
 		
 		centerPanle.add(panHero2Field,"grow, height 170:: , wrap");
