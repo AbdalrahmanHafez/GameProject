@@ -1,6 +1,6 @@
 [INSTRUCTIONS FILE]
 1. How to select the two heroes.
->> right after you click "start game" you will be prompted to select the two heros. The "start game" window will appear after running the Main().
+>> right after you click "start game" you will be prompted to select the two heroes. The "start game" window will appear after running the Main().
 
 2. How the current hero plays a minion.
 >> simply by clicking on the minion's card.
@@ -8,17 +8,17 @@
 3. How the current hero uses his minions to attack the opponent’s minion.
 >> the first click selects the attacker, the second selects the target.
 
-4. How the current hero casts all types of spells ( hero target, minion target etc.).
+4. How the current hero casts all types of spells ( hero target, minion target, etc.).
 >> if the spell does not need a target clicking it will cast it.
-if it does (either Hero/Minion), the target will be selected right after selecting the spell by either (clicking on a minion / clicking on the hero avatar).
+if it does (either Hero/Minion), the target will be selected right after selecting the spell by either (clicking on a minion /clicking on the hero avatar).
 
 5. How to end the turn.
->> throw a designated button centered to the right of the screen.
+>> through a designated button centered to the right of the screen.
 
 6. Specify the screen orientation (whether the current hero hand and field is at a fixed half i.e top/button or each hero has a fixed half).
->> The current hero is always at the half buttom of the screen.
+>> The current hero is always at the half bottom of the screen.
 
 7. Any other details that might be specific to your own implementation.
 (1) Written on Screensize [1920x1080].
-(2) you may encouter some coloring problems if you're using MAC OS.
+(2) you may encounter some coloring problems if you're using MAC OS.
 (3) The main() is inside : src/Main/Controller.java
