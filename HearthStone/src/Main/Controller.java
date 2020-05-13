@@ -93,10 +93,10 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
 				
-				game.getCurrentHero().setTotalManaCrystals(10);
-				game.getCurrentHero().setCurrentManaCrystals(10);
-				game.getOpponent().setTotalManaCrystals(10);
-				game.getOpponent().setCurrentManaCrystals(10);
+				// game.getCurrentHero().setTotalManaCrystals(10);
+				// game.getCurrentHero().setCurrentManaCrystals(10);
+				// game.getOpponent().setTotalManaCrystals(10);
+				// game.getOpponent().setCurrentManaCrystals(10);
 				
 				;break;
 				
