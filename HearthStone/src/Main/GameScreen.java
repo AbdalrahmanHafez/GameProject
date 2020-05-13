@@ -57,10 +57,12 @@ import model.heroes.Hero;
 import net.miginfocom.swing.MigLayout;
 
 public class GameScreen extends JFrame implements ActionListener, ImageButtonListener,ControllerListener, ImagePanelListener{
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private alertBox alert = new alertBox();
 	Font fontPrince = null;
 	GameScreenListener listener;
 	CardOverlayWindow cardoverlay = new CardOverlayWindow();
+	
 	
 
 	ImageButton btnHero2Pic = new ImageButton(false);
@@ -147,7 +149,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.setTitle("HearthStone version 1.0");
 		this.setBounds(10, 20, 1930, 1030);
 //		this.setMinimumSize(new Dimension(1500, 800)); //recommended 
-//		this.setMinimumSize(new Dimension(1470, 768)); // to match small screen laptops
+//		this.setMinimumSize(new Dimension(0, 700)); // to match small screen laptops
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
@@ -178,13 +180,14 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 		leftPanle.setPreferredSize(new Dimension(250, 0));
 	
-		
+		int fontFactor = (int)(screenSize.getHeight()/63);
+	
 		txtGeneralInfo.setEditable(false);
-		txtGeneralInfo.setFont(new Font("Tahoma", Font.BOLD, 17));
+		txtGeneralInfo.setFont(new Font("Tahoma", Font.BOLD, fontFactor));
 		
 		txtCardInfo.setEditable(false);
-		txtCardInfo.setFont(new Font("Tahoma", Font.BOLD, 17));
-		
+		txtCardInfo.setFont(new Font("Tahoma", Font.BOLD, fontFactor));
+
 		
 		
 		lblHero2Mana.setFont(fontPrince);
@@ -315,14 +318,16 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 				+ "\nMana: " 				+ CurrentHero.getCurrentManaCrystals() + "/" + CurrentHero.getTotalManaCrystals()
 				+ "\nHand left: "			+ CurrentHero.getHand().size()
 				+ "\nDeck left: "			+ CurrentHero.getDeck().size()
-				
-				);
+		);
 		lblHeroMana.setText(CurrentHero.getCurrentManaCrystals() + " / " + CurrentHero.getTotalManaCrystals());
 		lblHero2Mana.setText(OpponentHero.getCurrentManaCrystals() + " / " + OpponentHero.getTotalManaCrystals());
 
 		imgHero2Deck.setText(OpponentHero.getDeck().size()+"");
 		imgHeroDeck.setText(CurrentHero.getDeck().size()+"");
 
+		btnHeroPic.setImage(CurrentHero.getAvatar());
+		btnHero2Pic.setImage(OpponentHero.getAvatar());
+		
 		
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
