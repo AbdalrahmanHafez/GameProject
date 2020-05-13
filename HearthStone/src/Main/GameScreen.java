@@ -327,6 +327,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		btnHeroPic.setImage(CurrentHero.getAvatar());
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
+		btnHeroPic.setImage(CurrentHero.getAvatar());
+		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
