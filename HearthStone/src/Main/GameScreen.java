@@ -147,7 +147,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		this.setTitle("HearthStone version 1.0");
 		this.setBounds(10, 20, 1930, 1030);
 //		this.setMinimumSize(new Dimension(1500, 800)); //recommended 
-		this.setMinimumSize(new Dimension(1470, 768)); // to match small screen laptops
+//		this.setMinimumSize(new Dimension(1470, 768)); // to match small screen laptops
 		this.setLocationRelativeTo(null); // will center the window on the screen
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); //full screen
 //		this.setResizable( false );
@@ -237,7 +237,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 		
 		topPanle.add(btnHero2Pic, "grow, w 170::170");
-		topPanle.add(panHero2Hand, "grow, w 1000:100%:");
+		topPanle.add(panHero2Hand, "grow, w :100%:");
+		
 		JPanel mana2Pan = new JPanel(new MigLayout("fill , insets 0"));
 		mana2Pan.setOpaque(false); mana2Pan.setBackground(new Color(0,0,0,0));
 		JLabel lblmana2 = new JLabel("Mana");
@@ -258,8 +259,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		
 		
 		bottomPanle.add(btnHeroPic, "grow, w 170::170");
-		bottomPanle.add(panHeroHand, "grow, w 1000:100%:");
-		bottomPanle.add(btnHeroPower, "grow, w 150::, gapright 2%");
+		bottomPanle.add(panHeroHand, "grow, w :100%:");
+		bottomPanle.add(btnHeroPower, "grow, w 150::, gapright 10!");
 
 		JPanel manaPan = new JPanel(new MigLayout("fill , insets 0"));
 		manaPan.setOpaque(false); manaPan.setBackground(new Color(0,0,0,0));
