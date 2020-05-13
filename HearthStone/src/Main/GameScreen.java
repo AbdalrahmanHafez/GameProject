@@ -50,6 +50,7 @@ import assets.alertBox;
 import assets.CardButton;
 import assets.CardOverlayWindow;
 import model.cards.Card;
+import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.AOESpell;
 import model.cards.spells.Spell;
@@ -300,8 +301,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
 		Controller.playSound("myGreetings");
-		
-	
 	}
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {

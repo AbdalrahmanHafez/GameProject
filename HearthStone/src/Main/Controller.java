@@ -91,11 +91,11 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
 				
-
-//				game.getCurrentHero().setTotalManaCrystals(10);
-//				game.getCurrentHero().setCurrentManaCrystals(10);
-//				game.getOpponent().setTotalManaCrystals(10);
-//				game.getOpponent().setCurrentManaCrystals(10);
+//TODO remove
+				game.getCurrentHero().setTotalManaCrystals(10);
+				game.getCurrentHero().setCurrentManaCrystals(10);
+				game.getOpponent().setTotalManaCrystals(10);
+				game.getOpponent().setCurrentManaCrystals(10);
 				
 				;break;
 				
@@ -192,7 +192,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				
 				if(spell instanceof HeroTargetSpell)
 					try {
-						game.getCurrentHero().castSpell((HeroTargetSpell)spell, game.getCurrentHero());
+						game.getCurrentHero().castSpell((HeroTargetSpell)spell, game.getOpponent());
 					} catch (NotYourTurnException | NotEnoughManaException e2) {
 						alert.error(e2.getMessage());
 					}

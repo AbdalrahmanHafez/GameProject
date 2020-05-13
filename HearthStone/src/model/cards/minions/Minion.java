@@ -101,7 +101,12 @@ public class Minion extends Card implements Cloneable {
 			return "resources/images/Minions/TirionFordring.png";
 		case "Prophet Velen":
 			return "resources/images/Minions/ProphetVelen.png";
+		case "Silver Hand Recruit":
+			return "resources/images/Minions/SilverHandRecruit.png";
+		case "Wilfred Fizzlebang":
+			return "resources/images/Minions/WilfredFizzlebang.png";
 		}
+		
 		return "";
 	}
 	
@@ -146,6 +151,10 @@ public class Minion extends Card implements Cloneable {
 			return "resources/images/Minions/avatar/TirionFordring.jpg";
 		case "Prophet Velen":
 			return "resources/images/Minions/avatar/ProphetVelen.jpg";
+		case "Silver Hand Recruit":
+			return "resources/images/Minions/avatar/SilverHandRecruit.png";
+		case "Wilfred Fizzlebang":
+			return "resources/images/Minions/avatar/WilfredFizzlebang.png";
 		}
 		return "";
 	}
