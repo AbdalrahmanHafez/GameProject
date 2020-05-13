@@ -63,7 +63,7 @@ public class CardButton extends ImageButton{
 					
 					 border_activate();
 					 if(showOverlay)
-						 	btn.setImage("resources/images/hiddencard.png");
+						 	btn.setImage("resources/images/uparrow.png");
 				 }
 				public void mouseExited(MouseEvent e) {
 					 CardButton btn =  ((CardButton) e.getSource());
