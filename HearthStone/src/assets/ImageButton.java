@@ -42,6 +42,7 @@ public class ImageButton extends JButton implements ActionListener {
 	protected String imagePath;
 	protected String imageDefualtPath;
 	protected String imageHiddenPath = "resources/images/hiddencard.png";
+	public boolean hightlighted = false;
 
 	
 	public JLabel Label;
@@ -81,7 +82,19 @@ public class ImageButton extends JButton implements ActionListener {
 		
 		}
 	
+	public void setHighlightMode() {
+		this.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.red));
+		
+		listener.updateCursor("resources/images/Cursors/selectingTarget.png");
 
+		this.hightlighted = true;
+	}
+	public void setHighlightRemove() {
+		this.setBorder(null);
+		listener.updateCursor("");
+		this.hightlighted = false;
+}
+	
 	
 	public void setImage(String imgPath) {
 		this.imagePath = imgPath;

@@ -32,6 +32,8 @@ import model.cards.spells.LeechingSpell;
 import model.cards.spells.MinionTargetSpell;
 import model.cards.spells.Spell;
 import model.heroes.Hero;
+import model.heroes.Mage;
+import model.heroes.Priest;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -91,7 +93,6 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				welcomesc.setVisible(false);
 				gamesc.setVisible(true);
 				
-//TODO remove
 				game.getCurrentHero().setTotalManaCrystals(10);
 				game.getCurrentHero().setCurrentManaCrystals(10);
 				game.getOpponent().setTotalManaCrystals(10);
@@ -198,9 +199,7 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 					}
 				
 			;break;
-			
 			case "HeroPower":
-				
 				try {
 					game.getCurrentHero().useHeroPower();
 					Controller.playSound("damage-heropower");
@@ -210,8 +209,42 @@ public class Controller implements ActionListener, WelcomeScreenListener, GameSc
 				}
 			;break;
 
+			case "HeroPowerAttackHero":
+				try {
+					((Mage)(game.getCurrentHero())).useHeroPower(game.getOpponent());
+				} catch (ClassCastException cce) {}
+				catch (Exception ex) {
+					alert.error(ex.getMessage());
+				}
+				try {
+					((Priest)(game.getCurrentHero())).useHeroPower(game.getOpponent());
+				} catch (ClassCastException cce) {}
+				catch (Exception ex) {
+					alert.error(ex.getMessage());
+				}
 				
+				Controller.playSound("damage-heropower");
+
+			;break;
+			
+			case "HeroPowerAttackMinion":
+				Minion m = (Minion) ((CardButton)(   e.getSource()  )).getCard();
+				try {
+					((Mage)(game.getCurrentHero())).useHeroPower(m);
+				} catch (ClassCastException cce) {}
+				catch (Exception ex) {
+					alert.error(ex.getMessage());
+				}
+				try {
+					((Priest)(game.getCurrentHero())).useHeroPower(m);
+				} catch (ClassCastException cce) {}
+				catch (Exception ex) {
+					alert.error(ex.getMessage());
+				}
 				
+				Controller.playSound("damage-heropower");
+
+			;break;
 		}
 		
 		

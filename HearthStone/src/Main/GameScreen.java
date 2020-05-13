@@ -55,6 +55,8 @@ import model.cards.minions.Minion;
 import model.cards.spells.AOESpell;
 import model.cards.spells.Spell;
 import model.heroes.Hero;
+import model.heroes.Mage;
+import model.heroes.Priest;
 import net.miginfocom.swing.MigLayout;
 
 public class GameScreen extends JFrame implements ActionListener, ImageButtonListener,ControllerListener, ImagePanelListener{
@@ -64,8 +66,9 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	GameScreenListener listener;
 	CardOverlayWindow cardoverlay = new CardOverlayWindow();
 	
+	Hero currentHero = null;
+	Hero opponentHero = null;
 	
-
 	ImageButton btnHero2Pic = new ImageButton(false);
 	JLabel	lblHero2Mana = new JLabel("opponent mana", SwingConstants.CENTER);
 
@@ -304,7 +307,7 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 	}
 	
 	public void updateInfo(Hero CurrentHero, Hero OpponentHero) {
-
+		this.currentHero = CurrentHero; this.opponentHero = OpponentHero;
 		txtGeneralInfo.setText("====[GAME INFO]===="
 				+ "\nAgainst : " 	     	+ OpponentHero.getName()
 				+ "\nHP: " 					+ OpponentHero.getCurrentHP()
@@ -327,8 +330,6 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 		btnHeroPic.setImage(CurrentHero.getAvatar());
 		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
-		btnHeroPic.setImage(CurrentHero.getAvatar());
-		btnHero2Pic.setImage(OpponentHero.getAvatar());
 		
 		panHeroHand.removeAll();
 		for(Card c : CurrentHero.getHand()) {
@@ -419,10 +420,18 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 			waitingfortarget = false;
 //			the opp field cards now not clickable 
 			setFieldOppTo(false);
-			attacker.setHighlightRemove();
+			try{
+				attacker.setHighlightRemove();
+			}catch(Exception ex) {;}
 
-			
+					
 			if(e.getSource() == btnHero2Pic) {
+				if(btnHeroPower.hightlighted) {
+					if(currentHero instanceof Mage || currentHero instanceof Priest) {
+//						heropower targering a the other hero
+						e = new ActionEvent(e.getSource(), 0, "HeroPowerAttackHero");	
+					}
+				}else
 				if(attacker instanceof SpellCardButton) {
 					e = new ActionEvent(e.getSource(), 0, "spellattackhero");
 				}else
@@ -432,7 +441,12 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 
 				
 			}else {
-			
+				if(btnHeroPower.hightlighted) {
+					if(currentHero instanceof Mage || currentHero instanceof Priest) {
+//						heropower targering a minion
+						e = new ActionEvent(e.getSource(), 0, "HeroPowerAttackMinion");	
+					}
+				}else
 				if(attacker instanceof SpellCardButton) {
 					CardButton source = (CardButton)  e.getSource(); 
 					source.setAttackedBy(attacker);
@@ -445,6 +459,8 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 				}
 
 			}
+			
+			if(btnHeroPower.hightlighted) {btnHeroPower.setHighlightRemove();}
 
 			listener.actionPerformed(e); // sending the attack
 			return;
@@ -456,17 +472,15 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 			CardButton source = (CardButton)  e.getSource(); 
 		
 			if(e.getActionCommand() == "spellcast") {
+				Controller.playSound("spellCast");
 				if (! ((SpellCardButton) source).doesspellNeedaTarget() ) { // does not need a target
-					attacker = source;
+					attacker = (CardButton) source;
 					listener.actionPerformed(e);
 					return;
 				}
 			}
 			
 			if(e.getActionCommand() == "minionattack" || e.getActionCommand() == "spellcast") {
-				if(e.getActionCommand() == "spellcast") {
-					Controller.playSound("spellCast");
-				}
 				attacker = source;
 				waitingfortarget = true;
 //				enable the opp field cards to be clickable
@@ -474,7 +488,21 @@ public class GameScreen extends JFrame implements ActionListener, ImageButtonLis
 				setFieldOppTo(true);
 				return;
 			}
-			
+		}
+		
+		if ( e.getSource() instanceof ImageButton ) {	
+			if(e.getActionCommand() == "HeroPower") {
+				if(currentHero instanceof Mage || currentHero instanceof Priest) {
+				waitingfortarget = true;
+//				enable the opp field cards to be clickable
+				btnHeroPower.setHighlightMode();
+				setFieldOppTo(true);
+				return;
+				
+				}else {
+//				the hero does not need a target, send the attack as is
+				}
+			}
 		}
 		
 			listener.actionPerformed(e);
